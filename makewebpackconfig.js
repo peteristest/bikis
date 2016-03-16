@@ -4,8 +4,6 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 // var AppCachePlugin = require('appcache-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
-console.log('make webpac kconfig')
-
 module.exports = function (options) {
   var entry, plugins, cssLoaders
 

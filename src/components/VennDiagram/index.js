@@ -5,13 +5,36 @@ import d3 from 'd3'
 
 class VennDiagram extends Component {
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      order: 0
+    }
+
+    this.interval = setInterval(this.increment.bind(this), 1000)
+  }
+
+  increment () {
+    const { disciplines } = this.props
+    this.setState({
+      order: (this.state.order + 1) % disciplines.length
+    })
+  }
+
   componentDidMount () {
     this.updateChart()
     this.fadeIn()
+
+    this.timeout = setTimeout(this.increment.bind(this), 100)
   }
 
   componentDidUpdate () {
     this.updateChart()
+  }
+
+  componentWillUnmount () {
+    clearInterval(this.interval)
+    clearTimeout(this.timeout)
   }
 
   fadeIn () {
@@ -48,10 +71,16 @@ class VennDiagram extends Component {
       })),
 
       // triples
-      ...groupArray(disciplines, 3).map((pair) => ({
-        sets: pair,
+      ...groupArray(disciplines, 3).map((triple) => ({
+        sets: triple,
         size: sizeTriple
-      }))
+      })),
+
+      {
+        sets: disciplines,
+        size: sizeTriple,
+        label: '😀'
+      }
     ]
   }
 
@@ -61,8 +90,11 @@ class VennDiagram extends Component {
 
   updateChart () {
     const { disciplines, large, small } = this.props
+    const { order } = this.state
 
-    const chartData = this.getData(disciplines, large, small)
+    const items = [...disciplines.slice(order, disciplines.length), ...disciplines.slice(0, order)]
+
+    const chartData = this.getData(items, large, small)
     const vennChart = this.getVennDiagram()
     const elem = ReactDOM.findDOMNode(this)
 
