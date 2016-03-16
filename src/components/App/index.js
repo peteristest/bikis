@@ -12,7 +12,7 @@ import { connect } from 'react-redux'
 class App extends Component {
   render () {
     return (
-      <div className='wrapper'>
+      <div className='wrapper px3 py2'>
         {this.props.children}
       </div>
     )
