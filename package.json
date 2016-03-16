@@ -4,14 +4,17 @@
   "description": "Quick setup for new React.js applications featuring Redux, hot–reloading, PostCSS, react-router and Mocha.",
   "dependencies": {
     "basscss": "^8.0.1",
+    "d3": "^3.5.16",
     "fontfaceobserver": "^1.5.1",
     "history": "1.17.0",
     "react": "^0.14.2",
     "react-dom": "^0.14.2",
+    "react-faux-dom": "^2.4.0",
     "react-redux": "^4.0.0",
     "react-router": "^1.0.3",
     "redux": "^3.0.0",
-    "redux-thunk": "^1.0.0"
+    "redux-thunk": "^1.0.0",
+    "venn.js": "^0.2.7"
   },
   "devDependencies": {
     "appcache-webpack-plugin": "^1.2.0",
@@ -20,7 +23,7 @@
     "babel-core": "^6.0.0",
     "babel-eslint": "^4.1.2",
     "babel-loader": "^6.0.0",
-    "babel-plugin-react-transform": "^2.0.0",
+    "babel-plugin-react-transform": "^2.0.2",
     "babel-plugin-transform-react-constant-elements": "6.3.13",
     "babel-plugin-transform-react-inline-elements": "6.3.13",
     "babel-plugin-transform-react-remove-prop-types": "0.1.0",
@@ -47,7 +50,9 @@
     "postcss-loader": "^0.8.0",
     "postcss-reporter": "^1.2.1",
     "postcss-simple-vars": "^1.0.0",
+    "react-transform-catch-errors": "^1.0.2",
     "react-transform-hmr": "^1.0.1",
+    "redbox-react": "^1.2.2",
     "style-loader": "^0.13.0",
     "url-loader": "^0.5.6",
     "webpack": "^1.12.1",
