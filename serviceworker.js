@@ -3,7 +3,7 @@ var CACHE_NAME = 'react-boilerplate-cache-v1';
 var urlsToCache = [
   '/',
   '/css/main.css',
-  '/js/bundle.js'
+  '/src/bundle.js'
 ];
 
 // Set the callback for the install step

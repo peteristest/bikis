@@ -6,29 +6,27 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import Logo from '../../img/logo.png';
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 class App extends Component {
-  render() {
+  render () {
     return (
-      <div className="wrapper">
-        <img className="logo" src={Logo} />
-        { this.props.children }
+      <div className='wrapper'>
+        {this.props.children}
       </div>
-    );
+    )
   }
 }
 
 // REDUX STUFF
 
 // Which props do we want to inject, given the global state?
-function select(state) {
+function select (state) {
   return {
     data: state
-  };
+  }
 }
 
 // Wrap the component to inject dispatch and state into it
-export default connect(select)(App);
+export default connect(select)(App)
