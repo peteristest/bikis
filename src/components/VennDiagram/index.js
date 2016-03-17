@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import venn from 'venn.js/build/venn.min.js'
 import d3 from 'd3'
 
+const COLOURS = ['#ff7474', '#83ffb1', '#9cfffd', '#e86fff', '#FAE443', '#1D9DF4']
+
 class VennDiagram extends Component {
 
   constructor (props) {
@@ -10,22 +12,28 @@ class VennDiagram extends Component {
     this.state = {
       order: 0
     }
-
-    this.interval = setInterval(this.increment.bind(this), 1000)
   }
 
   increment () {
-    const { disciplines } = this.props
+    const { items } = this.props
     this.setState({
-      order: (this.state.order + 1) % disciplines.length
+      order: (this.state.order + 1) % items.length
     })
   }
 
   componentDidMount () {
     this.updateChart()
-    this.fadeIn()
 
-    this.timeout = setTimeout(this.increment.bind(this), 100)
+    const { duration, animate = false } = this.props
+
+    if (animate) {
+      this.timeout = setTimeout(this.animate.bind(this, duration), 900)
+    }
+  }
+
+  animate (duration) {
+    this.increment()
+    this.interval = setInterval(this.increment.bind(this), duration + 500)
   }
 
   componentDidUpdate () {
@@ -37,16 +45,7 @@ class VennDiagram extends Component {
     clearTimeout(this.timeout)
   }
 
-  fadeIn () {
-    const elem = ReactDOM.findDOMNode(this)
-    elem.style.opacity = 0
-    elem.style.transition = 'opacity 350ms'
-    window.requestAnimationFrame(() => {
-      setTimeout(() => { elem.style.opacity = 1 }, 100)
-    })
-  }
-
-  getData (disciplines, sizePair, sizeTriple) {
+  getData (items, sizePair, sizeTriple, intersectLabel) {
     const groupArray = (array, elems = 2) => {
       const a = [...Array.from(array), array[0]]
       const temp = a.slice()
@@ -62,51 +61,76 @@ class VennDiagram extends Component {
 
     return [
       // single items
-      ...disciplines.map((discipline) => ({sets: [discipline], size: 12})),
+      ...items.map((discipline) => ({sets: [discipline], size: 12})),
 
       // pairs
-      ...groupArray(disciplines).map((pair) => ({
+      ...groupArray(items).map((pair) => ({
         sets: pair,
         size: sizePair
       })),
 
       // triples
-      ...groupArray(disciplines, 3).map((triple) => ({
+      ...groupArray(items, 3).map((triple) => ({
         sets: triple,
         size: sizeTriple
       })),
 
       {
-        sets: disciplines,
+        sets: items,
         size: sizeTriple,
-        label: '😀'
+        label: intersectLabel
       }
     ]
   }
 
-  getVennDiagram () {
-    return venn.VennDiagram().wrap(false).width(600).height(500)
-  }
-
   updateChart () {
-    const { disciplines, large, small } = this.props
+    const { items, large, small, duration, width, height, intersectLabel } = this.props
     const { order } = this.state
 
-    const items = [...disciplines.slice(order, disciplines.length), ...disciplines.slice(0, order)]
+    const chartItems = [...items.slice(order, items.length), ...items.slice(0, order)]
 
-    const chartData = this.getData(items, large, small)
-    const vennChart = this.getVennDiagram()
+    const chartData = this.getData(chartItems, large, small, intersectLabel)
+    const colours = d3.scale.ordinal().range(COLOURS)
+    const vennChart = venn.VennDiagram()
+      .wrap(false)
+      .width(width)
+      .height(height)
+      .duration(duration)
+      .colours(colours)
+
     const elem = ReactDOM.findDOMNode(this)
 
     d3
       .select(elem)
       .datum(chartData)
       .call(vennChart)
+
+    d3
+      .select(elem)
+      .selectAll('.venn-circle path')
+      .style('fill-opacity', 0.5)
+      .style('mix-blend-mode', 'multiply')
+
+    d3
+      .select(elem)
+      .selectAll('.venn-circle text')
+      .style('fill', '#fff')
   }
 
   render () {
     return <div {...this.props} />
   }
+}
+
+VennDiagram.propTypes = {
+  intersectLabel: React.PropTypes.string.isRequired,
+  duration: React.PropTypes.number.isRequired,
+  items: React.PropTypes.array.isRequired,
+  large: React.PropTypes.number.isRequired,
+  small: React.PropTypes.number.isRequired,
+  width: React.PropTypes.number.isRequired,
+  height: React.PropTypes.number.isRequired,
+  animate: React.PropTypes.bool
 }
 
 export default VennDiagram

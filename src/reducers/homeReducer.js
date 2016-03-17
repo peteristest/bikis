@@ -18,7 +18,15 @@ import assignToEmpty from '../utils/assign'
 
 const initialState = {
   projectName: 'peter.is',
-  ownerName: 'peteris'
+  ownerName: 'peteris',
+  disciplines: [
+    'Design', // ✏️
+    'Tech', // 💾
+    'Internet', // 🌐
+    'Cycling', // 🚴
+    'Travel', // ️️✈️
+    'Photo' // 📷
+  ]
 }
 
 function homeReducer (state = initialState, action) {

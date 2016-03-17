@@ -8,6 +8,7 @@
     "fontfaceobserver": "^1.5.1",
     "history": "1.17.0",
     "react": "^0.14.2",
+    "react-addons-css-transition-group": "^0.14.7",
     "react-dom": "^0.14.2",
     "react-faux-dom": "^2.4.0",
     "react-redux": "^4.0.0",

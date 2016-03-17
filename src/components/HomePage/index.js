@@ -6,6 +6,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import VennDiagram from '../VennDiagram/'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 class HomePage extends Component {
 
@@ -23,16 +24,13 @@ class HomePage extends Component {
   }
 
   render () {
-    const disciplines = [
-      'Design',
-      'Technology',
-      'Internet',
-      'Cycling',
-      'Travel',
-      'Photography'
-    ]
-    const sizeLarge = 12
-    const sizeSmall = 4
+    const { disciplines } = this.props.data
+
+    const sizeLarge = 9
+    const sizeSmall = 3
+    const { clientWidth, clientHeight } = window.document.documentElement
+    const w = clientWidth * 0.8
+    const h = clientHeight * 0.7
 
     const { venn } = this.state
 
@@ -41,8 +39,9 @@ class HomePage extends Component {
         <div className='max-width-1 bio relative z2'>
           <h1 className='h3'>Peteris Bikis</h1>
           <p>
-            Creative Technologist, Designer and Engineer. <a href='//asketicsf.com' target='_blank'>Asketic</a> Co-founder. I'm a <a href='#' onMouseOver={this.toggleVenn.bind(this)} onMouseOut={this.toggleVenn.bind(this)}>venn diagram</a> of design, technology, the
-            Internet, cycling, travel, and photography. Currently obsessed with React and functional programming. Interested in AI, neural networks and a weirder future <span dangerouslySetInnerHTML={{ __html: '&#128126' }} />
+            Creative Technologist, Designer and Engineer. <a href='//asketicsf.com' target='_blank'>Asketic</a> Co-founder. I'm a <a href='#' onMouseOver={this.toggleVenn.bind(this)}
+              onMouseOut={this.toggleVenn.bind(this)}>venn diagram</a> of design, technology, the Internet, cycling, travel, and photography. Currently obsessed with React and functional
+            programming. Interested in AI, neural networks and a weirder future <span dangerouslySetInnerHTML={{ __html: '&#128126' }} />
           </p>
           <p>
             <a href='//twitter.com/peteris'>@peteris</a>
@@ -51,7 +50,24 @@ class HomePage extends Component {
             <a href='mailto:hi@peter.is'>hi@peter.is</a>
           </p>
         </div>
-        {venn && <VennDiagram disciplines={disciplines} large={sizeLarge} small={sizeSmall} className='absolute top-0 right-0 z1' />}
+        <ReactCSSTransitionGroup
+          transitionName='visualisation'
+          transitionEnterTimeout={600}
+          transitionLeaveTimeout={300}>
+        {venn && (
+          <VennDiagram
+            key='venn'
+            intersectLabel='👋'
+            items={disciplines}
+            large={sizeLarge}
+            small={sizeSmall}
+            duration={1000}
+            width={w}
+            height={h}
+            animate
+            className='venn absolute z1' />
+        )}
+        </ReactCSSTransitionGroup>
       </div>
     )
   }

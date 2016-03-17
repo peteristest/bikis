@@ -19,18 +19,49 @@ html {
 
 html,
 body {
-	margin: 0;
-	padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 html {
-	font-size: 23px;
+  font-size: 19px;
 }
 
+$red: #EC3338;
+$blue: #5934F6;
+$purple: rgb(153, 102, 255);
+
+$baseColor: $purple;
+
 body {
-	font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  color: $baseColor;
+  line-height: 1.9em;
+  background-color: rgba(0,0,0,.02);
 }
 
 body.js-karla-loaded {
-	font-family: 'Karla', Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: 'Karla', Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: $baseColor;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+}
+
+a:after {
+  content: '';
+  display: block;
+  border-bottom: 6px solid #5934F6;
+  position: absolute;
+  top: 1.2em;
+  left: 0;
+  right: 0;
+  opacity: 0.2;
+}
+
+.h3 {
+  font-weight: 100;
 }
