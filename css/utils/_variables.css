@@ -6,3 +6,6 @@ $blue: #5934F6;
 $purple: rgb(153, 102, 255);
 
 $text-color: $purple;
+
+/* Easing */
+$ease-out-cubic: cubic-bezier(0.215, 0.610, 0.355, 1.000);

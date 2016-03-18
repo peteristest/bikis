@@ -52,14 +52,14 @@ import '../css/main.css'
 
 // Create the store with the redux-thunk middleware, which allows us
 // to do asynchronous things in the actions
-import rootReducer from './reducers/rootReducer'
+import rootReducer from './reducers/index'
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore)
 const store = createStoreWithMiddleware(rootReducer)
 
 // Make reducers hot reloadable, see http://stackoverflow.com/questions/34243684/make-redux-reducers-and-other-non-components-hot-loadable
 if (module.hot) {
-  module.hot.accept('./reducers/rootReducer', () => {
-    const nextRootReducer = require('./reducers/rootReducer').default
+  module.hot.accept('./reducers/index', () => {
+    const nextRootReducer = require('./reducers/index').default
     store.replaceReducer(nextRootReducer)
   })
 }

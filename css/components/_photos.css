@@ -1,0 +1,50 @@
+.photos {
+  opacity: 0.6;
+}
+
+.image-container {
+  transform-origin: 100% 100%;
+}
+
+.image {
+  border: 0.5em solid #fff;
+  border-bottom-width: 1.5em;
+}
+
+.bg {
+  background-color: $blue;
+  mix-blend-mode: screen;
+}
+
+.image-container img {
+  filter: saturate(0) contrast(1.2);
+}
+
+.visualisation-enter.visualisation-enter-active .image-container,
+.visualisation-leave.visualisation-leave-active .image-container {
+  transition: opacity 300ms $ease-out-cubic;
+  transition-property: opacity,transform;  
+}
+
+.visualisation-enter .image-container {
+  opacity: 0.01;
+  transform: translateY(10%) translateX(4%) rotateY(-10deg) rotateX(10deg);
+}
+
+.visualisation-enter.visualisation-enter-active .image-container {
+  opacity: 1;
+  transform: none;
+}
+
+.visualisation-leave .image-container {
+  opacity: 1;
+  transform: none;
+  transform-origin: 50% 50%;;
+}
+
+.visualisation-leave.visualisation-leave-active .image-container {
+  opacity: 0;
+  transition-duration: 500ms;
+  transform: translateY(30%) rotateX(10deg) scale(0.9);
+  transition-delay: 0ms !important;
+}

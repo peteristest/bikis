@@ -1,26 +1,50 @@
 /*
  * HomePage
- * This is the first thing users see of our App
  */
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import VennDiagram from '../VennDiagram/'
+import PhotosContainer from '../../containers/PhotosContainer/'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import { asyncFetchInstagramPhotos } from '../../actions'
 
 class HomePage extends Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      venn: false
+      venn: false,
+      photos: false
     }
+  }
+
+  componentWillMount () {
+    const { asyncFetchInstagramPhotos } = this.props
+    asyncFetchInstagramPhotos()
   }
 
   toggleVenn () {
     this.setState({
       venn: !this.state.venn
     })
+  }
+
+  togglePhotos () {
+    this.setState({
+      photos: !this.state.photos
+    })
+  }
+
+  renderToggle (label, prop) {
+    const self = this
+    const toggle = () => {
+      self.setState({
+        [prop]: !this.state[prop]
+      })
+    }
+
+    return <a href='#' onMouseOver={toggle} onMouseOut={toggle}>{label}</a>
   }
 
   render () {
@@ -32,16 +56,19 @@ class HomePage extends Component {
     const w = clientWidth * 0.8
     const h = clientHeight * 0.7
 
-    const { venn } = this.state
+    const { venn, photos } = this.state
 
     return (
       <div className='home height-100'>
         <div className='max-width-1 bio relative z2 height-100 px2 py3'>
           <h1 className='h3'>Peteris Bikis</h1>
           <p>
-            Creative Technologist, Designer and Engineer. <a href='//asketicsf.com' target='_blank'>Asketic</a> Co-founder. I'm a <a href='#' onMouseOver={this.toggleVenn.bind(this)}
-              onMouseOut={this.toggleVenn.bind(this)}>venn diagram</a> of design, technology, the Internet, cycling, travel, and photography. Currently obsessed with React and functional
-            programming. Interested in AI, neural networks and a weirder future <span dangerouslySetInnerHTML={{ __html: '&#128126' }} />
+            Creative Technologist, Designer and Engineer. <a href='//asketicsf.com' target='_blank'>Asketic</a> Co-founder.
+            I'm a {this.renderToggle('venn diagram', 'venn')} of design, technology, the Internet,
+            cycling, travel, and {this.renderToggle('photography', 'photos')}.
+            Currently obsessed with React and functional
+            programming. Interested in AI, neural networks
+            and a weirder future <span dangerouslySetInnerHTML={{ __html: '&#128126' }} />
           </p>
           <p>
             <a href='//twitter.com/peteris'>@peteris</a>
@@ -53,7 +80,7 @@ class HomePage extends Component {
         <ReactCSSTransitionGroup
           transitionName='visualisation'
           transitionEnterTimeout={600}
-          transitionLeaveTimeout={300}>
+          transitionLeaveTimeout={600}>
         {venn && (
           <VennDiagram
             key='venn'
@@ -65,7 +92,13 @@ class HomePage extends Component {
             width={w}
             height={h}
             animate
-            className='venn absolute z1' />
+            className='component venn absolute absolute-center z1' />
+        )}
+        {photos && (
+          <PhotosContainer
+            className='component photos absolute bottom-0 right-0 m2 z1'
+            style={{width: '50%'}}
+          />
         )}
         </ReactCSSTransitionGroup>
       </div>
@@ -73,14 +106,13 @@ class HomePage extends Component {
   }
 }
 
-// REDUX STUFF
-
-// Which props do we want to inject, given the global state?
-function select (state) {
+function mapStateToProps (state) {
   return {
-    data: state
+    data: state.home
   }
 }
 
-// Wrap the component to inject dispatch and state into it
-export default connect(select)(HomePage)
+export default connect(
+  mapStateToProps,
+  { asyncFetchInstagramPhotos }
+)(HomePage)
