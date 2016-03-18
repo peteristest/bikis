@@ -57,7 +57,7 @@ class HomePage extends Component {
         {venn && (
           <VennDiagram
             key='venn'
-            intersectLabel='👋'
+            intersectLabel={['👋', '👌']}
             items={disciplines}
             large={sizeLarge}
             small={sizeSmall}

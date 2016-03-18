@@ -5,12 +5,15 @@ import d3 from 'd3'
 
 const COLOURS = ['#ff7474', '#83ffb1', '#9cfffd', '#e86fff', '#FAE443', '#1D9DF4']
 
+const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)]
+
 class VennDiagram extends Component {
 
   constructor (props) {
     super(props)
     this.state = {
-      order: 0
+      order: 0,
+      intersectLabel: '*'
     }
   }
 
@@ -22,9 +25,12 @@ class VennDiagram extends Component {
   }
 
   componentDidMount () {
-    this.updateChart()
+    const { duration, animate = false, intersectLabel } = this.props
+    this.setState({
+      intersectLabel: typeof intersectLabel === String ? intersectLabel : getRandomElement(intersectLabel)
+    })
 
-    const { duration, animate = false } = this.props
+    this.updateChart()
 
     if (animate) {
       this.timeout = setTimeout(this.animate.bind(this, duration), 900)
@@ -84,8 +90,8 @@ class VennDiagram extends Component {
   }
 
   updateChart () {
-    const { items, large, small, duration, width, height, intersectLabel } = this.props
-    const { order } = this.state
+    const { items, large, small, duration, width, height } = this.props
+    const { order, intersectLabel } = this.state
 
     const chartItems = [...items.slice(order, items.length), ...items.slice(0, order)]
 
@@ -123,7 +129,9 @@ class VennDiagram extends Component {
 }
 
 VennDiagram.propTypes = {
-  intersectLabel: React.PropTypes.string.isRequired,
+  intersectLabel: React.PropTypes.oneOfType([
+    React.PropTypes.string, React.PropTypes.array
+  ]).isRequired,
   duration: React.PropTypes.number.isRequired,
   items: React.PropTypes.array.isRequired,
   large: React.PropTypes.number.isRequired,
