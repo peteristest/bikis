@@ -21,21 +21,12 @@ html,
 body {
   margin: 0;
   padding: 0;
+  height: 100%;
 }
-
-html {
-  font-size: 19px;
-}
-
-$red: #EC3338;
-$blue: #5934F6;
-$purple: rgb(153, 102, 255);
-
-$baseColor: $purple;
 
 body {
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  color: $baseColor;
+  color: $text-color;
   line-height: 1.9em;
   background-color: rgba(0,0,0,.02);
 }
@@ -45,7 +36,7 @@ body.js-karla-loaded {
 }
 
 a {
-  color: $baseColor;
+  color: $text-color;
   text-decoration: none;
   position: relative;
   display: inline-block;
@@ -64,4 +55,8 @@ a:after {
 
 .h3 {
   font-weight: 100;
+}
+
+#app {
+  height: 100%;
 }

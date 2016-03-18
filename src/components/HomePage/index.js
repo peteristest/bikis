@@ -35,8 +35,8 @@ class HomePage extends Component {
     const { venn } = this.state
 
     return (
-      <div className='home'>
-        <div className='max-width-1 bio relative z2'>
+      <div className='home height-100'>
+        <div className='max-width-1 bio relative z2 height-100 px2 py3'>
           <h1 className='h3'>Peteris Bikis</h1>
           <p>
             Creative Technologist, Designer and Engineer. <a href='//asketicsf.com' target='_blank'>Asketic</a> Co-founder. I'm a <a href='#' onMouseOver={this.toggleVenn.bind(this)}
