@@ -4,7 +4,8 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import VennDiagram from '../VennDiagram/'
+import VennDiagram from '../VennDiagram'
+import WorldMap from '../WorldMap'
 import PhotosContainer from '../../containers/PhotosContainer/'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { asyncFetchInstagramPhotos } from '../../actions'
@@ -15,7 +16,8 @@ class HomePage extends Component {
     super(props)
     this.state = {
       venn: false,
-      photos: false
+      photos: false,
+      map: false
     }
   }
 
@@ -48,7 +50,7 @@ class HomePage extends Component {
   }
 
   render () {
-    const { disciplines } = this.props.data
+    const { disciplines, color } = this.props.data
 
     const sizeLarge = 9
     const sizeSmall = 3
@@ -56,7 +58,7 @@ class HomePage extends Component {
     const w = clientWidth * 0.8
     const h = clientHeight * 0.7
 
-    const { venn, photos } = this.state
+    const { venn, photos, map } = this.state
 
     return (
       <div className='home height-100'>
@@ -65,7 +67,7 @@ class HomePage extends Component {
           <p>
             Creative Technologist, Designer and Engineer. <a href='//asketicsf.com' target='_blank'>Asketic</a> Co-founder.
             I'm a {this.renderToggle('venn diagram', 'venn')} of design, technology, the Internet,
-            cycling, travel, and {this.renderToggle('photography', 'photos')}.
+            &nbsp;{this.renderToggle('cycling', 'map')}, travel, and {this.renderToggle('photography', 'photos')}.
             Currently obsessed with React and functional
             programming. Interested in AI, neural networks
             and a weirder future <span dangerouslySetInnerHTML={{ __html: '&#128126' }} />
@@ -100,6 +102,7 @@ class HomePage extends Component {
             style={{width: '50%'}}
           />
         )}
+          <WorldMap visible={map} color={color} className='component absolute bottom-0 right-0 z1' />
         </ReactCSSTransitionGroup>
       </div>
     )
