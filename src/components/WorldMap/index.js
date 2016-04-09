@@ -25,7 +25,9 @@ class WorldMap extends Component {
 
     const width = document.documentElement.clientWidth
     const height = document.documentElement.clientHeight
+
     const world = require('json!./../../world-110m.topojson')
+    const route = require('json!./../../route.topojson')
 
     const options = STYLES[ visible ? 'visible' : 'hidden' ]
     const { rotation, scale, opacity } = options
@@ -43,15 +45,23 @@ class WorldMap extends Component {
                   .attr('height', height)
 
     svg.append('path')
+      .attr('opacity', opacity)
       .datum(topojson.feature(world, world.objects.land))
       .attr('class', 'land')
-      .attr('opacity', opacity)
       .attr('d', path)
       .style('fill', color)
+
+    svg.append('path')
+      .attr('opacity', opacity)
+      .datum(topojson.feature(route, route.objects.route_line))
+      .attr('class', 'route')
+      .attr('d', path)
+      .attr('stroke', '#222')
 
     this.projection = projection
     this.path = path
     this.svg = svg
+    this.opacity = opacity
   }
 
   update () {
@@ -61,31 +71,32 @@ class WorldMap extends Component {
     this.transition(options)
   }
 
-  transition (options) {
+  transition (options, easing = 'cubic-in-out') {
     const { duration, rotation, opacity, scale } = options
     const { projection, path, svg } = this
     const p = svg.selectAll('path')
 
     d3.transition()
       .duration(duration)
-      .ease('cubic-in-out')
+      .ease(easing)
       .tween('rotate', () => {
         const r = d3.interpolate(projection.rotate(), rotation)
-        const o = d3.interpolate(opacity ? 0 : 0.5, opacity)
+        const o = d3.interpolate(this.opacity, opacity)
         const s = d3.interpolate(projection.scale(), scale)
 
         return (t) => {
+          this.opacity = o(t)
+
           projection.rotate(r(t)).scale(s(t))
           p
             .attr('opacity', o(t))
             .attr('d', path)
         }
       })
-      .transition()
   }
 
-  componentDidUpdate () {
-    this.update()
+  componentDidUpdate (prevProps) {
+    (this.props.visible !== prevProps.visible) && this.update()
   }
 
   render () {

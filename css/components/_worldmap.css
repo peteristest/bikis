@@ -1,0 +1,15 @@
+.route {
+  fill: none;
+  stroke-width: 2px;
+  stroke-dasharray: 5px;
+  animation: dash 800ms 0ms linear infinite both;
+}
+
+@keyframes dash {
+  from {
+    stroke-dashoffset: 10;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
