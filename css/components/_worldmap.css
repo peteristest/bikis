@@ -1,6 +1,6 @@
 .route {
   fill: none;
-  stroke-width: 2px;
+  stroke-width: 5px;
   stroke-dasharray: 5px;
   animation: dash 800ms 0ms linear infinite both;
 }

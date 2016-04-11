@@ -10,6 +10,26 @@ import PhotosContainer from '../../containers/PhotosContainer/'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { asyncFetchInstagramPhotos } from '../../actions'
 
+const Bio = ({renderToggle, className = ''}) => (
+  <div className={className}>
+    <h1 className='h3'>Peteris Bikis</h1>
+    <p>
+      Creative Technologist, Designer and Engineer. <a href='//asketicsf.com' target='_blank'>Asketic</a> Co-founder.
+      I'm a {renderToggle('venn diagram', 'venn')} of design, technology, the Internet,
+      &nbsp;{renderToggle('cycling', 'routeMap')}, {renderToggle('travel', 'travelMap')}, and {renderToggle('photography', 'photos')}.
+      Currently obsessed with React and functional
+      programming. Interested in AI, neural networks
+      and a weirder future <span dangerouslySetInnerHTML={{ __html: '&#128126' }} />
+    </p>
+    <p>
+      <a href='//twitter.com/peteris'>@peteris</a>
+    </p>
+    <p>
+      <a href='mailto:hi@peter.is'>hi@peter.is</a>
+    </p>
+  </div>
+)
+
 class HomePage extends Component {
 
   constructor (props) {
@@ -17,25 +37,14 @@ class HomePage extends Component {
     this.state = {
       venn: false,
       photos: false,
-      map: false
+      travelMap: false,
+      routeMap: false
     }
   }
 
   componentWillMount () {
     const { asyncFetchInstagramPhotos } = this.props
     asyncFetchInstagramPhotos()
-  }
-
-  toggleVenn () {
-    this.setState({
-      venn: !this.state.venn
-    })
-  }
-
-  togglePhotos () {
-    this.setState({
-      photos: !this.state.photos
-    })
   }
 
   renderToggle (label, prop) {
@@ -58,26 +67,14 @@ class HomePage extends Component {
     const w = clientWidth * 0.8
     const h = clientHeight * 0.7
 
-    const { venn, photos, map } = this.state
+    const { venn, photos, travelMap, routeMap } = this.state
+    const mapType = routeMap ? 'route' : 'cities'
+    const mapVisible = Boolean(travelMap || routeMap)
 
     return (
       <div className='home height-100'>
         <div className='max-width-1 bio relative z2 height-100 px2 py3'>
-          <h1 className='h3'>Peteris Bikis</h1>
-          <p>
-            Creative Technologist, Designer and Engineer. <a href='//asketicsf.com' target='_blank'>Asketic</a> Co-founder.
-            I'm a {this.renderToggle('venn diagram', 'venn')} of design, technology, the Internet,
-            &nbsp;{this.renderToggle('cycling', 'map')}, travel, and {this.renderToggle('photography', 'photos')}.
-            Currently obsessed with React and functional
-            programming. Interested in AI, neural networks
-            and a weirder future <span dangerouslySetInnerHTML={{ __html: '&#128126' }} />
-          </p>
-          <p>
-            <a href='//twitter.com/peteris'>@peteris</a>
-          </p>
-          <p>
-            <a href='mailto:hi@peter.is'>hi@peter.is</a>
-          </p>
+          <Bio renderToggle={this.renderToggle.bind(this)} className='absolute' />
         </div>
         <ReactCSSTransitionGroup
           transitionName='visualisation'
@@ -102,7 +99,7 @@ class HomePage extends Component {
             style={{width: '50%'}}
           />
         )}
-          <WorldMap visible={map} color={color} className='component absolute bottom-0 right-0 z1' />
+          <WorldMap visible={mapVisible} color={color} type={mapType} className='component absolute bottom-0 right-0 z1' />
         </ReactCSSTransitionGroup>
       </div>
     )
