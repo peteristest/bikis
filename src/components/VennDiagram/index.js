@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom'
 import venn from 'venn.js/build/venn.min.js'
 import d3 from 'd3'
 
-const COLOURS = ['#ff7474', '#83ffb1', '#9cfffd', '#e86fff', '#FAE443', '#1D9DF4']
+const c = (o) => `rgba(0,0,0,${o}`
+const COLOURS = [c(0.2), c(0.4), c(0.2), c(0.2), c(0.4), c(0.2)]
 
 const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
@@ -115,7 +116,6 @@ class VennDiagram extends Component {
       .select(elem)
       .selectAll('.venn-circle path')
       .style('fill-opacity', 0.5)
-      .style('mix-blend-mode', 'multiply')
 
     d3
       .select(elem)

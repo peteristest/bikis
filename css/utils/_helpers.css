@@ -6,7 +6,7 @@
 }
 
 .absolute-center {
-  top: 50%;
+  top: 47%;
   left: 50%;
   transform: translate3d(-50%,-50%,0);
 }

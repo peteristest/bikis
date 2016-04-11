@@ -17,7 +17,7 @@ const Bio = ({renderToggle, className = ''}) => (
     <p>
       Creative Technologist, Designer and Engineer. <a href='//asketicsf.com' target='_blank'>Asketic</a> Co-founder.
       I'm a {renderToggle('venn diagram', 'venn')} of design, {renderToggle('technology', 'technology')}, {renderToggle('the Internet', 'cloud')},
-      &nbsp;{renderToggle('cycling', 'routeMap')}, {renderToggle('travel', 'travelMap')}, and {renderToggle('photography', 'photos')}.
+      &nbsp;{renderToggle('travel', 'travelMap')}, {renderToggle('cycling', 'routeMap')}, and {renderToggle('photography', 'photos')}.
       Currently obsessed with React and functional
       programming. Interested in {renderToggle('AI', 'ai')}, neural networks
       and a {renderToggle('weirder', 'weird')} future <span dangerouslySetInnerHTML={{ __html: '&#128126' }} />
@@ -73,8 +73,8 @@ class HomePage extends Component {
     const sizeLarge = 9
     const sizeSmall = 3
     const { clientWidth, clientHeight } = window.document.documentElement
-    const w = clientWidth * 0.8
-    const h = clientHeight * 0.7
+    const w = clientWidth * 0.8 * 0.8
+    const h = clientHeight * 0.7 * 0.8
 
     const { venn, photos, travelMap, routeMap, ai, weird, cloud, technology, hover } = this.state
     const mapType = routeMap ? 'route' : 'cities'
@@ -84,6 +84,7 @@ class HomePage extends Component {
 
     return (
       <div className='home height-100'>
+        <div className='bg-gradient absolute z2 top-0 left-0 right-0 bottom-0 border z2' style={{opacity: 0.8}} />
         <div className='bio relative z2 height-100 px2 py3'>
           <Bio renderToggle={this.renderToggle.bind(this)} className={bioClassName} />
         </div>
@@ -117,7 +118,7 @@ class HomePage extends Component {
             className='component absolute bottom-0 right-0 z1' />
           {technology && <Gif name='technology' src='https://media.giphy.com/media/jy7Ipmx7Zeb0k/giphy.gif' />}
           {cloud && <Gif name='cloud' src='https://media.giphy.com/media/OT2lwSsUgpsT6/giphy.gif' />}
-          {ai && (<Gif name='ai' src='https://media.giphy.com/media/yNvuntGyTeh44/giphy.gif' />)}
+          {ai && (<Gif name='ai' src='https://media.giphy.com/media/IWoZqzqk7LZn2/giphy.gif' />)}
           {weird && (<Gif name='weird' src='https://media.giphy.com/media/13Gponwdr1r7MI/giphy.gif' />)}
         </ReactCSSTransitionGroup>
       </div>

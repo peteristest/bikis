@@ -99,7 +99,7 @@ class WorldMap extends Component {
       .datum(topojson.feature(world, world.objects.land))
       .attr('class', 'land')
       .attr('d', path)
-      .style('fill', color)
+      .style('fill',  '#999')
       .attr('opacity', opacity)
   }
 
