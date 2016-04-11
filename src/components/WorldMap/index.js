@@ -84,7 +84,7 @@ class WorldMap extends Component {
     const { width, height, projectionType, scale, rotation } = options
 
     const projection = d3.geo[projectionType]()
-      .translate([width * 0.5 * 1.4, height * 0.5 * 1.2])
+      .translate([width * 0.5, height * 0.5])
       .clipAngle(90)
       .scale(scale)
       .rotate(rotation)

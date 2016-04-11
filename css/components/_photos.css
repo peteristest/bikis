@@ -4,8 +4,6 @@
 
 .image {
   transform-origin: 100% 100%;
-  border: 0.5em solid #fff;
-  border-bottom-width: 1.5em;
 }
 
 .bg {

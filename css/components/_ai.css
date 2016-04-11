@@ -1,0 +1,38 @@
+.ai.visualisation-enter.visualisation-enter-active,
+.ai.visualisation-leave.visualisation-leave-active {
+  transition: opacity 300ms $ease-out-cubic;
+  transition-property: opacity,transform;  
+}
+
+.ai.visualisation-enter {
+  opacity: 0.01;
+}
+
+.ai.visualisation-enter.visualisation-enter-active {
+  opacity: 1;
+}
+
+.ai.visualisation-leave {
+  opacity: 1;
+  transform-origin: 50% 50%;
+}
+
+.ai.visualisation-leave.visualisation-leave-active {
+  opacity: 0;
+  transition-duration: 500ms;
+  transition-delay: 0ms !important;
+}
+
+.ai {
+  top: 50%;
+  right: 50%;
+  transform: translate3d(50%,-50%,0);
+}
+
+.ai img {
+  filter: saturate(0) contrast(1.2) brightness(1.2);
+}
+
+.ai .bg {
+  background-color: transparent;
+}

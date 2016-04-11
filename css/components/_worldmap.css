@@ -13,3 +13,11 @@
     stroke-dashoffset: 0;
   }
 }
+
+#profile {
+  position: absolute;
+  right: 0;
+  top: 20%;
+  mix-blend-mode: luminosity;
+  z-index: 2;
+}
