@@ -6,29 +6,27 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { asyncFetchInstagramPhotos } from '../../actions'
 
-const NUM_PHOTOS = 5
-const DEGREES = 2
-const SIZE = 50
-const WIDTH = 50
-const HEIGHT = 10
+const NUM_PHOTOS = 6
 const TRANSFORM_SMALL = 'TRANSFORM_SMALL'
 const TRANSFORM_LARGE = 'TRANSFORM_LARGE'
 
 const random = (int) => Math.floor(Math.random() * int)
 const shuffle = () => 0.5 - Math.random()
 
-const Photo = ({delay, transform, url}) => (
-  <span
-    className='image-container inline-block ml2 mt2 mr2 right-0 bottom-0 absolute'
+const Photo = ({delay, transform, url}) => {
+  const offset = 10 - Math.floor(Math.random() * 4) * 5
+  const bgTransform = `translate3d(${offset}%, ${offset}%, 0)`
+  return <span
+    className='image-container inline-block left-0 top-0 absolute'
     style={{transitionDelay: `${delay}ms`}}>
     <span className='image relative inline-block' style={{ transform }}>
       <img
         src={url}
         className='fit relative block' />
-      <span className='bg absolute top-0 left-0 right-0 bottom-0' />
+      <span className='bg absolute top-0 left-0 right-0 bottom-0' style={{ transform: bgTransform }} />
     </span>
   </span>
-)
+}
 
 class PhotosContainer extends Component {
 
@@ -55,22 +53,12 @@ class PhotosContainer extends Component {
     })
   }
 
-  getTransform (size) {
-    switch (size) {
-      case TRANSFORM_SMALL:
-        return {
-          rotation: random(DEGREES) - DEGREES * 0.5,
-          scale: 1 + (random(SIZE) - SIZE * 0.5) * 0.01,
-          x: random(WIDTH),
-          y: random(HEIGHT)
-        }
-      case TRANSFORM_LARGE:
-        return {
-          rotation: 0,
-          scale: 3.4,
-          x: 2,
-          y: 0
-        }
+  getTransform (size, index) {
+    const transforms = [[32, 30, 1.8], [0, 0, 0.75], [50, 34, 0.5], [0, 85, 0.75], [106, 0, 0.75], [106, 85, 0.75]]
+    return {
+      scale: transforms[index][2],
+      x: transforms[index][0],
+      y: transforms[index][1]
     }
   }
 
@@ -81,12 +69,11 @@ class PhotosContainer extends Component {
       .map((url, i) => {
         const isSmall = Boolean(i)
         const size = isSmall ? TRANSFORM_SMALL : TRANSFORM_LARGE
-        const { rotation, scale, x, y } = this.getTransform(size)
+        const { scale, x, y } = this.getTransform(size, i)
         const delay = isSmall ? random(images.length) : 0
 
         return {
           url,
-          rotation,
           scale,
           x, y,
           delay
@@ -96,9 +83,9 @@ class PhotosContainer extends Component {
 
   renderPhotos (images, withoutDelay = false) {
     return images.map((image, i) => {
-      const { url, rotation, scale, x, y, delay } = image
+      const { url, scale, x, y, delay } = image
       const d = withoutDelay ? 0 : delay * 15
-      const transform = `rotate(${rotation}deg) scale(${scale}) translateX(-${x}vw) translateY(-${y}vh)`
+      const transform = `scale(${scale}) translateX(${x}vw) translateY(${y}vh)`
 
       return <Photo key={i} delay={d} transform={transform} url={url} />
     })

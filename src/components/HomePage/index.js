@@ -16,16 +16,14 @@ const Bio = ({renderToggle, className = ''}) => (
     <h1 className='h3'>Peteris Bikis</h1>
     <p>
       Creative Technologist, Designer and Engineer. <a href='//asketicsf.com' target='_blank'>Asketic</a> Co-founder.
-      I'm a {renderToggle('venn diagram', 'venn')} of design, {renderToggle('technology', 'technology')}, {renderToggle('the Internet', 'cloud')},
+      I am a {renderToggle('venn diagram', 'venn')} of design, {renderToggle('technology', 'technology')}, {renderToggle('the Internet', 'cloud')},
       &nbsp;{renderToggle('travel', 'travelMap')}, {renderToggle('cycling', 'routeMap')}, and {renderToggle('photography', 'photos')}.
       Currently obsessed with React and functional
       programming. Interested in {renderToggle('AI', 'ai')}, neural networks
       and a {renderToggle('weirder', 'weird')} future <span dangerouslySetInnerHTML={{ __html: '&#128126' }} />
     </p>
     <p>
-      <a href='//twitter.com/peteris'>@peteris</a>
-    </p>
-    <p>
+      <a href='//twitter.com/peteris'>@peteris</a> —&nbsp;
       <a href='mailto:hi@peter.is'>hi@peter.is</a>
     </p>
   </div>
@@ -107,7 +105,7 @@ class HomePage extends Component {
         )}
         {photos && (
           <PhotosContainer
-            className='component photos absolute bottom-0 right-0 m2 z1'
+            className='component photos absolute top-0 left-0 m2 z1'
             style={{width: '50%'}}
           />
         )}
