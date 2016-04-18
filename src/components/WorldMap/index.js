@@ -128,25 +128,27 @@ class WorldMap extends Component {
   }
 
   update () {
-    const { visible, type } = this.props
+    const { visible, type, offset } = this.props
 
     const styles = this.getStyles({ type, visible })
     const showRoute = visible && type === TYPE_ROUTE
     const showCities = visible && type === TYPE_CITIES
 
     const options = {showRoute, showCities, ...styles}
-    this.transition(options)
+    this.transition(options, offset)
   }
 
-  transition (options) {
-    const { duration, rotation, opacity, scale, easing = 'cubic-in-out', showRoute, showCities } = options
+  transition (options, offset = 0) {
+    const { duration, opacity, scale, easing = 'cubic-in-out', showRoute, showCities } = options
     const { projection, path, svg } = this
     const land = svg.selectAll('.land')
     const route = svg.selectAll('.route')
     const cities = svg.selectAll('circle')
 
+    const rotation = [ options.rotation[0] + offset, options.rotation[1] ]
+
     d3.transition()
-      .duration(duration)
+      .duration(offset ? 0 : duration)
       .ease(easing)
       .tween('rotate', () => {
         const r = d3.interpolate(projection.rotate(), rotation)
@@ -180,7 +182,7 @@ class WorldMap extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    (this.props.visible !== prevProps.visible) && this.update()
+    (this.props.visible !== prevProps.visible || (this.props.visible && this.props.offset !== prevProps.offset)) && this.update()
   }
 
   render () {
@@ -191,6 +193,7 @@ class WorldMap extends Component {
 WorldMap.propTypes = {
   visible: React.PropTypes.bool.isRequired,
   color: React.PropTypes.string.isRequired,
+  offset: React.PropTypes.number,
   type: React.PropTypes.oneOf([TYPE_CITIES, TYPE_ROUTE])
 }
 

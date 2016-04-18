@@ -10,6 +10,7 @@ import PhotosContainer from '../../containers/PhotosContainer/'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import { asyncFetchInstagramPhotos } from '../../actions'
 import classNames from 'classnames'
+import Draggable from 'react-draggable'
 
 const Bio = ({renderToggle, className = ''}) => (
   <div className={className}>
@@ -44,7 +45,8 @@ class HomePage extends Component {
       routeMap: false,
       ai: false,
       weird: false,
-      cloud: false
+      cloud: false,
+      offset: 0
     }
   }
 
@@ -54,15 +56,50 @@ class HomePage extends Component {
   }
 
   renderToggle (label, prop) {
-    const self = this
     const toggle = (hover) => {
-      self.setState({
-        hover: hover,
-        [prop]: !this.state[prop]
+      if (this.state.dragging) { return }
+
+      this.setState({
+        hover: hover ? prop : false,
+        [prop]: hover
       })
     }
 
-    return <a href='#' onMouseOver={toggle.bind(this, true)} onMouseOut={toggle.bind(this, false)}>{label}</a>
+    const setOffset = (e, ui) => {
+      this.setState({
+        dragging: prop,
+        offset: this.state.offset + (ui.x - ui.lastX)
+      })
+    }
+
+    const resetState = (e, ui) => {
+      this.setState({
+        dragging: false,
+        hover: false,
+        offset: 0,
+        [prop]: false
+      })
+    }
+
+    const position = this.state.offset ? null : {x: 0, y: 0}
+    const className = classNames('toggle inline-block', {'toggle-hover': this.state.hover === prop})
+
+    let scale = 1
+    if (this.state.dragging === prop) {
+      scale = Math.max(1, Math.abs(this.state.offset / 100))
+    }
+
+    return (
+      <Draggable onDrag={setOffset.bind(this)} onStop={resetState.bind(this)} position={position}>
+        <span className='inline-block toggle-container'>
+          <span className='inline-block' style={{transform: `scale(${scale})`}}>
+            <span className={className}
+              onMouseOver={toggle.bind(this, true)}
+              onMouseOut={toggle.bind(this, false)}>{label}</span>
+          </span>
+        </span>
+      </Draggable>
+    )
   }
 
   render () {
@@ -74,11 +111,13 @@ class HomePage extends Component {
     const w = clientWidth * 0.8 * 0.8
     const h = clientHeight * 0.7 * 0.8
 
-    const { venn, photos, travelMap, routeMap, ai, weird, cloud, technology, hover } = this.state
+    const { venn, photos, travelMap, routeMap, ai, weird, cloud, technology, hover, dragging } = this.state
     const mapType = routeMap ? 'route' : 'cities'
     const mapVisible = Boolean(travelMap || routeMap)
 
-    const bioClassName = classNames('max-width-1 mx-auto', {'faded': hover})
+    const bioClassName = classNames('max-width-1 mx-auto', {'faded': hover || dragging}, {'disabled': dragging})
+
+    const offset = this.state.offset * 0.2
 
     return (
       <div className='home height-100'>
@@ -113,6 +152,7 @@ class HomePage extends Component {
             visible={mapVisible}
             color={color}
             type={mapType}
+            offset={offset}
             className='component absolute bottom-0 right-0 z1' />
           {technology && <Gif name='technology' src='https://media.giphy.com/media/jy7Ipmx7Zeb0k/giphy.gif' />}
           {cloud && <Gif name='cloud' src='https://media.giphy.com/media/OT2lwSsUgpsT6/giphy.gif' />}

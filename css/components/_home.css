@@ -18,19 +18,36 @@
   text-align: center;
 }
 
-.bio a:hover {
-  transition: transform 300ms ease;
-  transform: skewY(-15deg);
+.toggle {
+  cursor: pointer;
+  transition-property: transform;
 }
 
-.bio span, .bio a {
+.toggle.toggle-hover:active {
+  transform: skewY(-15deg) scale(1.5);
+}
+
+.bio p > span, .toggle-container, .bio a {
   transition: opacity 300ms ease;
 }
 
-.faded a, .faded span {
+.toggle.toggle-hover {
+  transform: skewY(-15deg);
+  transition: transform 300ms ease;
+}
+
+.faded a, .faded p > span {
   opacity: 0.15;
 }
 
-.faded a:hover {
+.bio .toggle-container.react-draggable-dragged {
+  transition: opacity,transform 300ms ease;
+}
+
+.bio .toggle-container.react-draggable-dragging {
+  transition-duration: 0ms;
+}
+
+.faded .toggle-container:hover {
   opacity: 1;
 }

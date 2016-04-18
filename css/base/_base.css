@@ -35,14 +35,16 @@ body.js-karla-loaded {
   font-family: 'Karla', Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
-a {
+a,
+.toggle {
   color: $text-color;
   text-decoration: none;
   position: relative;
   display: inline-block;
 }
 
-a:after {
+a:after,
+.toggle:after {
   content: '';
   display: block;
   border-bottom: 6px solid #5934F6;
