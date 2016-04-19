@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import d3 from 'd3'
+import 'd3-geo-projection/d3.geo.projection'
 import topojson from 'topojson'
 
 import map from 'json!./../../world-110m.topojson'
@@ -9,7 +10,7 @@ import cities from 'json!./../../cities.json'
 
 const TYPE_ROUTE = 'route'
 const TYPE_CITIES = 'cities'
-const PROJECTION_TYPE = 'orthographic'
+const PROJECTION_TYPE = 'craig' //'orthographic'
 const DOT_RADIUS = '3px'
 const STYLES = {
   'route': {
