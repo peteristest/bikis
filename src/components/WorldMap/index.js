@@ -10,20 +10,20 @@ import cities from 'json!./../../cities.json'
 
 const TYPE_ROUTE = 'route'
 const TYPE_CITIES = 'cities'
-const PROJECTION_TYPE = 'craig' //'orthographic'
+const PROJECTION_TYPE = 'collignon'
 const DOT_RADIUS = '3px'
 const STYLES = {
   'route': {
     'visible': {
       rotation: [-20, -40],
       opacity: 0.5,
-      scale: 440,
+      scale: 160,
       duration: 1000
     },
     'hidden': {
       rotation: [-10, -20],
       opacity: 0,
-      scale: 240,
+      scale: 10,
       duration: 500
     }
   },
@@ -31,13 +31,13 @@ const STYLES = {
     'visible': {
       rotation: [50, -40],
       opacity: 0.5,
-      scale: 240,
+      scale: 160,
       duration: 1000
     },
     'hidden': {
       rotation: [-10, -20],
       opacity: 0,
-      scale: 240,
+      scale: 10,
       duration: 500
     }
   }
