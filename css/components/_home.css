@@ -19,7 +19,7 @@
 }
 
 .toggle {
-  cursor: pointer;
+  cursor: grab;
   transition-property: transform;
 }
 

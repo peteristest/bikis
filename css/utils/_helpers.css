@@ -10,3 +10,12 @@
   left: 50%;
   transform: translate3d(-50%,-50%,0);
 }
+
+.x-center {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.no-pointer-events {
+  pointer-events: none;
+}

@@ -4,11 +4,11 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import VennDiagram from '../VennDiagram'
-import WorldMap from '../WorldMap'
-import PhotosContainer from '../../containers/PhotosContainer/'
+import VennDiagram from './../VennDiagram'
+import WorldMap from './../WorldMap'
+import CyclingNotes from './../../containers/CyclingNotes/'
+import PhotosContainer from './../../containers/PhotosContainer/'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import { asyncFetchInstagramPhotos } from '../../actions'
 import classNames from 'classnames'
 import Draggable from 'react-draggable'
 
@@ -48,11 +48,6 @@ class HomePage extends Component {
       cloud: false,
       offset: 0
     }
-  }
-
-  componentWillMount () {
-    const { asyncFetchInstagramPhotos } = this.props
-    asyncFetchInstagramPhotos()
   }
 
   renderToggle (label, prop) {
@@ -103,7 +98,7 @@ class HomePage extends Component {
   }
 
   render () {
-    const { disciplines, color } = this.props.data
+    const { data: { disciplines, color } } = this.props
 
     const sizeLarge = 9
     const sizeSmall = 3
@@ -158,6 +153,7 @@ class HomePage extends Component {
           {cloud && <Gif name='cloud' src='https://media.giphy.com/media/OT2lwSsUgpsT6/giphy.gif' />}
           {ai && (<Gif name='ai' src='https://media.giphy.com/media/IWoZqzqk7LZn2/giphy.gif' />)}
           {weird && (<Gif name='weird' src='https://media.giphy.com/media/13Gponwdr1r7MI/giphy.gif' />)}
+          {routeMap && <CyclingNotes />}
         </ReactCSSTransitionGroup>
       </div>
     )
@@ -171,6 +167,5 @@ function mapStateToProps (state) {
 }
 
 export default connect(
-  mapStateToProps,
-  { asyncFetchInstagramPhotos }
+  mapStateToProps
 )(HomePage)

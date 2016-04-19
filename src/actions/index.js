@@ -1,7 +1,7 @@
 import fetchJsonp from 'fetch-jsonp'
 
-import { FETCH_INSTAGRAM_PHOTOS } from '../constants/AppConstants'
-import { IG_ACCESS_TOKEN } from '../config'
+import { FETCH_INSTAGRAM_PHOTOS, FETCH_CYCLING_DATA } from './../constants/AppConstants'
+import { IG_ACCESS_TOKEN, STRAVA_ACCESS_TOKEN } from './../config'
 
 function fetchInstagramPhotos (data) {
   return {
@@ -21,3 +21,22 @@ export const asyncFetchInstagramPhotos = () => (dispatch, getState) => {
 }
 
 export const shouldFetchInstagramPhotos = ({ photos }) => Boolean(!photos.images.length)
+
+function fetchCyclingData (data) {
+  return {
+    type: FETCH_CYCLING_DATA,
+    data
+  }
+}
+
+export const asyncFetchCyclingData = () => (dispatch, getState) => {
+  const url = 'https://www.strava.com/api/v3/athlete/activities'
+
+  if (shouldFetchCyclingData(getState())) {
+    return fetchJsonp(`${url}?access_token=${STRAVA_ACCESS_TOKEN}`)
+      .then((response) => response.json())
+      .then((data) => dispatch(fetchCyclingData(data)))
+  }
+}
+
+export const shouldFetchCyclingData = ({ photos }) => Boolean(!photos.images.length)

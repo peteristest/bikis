@@ -1,0 +1,32 @@
+.notes {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 13px;
+  line-height: normal;
+  max-width: 500px;
+  background: rgba(255,255,255,.8);
+  box-shadow: $purple 2px 2px 0px;
+}
+
+.notes.visualisation-enter.visualisation-enter-active,
+.notes.visualisation-leave.visualisation-leave-active {
+  transition: opacity 300ms $ease-out-cubic;
+  transition-property: opacity,transform;  
+}
+
+.notes.visualisation-enter {
+  opacity: 0.01;
+}
+
+.notes.visualisation-enter.visualisation-enter-active {
+  opacity: 1;
+}
+
+.notes.visualisation-leave {
+  opacity: 1;
+  transform-origin: 50% 50%;
+}
+
+.notes.visualisation-leave.visualisation-leave-active {
+  opacity: 0;
+  transition-duration: 500ms;
+}
