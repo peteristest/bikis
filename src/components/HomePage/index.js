@@ -13,9 +13,8 @@ import classNames from 'classnames'
 import Draggable from 'react-draggable'
 
 const Bio = ({renderToggle, className = ''}) => (
-  <div className={className}>
-    <h1 className='h3'>Peteris Bikis</h1>
-    <p>
+  <div className={className} style={{lineHeight: '1.5em', fontSize: '2em', marginTop: 0, textAlign: 'left'}}>
+    <p className='mt0'>
       Creative Technologist, Designer and Engineer. <a href='//asketicsf.com' target='_blank'>Asketic</a> Co-founder.
       I am a {renderToggle('venn diagram', 'venn')} of design, {renderToggle('technology', 'technology')}, {renderToggle('the Internet', 'cloud')},
       &nbsp;{renderToggle('travel', 'travelMap')}, {renderToggle('cycling', 'routeMap')}, and {renderToggle('photography', 'photos')}.
@@ -110,14 +109,13 @@ class HomePage extends Component {
     const mapType = routeMap ? 'route' : 'cities'
     const mapVisible = Boolean(travelMap || routeMap)
 
-    const bioClassName = classNames('max-width-1 mx-auto', {'faded': hover || dragging}, {'disabled': dragging})
-
+    const bioClassName = classNames('', {'faded': hover || dragging}, {'disabled': dragging})
     const offset = this.state.offset * 0.2
 
     return (
       <div className='home height-100'>
         <div className='bg-gradient absolute z2 top-0 left-0 right-0 bottom-0 border z2' style={{opacity: 0.8}} />
-        <div className='bio relative z2 height-100 px2 py3'>
+        <div className='bio relative z2 height-100 px2'>
           <Bio renderToggle={this.renderToggle.bind(this)} className={bioClassName} />
         </div>
         <ReactCSSTransitionGroup
