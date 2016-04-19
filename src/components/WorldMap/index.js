@@ -148,8 +148,8 @@ class WorldMap extends Component {
     const rotation = [ options.rotation[0] + offset, options.rotation[1] ]
 
     d3.transition()
-      .duration(offset ? 0 : duration)
-      .ease(easing)
+      .duration(offset ? 300 : duration)
+      .ease(offset ? 'cubic-out' : easing)
       .tween('rotate', () => {
         const r = d3.interpolate(projection.rotate(), rotation)
         const o = d3.interpolate(this.opacity, opacity)
