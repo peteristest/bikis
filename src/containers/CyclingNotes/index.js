@@ -33,7 +33,7 @@ class CyclingNotesContainer extends Component {
     const notes = text.join('<br />')
 
     return (
-      <Notes text={notes} {...this.props} />
+      <Notes text={notes} />
     )
   }
 }

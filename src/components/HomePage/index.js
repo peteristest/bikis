@@ -7,20 +7,22 @@ import { connect } from 'react-redux'
 import VennDiagram from './../VennDiagram'
 import WorldMap from './../WorldMap'
 import CyclingNotes from './../../containers/CyclingNotes/'
+import WindowWithCursor from './../WindowWithCursor'
 import PhotosContainer from './../../containers/PhotosContainer/'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import ReactTransitionGroup from 'react-addons-transition-group'
 import classNames from 'classnames'
 import Draggable from 'react-draggable'
 
 const Bio = ({renderToggle, className = ''}) => (
   <div className={className} style={{lineHeight: '1.5em', fontSize: '2em', marginTop: 0, textAlign: 'left'}}>
     <p className='mt0'>
-      Creative Technologist, Designer and Engineer. <a href='//asketicsf.com' target='_blank'>Asketic</a> Co-founder.
-      I am a {renderToggle('venn diagram', 'venn')} of design, {renderToggle('technology', 'technology')}, {renderToggle('the Internet', 'cloud')},
-      &nbsp;{renderToggle('travel', 'travelMap')}, {renderToggle('cycling', 'routeMap')}, and {renderToggle('photography', 'photos')}.
-      Currently obsessed with React and functional
-      programming. Interested in {renderToggle('AI', 'ai')}, neural networks
-      and a {renderToggle('weirder', 'weird')} future <span dangerouslySetInnerHTML={{ __html: '&#128126' }} />
+      <span>Creative Technologist, Designer and Engineer.</span> <a href='//asketicsf.com' target='_blank'>Asketic</a> <span>Co-founder.</span>
+      <span>I am a</span> {renderToggle('venn diagram', 'venn')} <span>of design,</span> {renderToggle('technology', 'technology')}<span>, </span>{renderToggle('the Internet', 'cloud')}<span>,</span>
+      &nbsp;{renderToggle('travel', 'travelMap')}<span>, </span>{renderToggle('cycling', 'routeMap')}<span>, and</span> {renderToggle('photography', 'photos')}<span>.</span>
+      <span> Currently obsessed with React and functional
+      programming. Interested in</span> {renderToggle('AI', 'ai')}<span>, neural networks
+      and a</span> {renderToggle('weirder', 'weird')} <span>future</span> <span dangerouslySetInnerHTML={{ __html: '&#128126' }} />
     </p>
     <p>
       <a href='//twitter.com/peteris'>@peteris</a> —&nbsp;
@@ -109,7 +111,7 @@ class HomePage extends Component {
     const mapType = routeMap ? 'route' : 'cities'
     const mapVisible = Boolean(travelMap || routeMap)
 
-    const bioClassName = classNames('', {'faded': hover || dragging}, {'disabled': dragging})
+    const bioClassName = classNames('max-width-2', {'faded': hover || dragging}, {'disabled': dragging})
     const offset = this.state.offset * 0.2
 
     return (
@@ -151,8 +153,10 @@ class HomePage extends Component {
           {cloud && <Gif name='cloud' src='https://media.giphy.com/media/OT2lwSsUgpsT6/giphy.gif' />}
           {ai && (<Gif name='ai' src='https://media.giphy.com/media/IWoZqzqk7LZn2/giphy.gif' />)}
           {weird && (<Gif name='weird' src='https://media.giphy.com/media/13Gponwdr1r7MI/giphy.gif' />)}
-          {routeMap && <CyclingNotes />}
         </ReactCSSTransitionGroup>
+        <ReactTransitionGroup>
+          {routeMap && <WindowWithCursor key={1}><CyclingNotes /></WindowWithCursor>}
+        </ReactTransitionGroup>
       </div>
     )
   }
