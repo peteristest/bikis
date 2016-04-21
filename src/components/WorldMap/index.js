@@ -17,11 +17,11 @@ const STYLES = {
     'visible': {
       rotation: [-20, -40],
       opacity: 0.5,
-      scale: 160,
+      scale: 200,
       duration: 1000
     },
     'hidden': {
-      rotation: [-10, -20],
+      rotation: [-80, -20],
       opacity: 0,
       scale: 10,
       duration: 500
@@ -29,13 +29,13 @@ const STYLES = {
   },
   'cities': {
     'visible': {
-      rotation: [50, -40],
+      rotation: [20, -40],
       opacity: 0.5,
       scale: 160,
       duration: 1000
     },
     'hidden': {
-      rotation: [-10, -20],
+      rotation: [-60, -20],
       opacity: 0,
       scale: 10,
       duration: 500

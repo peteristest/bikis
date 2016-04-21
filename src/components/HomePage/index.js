@@ -28,11 +28,14 @@ const Bio = ({renderToggle, className = ''}) => (
       <a href='//twitter.com/peteris'>@peteris</a> —&nbsp;
       <a href='mailto:hi@peter.is'>hi@peter.is</a>
     </p>
+    <p>
+      &mdash;
+    </p>
   </div>
 )
 
 const Gif = ({src, name}) => (
-  <span className={`component ${name} ai absolute top-0 right-0`}><img src={src} /><span className='bg absolute top-0 left-0 right-0 bottom-0' /></span>
+  <span className={`component ${name} ai fixed top-0 right-0`}><img src={src} /><span className='bg absolute top-0 left-0 right-0 bottom-0' /></span>
 )
 
 class HomePage extends Component {
@@ -111,12 +114,12 @@ class HomePage extends Component {
     const mapType = routeMap ? 'route' : 'cities'
     const mapVisible = Boolean(travelMap || routeMap)
 
-    const bioClassName = classNames('max-width-2', {'faded': hover || dragging}, {'disabled': dragging})
+    const bioClassName = classNames('max-width-2 mb4 pb4', {'faded': hover || dragging}, {'disabled': dragging})
     const offset = this.state.offset * 0.2
 
     return (
       <div className='home height-100'>
-        <div className='bg-gradient absolute z2 top-0 left-0 right-0 bottom-0 border z2' style={{opacity: 0.8}} />
+        <div className='bg-gradient fixed z2 top-0 left-0 right-0 bottom-0 z2' style={{opacity: 0.8}} />
         <div className='bio relative z2 height-100 px2'>
           <Bio renderToggle={this.renderToggle.bind(this)} className={bioClassName} />
         </div>
@@ -135,11 +138,11 @@ class HomePage extends Component {
             width={w}
             height={h}
             animate
-            className='component venn absolute absolute-center z1' />
+            className='component venn fixed absolute-center z1' />
         )}
         {photos && (
           <PhotosContainer
-            className='component photos absolute top-0 left-0 m2 z1'
+            className='component photos fixed top-0 left-0 m2 z1'
             style={{width: '50%'}}
           />
         )}
@@ -148,7 +151,7 @@ class HomePage extends Component {
             color={color}
             type={mapType}
             offset={offset}
-            className='component absolute bottom-0 right-0 z1' />
+            className='component fixed top-0 right-0 z1 mt2' />
           {technology && <Gif name='technology' src='https://media.giphy.com/media/jy7Ipmx7Zeb0k/giphy.gif' />}
           {cloud && <Gif name='cloud' src='https://media.giphy.com/media/OT2lwSsUgpsT6/giphy.gif' />}
           {ai && (<Gif name='ai' src='https://media.giphy.com/media/IWoZqzqk7LZn2/giphy.gif' />)}
