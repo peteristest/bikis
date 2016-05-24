@@ -1,16 +1,23 @@
+.cursor,
+.notes-container {
+  transition: transform 600ms $ease-out-cubic;
+}
+
+.cursor {
+  max-width: 1.5em;
+}
+
 .notes {
-  font-family: 'Roboto Mono', monospace;
-  font-size: 13px;
-  line-height: normal;
   max-width: 500px;
-  background: rgba(255,255,255,.8);
-  box-shadow: $purple 2px 2px 0px;
+  background: $background-color;
+  box-shadow: $text-color 2px 2px 0px;
+  pointer-events: none;
+  transform: translate3d(0,0,0);
 }
 
 .notes.visualisation-enter.visualisation-enter-active,
 .notes.visualisation-leave.visualisation-leave-active {
-  transition: opacity 300ms $ease-out-cubic;
-  transition-property: opacity,transform;  
+  transition: opacity 500ms $ease-out-cubic;
 }
 
 .notes.visualisation-enter {

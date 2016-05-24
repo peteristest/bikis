@@ -10,10 +10,6 @@
   letter-spacing: 0.05em;
 }
 
-.bg-gradient {
-  background: linear-gradient(to right, rgba(250,250,250,1) 25%,rgba(250,250,250,0) 75%);
-}
-
 .bio {
   text-align: center;
 }
@@ -32,12 +28,13 @@
 }
 
 .toggle.toggle-hover {
-  transform: skewY(-15deg);
+  transform: skewY(-10deg);
   transition: transform 300ms ease;
 }
 
 .faded a, .faded p > span {
   opacity: 0.15;
+  color: $text-color;
 }
 
 .bio .toggle-container.react-draggable-dragged {

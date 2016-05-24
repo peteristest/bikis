@@ -37,9 +37,9 @@ const karlaObserver = new FontFaceObserver('Karla', {})
 
 // When Karla is loaded, add the js-karla-loaded class to the body
 karlaObserver.check().then(() => {
-  document.body.classList.add('js-karla-loaded')
+  document.body.classList.add('js-fonts-loaded')
 }, () => {
-  document.body.classList.remove('js-karla-loaded')
+  document.body.classList.remove('js-fonts-loaded')
 })
 
 // Import the pages

@@ -28,7 +28,7 @@ class CyclingNotesContainer extends Component {
       ' _`\\<,_ '.replace(/\ /gi, '&nbsp;'),
       '(_)/ (_)',
       '',
-      `Other than that, looks like I last went on a ${cycling.distance} mile ride ${when}.`,
+      `Other than that, looks like I last went on a ${cycling.distance}km ride ${when}.`,
       '']
     const notes = text.join('<br />')
 

@@ -18,3 +18,25 @@
 
 /* 5. Components */
 @import 'components/*.css';
+
+@keyframes squiggly-anim {
+  0% {
+    filter: url('#fuzzy-00');
+  }
+  25% {
+    filter: url('#fuzzy-01');
+  }
+  50% {
+    filter: url('#fuzzy-02');
+  }
+  75% {
+    filter: url('#fuzzy-03');
+  }
+  100% {
+    filter: url('#fuzzy-04');
+  }
+}
+
+.venn {
+  animation: squiggly-anim 0.3s infinite;
+}

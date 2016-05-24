@@ -49,8 +49,8 @@ class WorldMap extends Component {
     const { color, type, visible } = this.props
     const styles = this.getStyles({ type, visible })
     const opacity = styles.opacity
-    const width = document.documentElement.clientWidth
-    const height = document.documentElement.clientHeight
+    const width = Math.min(890, document.documentElement.clientWidth)
+    const height = Math.min(500, document.documentElement.clientHeight)
 
     // Set projection
     const options = { projectionType: PROJECTION_TYPE, width, height, ...styles }
@@ -85,7 +85,7 @@ class WorldMap extends Component {
     const { width, height, projectionType, scale, rotation } = options
 
     const projection = d3.geo[projectionType]()
-      .translate([width * 0.5, height * 0.5])
+      .translate([width * 0.5, height * 0.5 + 90])
       .clipAngle(90)
       .scale(scale)
       .rotate(rotation)
@@ -94,13 +94,13 @@ class WorldMap extends Component {
   }
 
   drawMap (world, options) {
-    const { svg, path, color, opacity } = options
+    const { svg, path, opacity } = options
 
     svg.append('path')
       .datum(topojson.feature(world, world.objects.land))
       .attr('class', 'land')
       .attr('d', path)
-      .style('fill',  '#999')
+      .style('fill', 'url(#gradient)')
       .attr('opacity', opacity)
   }
 

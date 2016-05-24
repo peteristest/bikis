@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import venn from 'venn.js/build/venn.min.js'
 import d3 from 'd3'
 
-const c = (o) => `rgba(0,0,0,${o}`
+const c = (o) => `rgba(132, 73, 249,${o}`
 const COLOURS = [c(0.2), c(0.4), c(0.2), c(0.2), c(0.4), c(0.2)]
 
 const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)]

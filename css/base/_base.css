@@ -28,11 +28,11 @@ body {
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   color: $text-color;
   line-height: 1.9em;
-  background-color: rgba(0,0,0,.02);
+  background-color: $background-color;
 }
 
-body.js-karla-loaded {
-  font-family: 'Karla', Helvetica Neue, Helvetica, Arial, sans-serif;
+body.js-fonts-loaded {
+  font-family: 'Vollkorn', Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 a,
@@ -41,6 +41,7 @@ a,
   text-decoration: none;
   position: relative;
   display: inline-block;
+  font-family: 'Karla';
 }
 
 a:after,
@@ -55,10 +56,42 @@ a:after,
   opacity: 0.2;
 }
 
+a.symbol {
+  display: inline-block;
+  position: static;
+  line-height: 0.5em;
+}
+
+a.symbol:after {
+  display: none;
+}
+
 .h3 {
   font-weight: 100;
 }
 
 #app {
   height: 100%;
+}
+
+.abs-center {
+  top: 50%;
+  right: 50%;
+  transform: translate3d(50%,-50%,0);
+}
+
+/* Bio styles */
+.large-text {
+  font-size: 5.5rem;
+  font-variant: small-caps;
+  transform: scale(0.9) translateY(5%);
+}
+
+.medium-text {
+  font-size: 2.5rem;
+}
+
+.distort {
+  filter: url("/#filter");
+  -webkit-filter: url("#filter");
 }

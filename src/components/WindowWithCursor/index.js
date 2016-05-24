@@ -21,20 +21,18 @@ class WindowWithCursor extends Component {
   }
 
   componentDidMount () {
-    const { position = 'right' } = this.props
+    const { position = 'bottom right', delay = 500 } = this.props
     const transitionTime = 600
-    const delay = 500
-    const isRight = position === 'right'
+    const isRight = position.indexOf('right') > -1
     const m = isRight ? -1 : 1
 
     this.setState({
-      isRight: Boolean(isRight),
       xCursor: 10 - 20 * m
     })
 
     setTimeout(() => {
       this.setState({
-        x: (50 + Math.random() * 200) * m,
+        x: (50 + Math.random() * 50) * m,
         y: 0
       })
     }, delay + transitionTime)
@@ -63,14 +61,14 @@ class WindowWithCursor extends Component {
   }
 
   render () {
-    const { x, y, xCursor, yCursor, isRight } = this.state
+    const { x, y, xCursor, yCursor } = this.state
+    const { position = 'bottom right' } = this.props
 
     const containerPosition = `translate3d(${x}px, ${y}px, 0)`
     const cursorPosition = `translate3d(${xCursor}px, ${yCursor}px, 0)`
-    const className = classNames('notes-container fixed z3 bottom-0', {
-      'right-0': isRight,
-      'left-0': !isRight
-    })
+
+    const className = classNames('notes-container fixed z3 my1', (position + ' ').split(' ').join('-0 '))
+    const isRight = position.indexOf('right')
 
     const cursorClassName = classNames('absolute cursor top-0 z4 mt1', {
       'right-0': isRight,
@@ -87,7 +85,8 @@ class WindowWithCursor extends Component {
 }
 
 WindowWithCursor.propTypes = {
-  text: React.PropTypes.oneOf(['left', 'right'])
+  position: React.PropTypes.oneOf(['top left', 'top right', 'bottom left', 'bottom right']),
+  delay: React.PropTypes.number
 }
 
 export default WindowWithCursor
