@@ -19,7 +19,7 @@
 /* 5. Components */
 @import 'components/*.css';
 
-@keyframes squiggly-anim {
+@keyframes fuzzy {
   0% {
     filter: url('#fuzzy-00');
   }
@@ -37,6 +37,6 @@
   }
 }
 
-.venn {
-  animation: squiggly-anim 0.3s infinite;
+.venn, .map {
+  animation: fuzzy 300ms infinite;
 }
