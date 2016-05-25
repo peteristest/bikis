@@ -15,7 +15,7 @@ import classNames from 'classnames'
 import Draggable from 'react-draggable'
 
 const Bio = ({renderToggle, className = ''}) => (
-  <div className={className} style={{lineHeight: '1.5em', fontSize: '2em', marginTop: 0, textAlign: 'left', maxWidth: '1400px'}}>
+  <div className={className} style={{lineHeight: '1.5em', fontSize: '2em', marginTop: 0, textAlign: 'left'}}>
     <p className='mt0' >
       <span>Creative Technologist, Designer and Engineer.</span> <a href='//asketicsf.com' target='_blank'>Asketic</a> <span>Co-founder.</span>
       <span className='large-text distort block center right'>Peteris<br /><span style={{marginLeft: '-0.5em'}}>Bikis</span> </span>
@@ -27,6 +27,8 @@ const Bio = ({renderToggle, className = ''}) => (
     </p>
   </div>
 )
+
+const Tab = () => <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
 const Gif = ({src, name}) => (
   <span className={`component ${name} ai fixed top-0 right-0`}><img src={src} /><span className='bg absolute top-0 left-0 right-0 bottom-0' /></span>
@@ -132,36 +134,54 @@ class HomePage extends Component {
     const bioClassName = classNames('max-width', {'faded': hover || dragging}, {'disabled': dragging})
     const offset = this.state.offset * 0.2
 
+    const titleAwards = 'Awards'
+    const textAwards = titleAwards.split('').map((character, i) => (
+      character + Array(titleAwards.length - i + (i ? 0 : 1)).fill('&nbsp;').join('') + '<br />'
+    )).join('')
+
     return (
       <div className='home height-100'>
         <SvgFilters />
-        <div className='bio relative z2 height-100 px2 py1'>
+        <div className='bio relative z2 height-100 px2 py1' style={{maxWidth: '1400px'}}>
           <Bio
             renderToggle={this.renderToggle.bind(this)} className={bioClassName} />
-          <div className='clearfix'>
-            <p className='left'>
-              <span className='medium-text distort center'>Featured Work</span><br />
-              <span className='inline-block h4 font-alternative' style={{lineHeight: '1.5em'}}>
-                {work.map((project) => (
-                  <span><a href='#'>{project}</a><br /></span>
+          <div className='clearfix mx-auto relative'>
+            <p className='left pl3'>
+              <span className='medium-text distort left-align mb2 inline-block absolute top-0 pt1'>
+                Featured work
+              </span><br />
+              <span className='inline-block h4 font-alternative pl2' style={{lineHeight: '1.5em'}}>
+                {work.map((project, i) => (
+                  <span>{Array(i + 1).fill(<Tab />)}<a href='#'>{project}</a><br /></span>
                 ))}
               </span>
             </p>
-            <p className='right mr2'>
-              <span className='medium-text distort center'>Awards</span><br />
+            <p className='right mr3 ml3 pr3 relative pl4'>
+              <span
+                className='medium-text distort right-align block absolute left-0'
+                style={{lineHeight: '0.55em'}}
+                dangerouslySetInnerHTML={{ __html: textAwards }} />
+              <br />
               <span className='h4 font-alternative inline-block' style={{lineHeight: '1.5em'}}>
-                {awards.map((award) => (
-                  <span>{award}<br /></span>
+                {awards.map((award, i) => (
+                  <span>{Array(i + 1).fill(<Tab />)}{award}<br /></span>
                 ))}
               </span>
             </p>
           </div>
-          <p className='flex flex-center flex-stretch clearfix'>
-            <a href='//twitter.com/peteris'>@peteris</a>
-            <span className='medium-text distort flex-auto center'>Say Hello</span>
-            <a href='mailto:hi@peter.is'>hi@peter.is</a>
+          <p className='clearfix center mt3'>
+            <span
+              className='caps medium-text distort center inline-block'
+              style={{lineHeight: '0.75em'}}
+              dangerouslySetInnerHTML={{ __html: 'Say Hello'.split('').join('<br />') }}
+            /><br />
+            <span className='mt3 font-alternative inline-block' style={{lineHeight: '1.5em'}}>
+              <a href='mailto:hi@peter.is'>hi@peter.is</a><br />
+              <a href='//twitter.com/peteris'>@peteris</a><br />
+              +44 (0)7 534 72 9985<br />
+            </span>
           </p>
-          <p className='small font-monospace pb3 mt4 max-width-2 mx-auto'>
+          <p className='small font-monospace pb3 mt4 max-width-2 mx-auto center'>
             &copy; Peteris Bikis 2016. Built using React, Redux, Basscss and D3. <br />Illustrations used with permission by <a href='http://vincemckelvie.tumblr.com/'>Vince McKelvie</a>.
           </p>
         </div>
