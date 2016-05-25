@@ -62,8 +62,15 @@
   }
 }
 
-.monospace {
+.font-monospace {
   font-family: 'Roboto Mono', monospace;
+}
+
+.font-alternative {
+  font-family: 'Karla';
+}
+
+.small {
   font-size: 13px;
   line-height: normal;
 }

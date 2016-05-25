@@ -10,8 +10,8 @@
   letter-spacing: 0.05em;
 }
 
-.bio {
-  text-align: center;
+.bio p {
+  hyphens: auto;
 }
 
 .toggle {

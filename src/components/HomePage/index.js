@@ -25,11 +25,6 @@ const Bio = ({renderToggle, className = ''}) => (
       programming. Interested in</span> {renderToggle('AI', 'ai')}<span>, neural networks
       and a</span> {renderToggle('weirder', 'weird')} <span>future</span>.
     </p>
-    <p className='flex flex-center flex-stretch'>
-      <a href='//twitter.com/peteris'>@peteris</a>
-      <span className='medium-text distort flex-auto center'>Say Hello</span>
-      <a href='mailto:hi@peter.is'>hi@peter.is</a>
-    </p>
   </div>
 )
 
@@ -122,7 +117,7 @@ class HomePage extends Component {
   }
 
   render () {
-    const { data: { disciplines, color } } = this.props
+    const { data: { disciplines, color, work, awards } } = this.props
 
     const sizeLarge = 9
     const sizeSmall = 3
@@ -143,7 +138,30 @@ class HomePage extends Component {
         <div className='bio relative z2 height-100 px2 py1'>
           <Bio
             renderToggle={this.renderToggle.bind(this)} className={bioClassName} />
-          <p className='small monospace pb3 mt4 max-width-2 mx-auto'>
+          <div className='clearfix'>
+            <p className='left'>
+              <span className='medium-text distort center'>Featured Work</span><br />
+              <span className='inline-block h4 font-alternative' style={{lineHeight: '1.5em'}}>
+                {work.map((project) => (
+                  <span><a href='#'>{project}</a><br /></span>
+                ))}
+              </span>
+            </p>
+            <p className='right mr2'>
+              <span className='medium-text distort center'>Awards</span><br />
+              <span className='h4 font-alternative inline-block' style={{lineHeight: '1.5em'}}>
+                {awards.map((award) => (
+                  <span>{award}<br /></span>
+                ))}
+              </span>
+            </p>
+          </div>
+          <p className='flex flex-center flex-stretch clearfix'>
+            <a href='//twitter.com/peteris'>@peteris</a>
+            <span className='medium-text distort flex-auto center'>Say Hello</span>
+            <a href='mailto:hi@peter.is'>hi@peter.is</a>
+          </p>
+          <p className='small font-monospace pb3 mt4 max-width-2 mx-auto'>
             &copy; Peteris Bikis 2016. Built using React, Redux, Basscss and D3. <br />Illustrations used with permission by <a href='http://vincemckelvie.tumblr.com/'>Vince McKelvie</a>.
           </p>
         </div>
