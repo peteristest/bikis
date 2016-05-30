@@ -37,6 +37,6 @@
   }
 }
 
-.venn, .map {
+.fuzzy {
   animation: fuzzy 300ms infinite;
 }

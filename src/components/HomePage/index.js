@@ -132,6 +132,7 @@ class HomePage extends Component {
     const mapVisible = Boolean(travelMap || routeMap)
 
     const bioClassName = classNames('max-width', {'faded': hover || dragging}, {'disabled': dragging})
+    const mapClassName = classNames('component map fixed abs-center z1', {'fuzzy': mapVisible})
     const offset = this.state.offset * 0.2
 
     const titleAwards = 'Awards'
@@ -200,7 +201,7 @@ class HomePage extends Component {
             width={w}
             height={h}
             animate
-            className='component venn fixed absolute-center z1' />
+            className='component venn fixed absolute-center z1 fuzzy' />
         )}
         {photos && (
           <PhotosContainer
@@ -213,7 +214,7 @@ class HomePage extends Component {
             color={color}
             type={mapType}
             offset={offset}
-            className='component map fixed abs-center z1' />
+            className={mapClassName} />
           {technology && <Gif name='technology' src='https://media.giphy.com/media/jy7Ipmx7Zeb0k/giphy.gif' />}
           {cloud && <Gif name='cloud' src='https://media.giphy.com/media/OT2lwSsUgpsT6/giphy.gif' />}
           {ai && (<Gif name='ai' src='https://media.giphy.com/media/IWoZqzqk7LZn2/giphy.gif' />)}
