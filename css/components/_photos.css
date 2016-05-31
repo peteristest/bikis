@@ -6,7 +6,7 @@
   transform-origin: 100% 100%;
 }
 
-.bg {
+.photo-bg {
   background-color: $blue;
   mix-blend-mode: screen;
 }

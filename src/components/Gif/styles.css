@@ -1,0 +1,30 @@
+/* Easing */
+$ease-out-cubic: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+
+.gif.visualisation-enter.visualisation-enter-active,
+.gif.visualisation-leave.visualisation-leave-active {
+  transition: opacity 300ms $ease-out-cubic;
+  transition-property: opacity,transform;  
+}
+
+.gif.visualisation-enter {
+  opacity: 0.01;
+}
+
+.gif.visualisation-enter.visualisation-enter-active {
+  opacity: 1;
+}
+
+.gif.visualisation-leave {
+  opacity: 1;
+  transform-origin: 50% 50%;
+}
+
+.gif.visualisation-leave.visualisation-leave-active {
+  opacity: 0;
+  transition-duration: 500ms;
+}
+
+.gif-image {
+  filter: saturate(0) contrast(1.2) brightness(1.2);
+}

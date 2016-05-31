@@ -6,6 +6,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import VennDiagram from './../VennDiagram'
 import WorldMap from './../WorldMap'
+import Gif from './../Gif'
 import CyclingNotes from './../../containers/CyclingNotes/'
 import WindowWithCursor from './../WindowWithCursor'
 import PhotosContainer from './../../containers/PhotosContainer/'
@@ -18,7 +19,7 @@ const Bio = ({renderToggle, className = ''}) => (
   <div className={className} style={{lineHeight: '1.5em', fontSize: '2em', marginTop: 0, textAlign: 'left'}}>
     <p className='mt0' >
       <span>Creative Technologist, Designer and Engineer.</span> <a href='//asketicsf.com' target='_blank'>Asketic</a> <span>Co-founder.</span>
-      <span className='large-text distort block center right'>Peteris<br /><span style={{marginLeft: '-0.5em'}}>Bikis</span> </span>
+      <span className='large-text text-pb distort block center right'>Peteris<br /><span style={{marginLeft: '-0.5em'}}>Bikis</span> </span>
       <span>&nbsp; I am a</span> {renderToggle('venn diagram', 'venn')} <span>of design,</span> {renderToggle('technology', 'technology')}<span>, </span>{renderToggle('the Internet', 'cloud')}<span>,</span>
       &nbsp;{renderToggle('travel', 'travelMap')}<span>, </span>{renderToggle('cycling', 'routeMap')}<span>, and</span> {renderToggle('photography', 'photos')}<span>.</span>
       <span> Currently obsessed with React and functional
@@ -29,10 +30,6 @@ const Bio = ({renderToggle, className = ''}) => (
 )
 
 const Tab = () => <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-
-const Gif = ({src, name}) => (
-  <span className={`component ${name} ai fixed top-0 right-0`}><img src={src} /><span className='bg absolute top-0 left-0 right-0 bottom-0' /></span>
-)
 
 const SvgFilters = () => {
   const baseFrequency = '0.05 0.05'
@@ -140,39 +137,45 @@ class HomePage extends Component {
       character + Array(titleAwards.length - i + (i ? 0 : 1)).fill('&nbsp;').join('') + '<br />'
     )).join('')
 
+    // Safari is dishonest about supporting SVG filters
+    const isSafari = /Safari/.test(navigator.userAgent)
+    const className = classNames('home height-11', {'no-svgfilters': isSafari})
+
     return (
-      <div className='home height-100'>
+      <div className={className}>
         <SvgFilters />
         <div className='bio relative z2 height-100 px2 py1' style={{maxWidth: '1400px'}}>
           <Bio
             renderToggle={this.renderToggle.bind(this)} className={bioClassName} />
-          <div className='clearfix mx-auto relative'>
-            <p className='left pl3'>
-              <span className='medium-text distort left-align mb2 inline-block absolute top-0 pt1'>
+          <div className='clearfix mx-auto relative flex flex-wrap'>
+            <p className='pl3'>
+              <span className='medium-text text-work distort left-align mb2 inline-block absolute top-0 pt1'>
                 Featured work
               </span><br />
               <span className='inline-block h4 font-alternative pl2' style={{lineHeight: '1.5em'}}>
                 {work.map((project, i) => (
-                  <span>{Array(i + 1).fill(<Tab />)}<a href='#'>{project}</a><br /></span>
+                  <span key={i}>{Array(i + 1).fill(<Tab />)}<a href='#'>{project}</a><br /></span>
                 ))}
               </span>
             </p>
-            <p className='right mr3 ml3 pr3 relative pl4'>
-              <span
-                className='medium-text distort right-align block absolute left-0'
-                style={{lineHeight: '0.55em'}}
-                dangerouslySetInnerHTML={{ __html: textAwards }} />
-              <br />
-              <span className='h4 font-alternative inline-block' style={{lineHeight: '1.5em'}}>
-                {awards.map((award, i) => (
-                  <span>{Array(i + 1).fill(<Tab />)}{award}<br /></span>
-                ))}
-              </span>
-            </p>
+            <div className='ml-auto'>
+              <p className='mr3 ml3 pr3 relative pl4'>
+                <span
+                  className='medium-text text-awards distort right-align block absolute left-0'
+                  style={{lineHeight: '0.55em'}}
+                  dangerouslySetInnerHTML={{ __html: textAwards }} />
+                <br />
+                <span className='h4 font-alternative inline-block' style={{lineHeight: '1.5em'}}>
+                  {awards.map((award, i) => (
+                    <span key={i}>{Array(i + 1).fill(<Tab />)}{award}<br /></span>
+                  ))}
+                </span>
+              </p>
+            </div>
           </div>
           <p className='clearfix center mt3'>
             <span
-              className='caps medium-text distort center inline-block'
+              className='caps medium-text text-sayhello distort center inline-block'
               style={{lineHeight: '0.75em'}}
               dangerouslySetInnerHTML={{ __html: 'Say Hello'.split('').join('<br />') }}
             /><br />
@@ -201,11 +204,12 @@ class HomePage extends Component {
             width={w}
             height={h}
             animate
-            className='component venn fixed absolute-center z1 fuzzy' />
+            className='component venn fixed abs-center z1 fuzzy' />
         )}
         {photos && (
           <PhotosContainer
-            className='component photos fixed top-0 left-0 m2 z1'
+            className='component photos absolute top-0 left-0 m2 z1'
+            offset={offset}
             style={{width: '50%'}}
           />
         )}

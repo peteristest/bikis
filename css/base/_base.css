@@ -75,9 +75,9 @@ a.symbol:after {
 }
 
 .abs-center {
-  top: 50%;
-  right: 50%;
-  transform: translate3d(50%,-50%,0);
+  top: 50vh;
+  left: 50vw;
+  transform: translate3d(-50%,-50%,0);
 }
 
 /* Bio styles */
@@ -91,7 +91,42 @@ a.symbol:after {
   font-size: 2.5rem;
 }
 
+.normal-text {
+  font-size: 1.5rem;
+}
+
 .distort {
   filter: url("/#filter");
   -webkit-filter: url("#filter");
+}
+
+/* Fallbacks */
+
+.no-svgfilters .text-pb {
+  background-image: url(../img/text-peterisbikis.png);
+  padding-top: 0.15em;
+  padding-right: 0.1em;
+  padding-left: 0.1em;
+  margin-top: -0.15em;
+}
+
+.no-svgfilters .text-work {
+  background-image: url(../img/text-featuredwork.png);
+}
+
+.no-svgfilters .text-awards {
+  background-image: url(../img/text-awards.png);
+}
+
+.no-svgfilters .text-sayhello {
+  background-image: url(../img/text-sayhello.png);
+}
+
+.no-svgfilters .distort {
+  filter: none;
+  -webkit-filter: none;
+  color: transparent;
+  background-size: contain;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
 }

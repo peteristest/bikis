@@ -13,19 +13,20 @@ const TRANSFORM_LARGE = 'TRANSFORM_LARGE'
 const random = (int) => Math.floor(Math.random() * int)
 const shuffle = () => 0.5 - Math.random()
 
-const Photo = ({delay, transform, url}) => {
-  const offset = 10 - Math.floor(Math.random() * 4) * 5
-  const bgTransform = `translate3d(${offset}%, ${offset}%, 0)`
-  return <span
-    className='image-container inline-block left-0 top-0 absolute'
-    style={{transitionDelay: `${delay}ms`}}>
-    <span className='image relative inline-block' style={{ transform }}>
-      <img
-        src={url}
-        className='fit relative block' />
-      <span className='bg absolute top-0 left-0 right-0 bottom-0' style={{ transform: bgTransform }} />
+const Photo = ({delay, transform, url, bgOffset}) => {
+  const bgTransform = `translate3d(${bgOffset}%, ${bgOffset}%, 0)`
+  return (
+    <span
+      className='image-container inline-block left-0 top-0 absolute'
+      style={{transitionDelay: `${delay}ms`}}>
+      <span className='image relative inline-block' style={{ transform }}>
+        <img
+          src={url}
+          className='fit relative block' />
+        <span className='photo-bg absolute top-0 left-0 right-0 bottom-0' style={{ transform: bgTransform }} />
+      </span>
     </span>
-  </span>
+  )
 }
 
 class PhotosContainer extends Component {
@@ -71,32 +72,36 @@ class PhotosContainer extends Component {
         const size = isSmall ? TRANSFORM_SMALL : TRANSFORM_LARGE
         const { scale, x, y } = this.getTransform(size, i)
         const delay = isSmall ? random(images.length) : 0
+        const bgOffset = 10 - random(4) * 5
 
         return {
           url,
           scale,
           x, y,
-          delay
+          delay,
+          bgOffset
         }
       })
   }
 
-  renderPhotos (images, withoutDelay = false) {
+  renderPhotos (images, withoutDelay = false, offset) {
     return images.map((image, i) => {
-      const { url, scale, x, y, delay } = image
+      const { url, scale, x, y, delay, bgOffset } = image
       const d = withoutDelay ? 0 : delay * 15
-      const transform = `scale(${scale}) translateX(${x}vw) translateY(${y}vh)`
+      const transformOffset = 0.05 * (3 - scale) * offset
+      const transform = `scale(${scale}) translateX(${x + transformOffset}vw) translateY(${y}vh)`
 
-      return <Photo key={i} delay={d} transform={transform} url={url} />
+      return <Photo key={i} delay={d} transform={transform} url={url} bgOffset={bgOffset} />
     })
   }
 
   render () {
     const { images, withoutDelay } = this.state
+    const { className, style, offset } = this.props
 
     return (
-      <div {...this.props}>
-        {this.renderPhotos(images, withoutDelay)}
+      <div className={className} style={style}>
+        {this.renderPhotos(images, withoutDelay, offset)}
       </div>
     )
   }

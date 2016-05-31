@@ -1,8 +1,13 @@
-var path = require('path')
-var webpack = require('webpack')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-// var AppCachePlugin = require('appcache-webpack-plugin')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+const cssnext = require('postcss-cssnext')
+const postcssFocus = require('postcss-focus')
+const postcssReporter = require('postcss-reporter')
+const postcssImport = require('postcss-import')
+const postcssSimpleVars = require('postcss-simple-vars')
 
 module.exports = function (options) {
   var entry, plugins, cssLoaders
@@ -91,18 +96,18 @@ module.exports = function (options) {
     plugins: plugins,
     postcss: function () {
       return [
-        require('postcss-import')({ // Import all the css files...
+        postcssImport({ // Import all the css files...
           glob: true,
           onImport: function (files) {
             files.forEach(this.addDependency) // ...and add dependecies from the main.css files to the other css files...
           }.bind(this) // ...so they get hot–reloaded when something changes...
         }),
-        require('postcss-simple-vars')(), // ...then replace the variables...
-        require('postcss-focus')(), // ...add a :focus to ever :hover...
-        require('autoprefixer')({ // ...and add vendor prefixes...
-          browsers: ['last 2 versions', 'IE > 8'] // ...supporting the last 2 major browser versions and IE 8 and up...
+        postcssSimpleVars(), // ...then replace the variables...
+        postcssFocus(), // ...add a :focus to ever :hover...
+        cssnext({ // ...and add vendor prefixes...
+          browsers: ['last 2 versions', 'IE > 10'] // ...supporting the last 2 major browser versions and IE 8 and up...
         }),
-        require('postcss-reporter')({ // This plugin makes sure we get warnings in the console
+        postcssReporter({ // This plugin makes sure we get warnings in the console
           clearMessages: true
         })
       ]
