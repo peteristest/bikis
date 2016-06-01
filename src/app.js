@@ -27,11 +27,10 @@ if ('serviceWorker' in navigator) {
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { Router, Route } from 'react-router'
+import { Router, Route, browserHistory } from 'react-router'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import FontFaceObserver from 'fontfaceobserver'
-import createHistory from 'history/lib/createBrowserHistory'
 
 const karlaObserver = new FontFaceObserver('Karla', {})
 
@@ -64,14 +63,38 @@ if (module.hot) {
   })
 }
 
-// Mostly boilerplate, except for the Routes. These are the pages you can go to,
-// which are all wrapped in the App component, which contains the navigation etc
+import Gif from './components/Gif'
+import PhotosContainer from './containers/PhotosContainer'
+import VennDiagramContainer from './containers/VennDiagramContainer'
+const TechnologyGif = () => (
+  <Gif name='technology' src='https://media.giphy.com/media/jy7Ipmx7Zeb0k/giphy.gif' />
+)
+
+const WeirdGif = () => (
+  <Gif name='weird' src='https://media.giphy.com/media/QTKpNChuRixKo/giphy.gif' />
+)
+
+const AiGif = () => (
+  <Gif name='ai' src='https://media.giphy.com/media/IWoZqzqk7LZn2/giphy.gif' />
+)
+
+const CloudGif = () => (
+  <Gif name='cloud' src='https://media.giphy.com/media/OT2lwSsUgpsT6/giphy.gif' />
+)
+
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={createHistory()}>
+    <Router history={browserHistory}>
       <Route component={App}>
-        <Route path='/' component={HomePage} />
-        <Route path='*' component={NotFoundPage} />
+        <Route path='/' component={HomePage}>
+          <Route path='/technology' component={TechnologyGif} />
+          <Route path='/weirder' component={WeirdGif} />
+          <Route path='/ai' component={AiGif} />
+          <Route path='/internet' component={CloudGif} />
+          <Route path='/photography' component={PhotosContainer} />
+          <Route path='/venn' component={VennDiagramContainer} />
+        </Route>
+        <Route path='*' component={HomePage} />
       </Route>
     </Router>
   </Provider>,

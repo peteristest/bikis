@@ -97,10 +97,10 @@ class PhotosContainer extends Component {
 
   render () {
     const { images, withoutDelay } = this.state
-    const { className, style, offset } = this.props
+    const { offset = 0 } = this.props
 
     return (
-      <div className={className} style={style}>
+      <div className='component photos absolute top-0 left-0 m2 z1' style={{width: '50%'}}>
         {this.renderPhotos(images, withoutDelay, offset)}
       </div>
     )

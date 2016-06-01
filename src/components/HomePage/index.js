@@ -4,30 +4,41 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import VennDiagram from './../VennDiagram'
+import { browserHistory } from 'react-router'
+
 import WorldMap from './../WorldMap'
-import Gif from './../Gif'
 import CyclingNotes from './../../containers/CyclingNotes/'
 import WindowWithCursor from './../WindowWithCursor'
-import PhotosContainer from './../../containers/PhotosContainer/'
+import Toggle from './../Toggle'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactTransitionGroup from 'react-addons-transition-group'
 import classNames from 'classnames'
-import Draggable from 'react-draggable'
 
-const Bio = ({renderToggle, className = ''}) => (
-  <div className={className} style={{lineHeight: '1.5em', fontSize: '2em', marginTop: 0, textAlign: 'left'}}>
-    <p className='mt0' >
-      <span>Creative Technologist, Designer and Engineer.</span> <a href='//asketicsf.com' target='_blank'>Asketic</a> <span>Co-founder.</span>
-      <span className='large-text text-pb distort block center right'>Peteris<br /><span style={{marginLeft: '-0.5em'}}>Bikis</span> </span>
-      <span>&nbsp; I am a</span> {renderToggle('venn diagram', 'venn')} <span>of design,</span> {renderToggle('technology', 'technology')}<span>, </span>{renderToggle('the Internet', 'cloud')}<span>,</span>
-      &nbsp;{renderToggle('travel', 'travelMap')}<span>, </span>{renderToggle('cycling', 'routeMap')}<span>, and</span> {renderToggle('photography', 'photos')}<span>.</span>
-      <span> Currently obsessed with React and functional
-      programming. Interested in</span> {renderToggle('AI', 'ai')}<span>, neural networks
-      and a</span> {renderToggle('weirder', 'weird')} <span>future</span>.
-    </p>
-  </div>
-)
+const Bio = ({className = '', onRelease, onToggle, updateOffset, activeToggle}) => {
+  const toggle = (label, prop) => (
+    <Toggle
+      label={label}
+      prop={prop || label}
+      active={(prop || label) === activeToggle}
+      onToggle={onToggle}
+      onRelease={onRelease}
+      updateOffset={updateOffset} />
+  )
+
+  return (
+    <div className={className} style={{lineHeight: '1.5em', fontSize: '2em', marginTop: 0, textAlign: 'left'}}>
+      <p className='mt0' >
+        <span>Creative Technologist, Designer and Engineer.</span> <a href='//asketicsf.com' target='_blank'>Asketic</a> <span>Co-founder.</span>
+        <span className='large-text text-pb distort block center right'>Peteris<br /><span style={{marginLeft: '-0.5em'}}>Bikis</span> </span>
+        <span>&nbsp; I am a</span> {toggle('venn diagram', 'venn')} <span>of design,</span> {toggle('technology')}<span>, </span>{toggle('the Internet', 'internet')}<span>,</span>
+        &nbsp;{toggle('travel', 'travelMap')}<span>, </span> {toggle('cycling', 'routeMap')}<span>, and</span> {toggle('photography')}<span>.</span>
+        <span> Currently obsessed with React and functional
+        programming. Interested in</span> {toggle('AI')}<span>, neural networks
+        and a</span> {toggle('weirder')} <span>future</span>.
+      </p>
+    </div>
+  )
+}
 
 const Tab = () => <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
@@ -62,69 +73,47 @@ class HomePage extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      venn: false,
-      photos: false,
-      travelMap: false,
-      routeMap: false,
-      ai: false,
-      weird: false,
-      cloud: false,
-      offset: 0
+      offset: 0,
+      dragging: false
     }
   }
 
-  renderToggle (label, prop) {
-    const toggle = (hover) => {
-      if (this.state.dragging) { return }
+  toggle (hover, prop) {
+    console.log('--- Toggle', hover, prop, this.state.dragging)
+    if (this.state.dragging) { return }
 
-      this.setState({
-        hover: hover ? prop : false,
-        [prop]: hover
-      })
+    // Update history
+    if (this.props.location.pathname !== `/${prop}`) {
+      browserHistory.push(`/${prop}`)
+    } else if (!hover) {
+      browserHistory.push('/')
     }
+  }
 
-    const setOffset = (e, ui) => {
-      this.setState({
-        dragging: prop,
-        offset: this.state.offset + (ui.x - ui.lastX)
-      })
-    }
+  updateOffset (offset) {
+    this.setState({
+      dragging: true,
+      offset
+    })
+  }
 
-    const resetState = (e, ui) => {
-      this.setState({
-        dragging: false,
-        hover: false,
-        offset: 0,
-        [prop]: false
-      })
-    }
+  resetState (prop, e, ui) {
+    this.setState({
+      dragging: false,
+      offset: 0
+    })
 
-    const position = this.state.offset ? null : {x: 0, y: 0}
-    const className = classNames('toggle inline-block', {'toggle-hover': this.state.hover === prop})
-
-    return (
-      <Draggable onDrag={setOffset.bind(this)} onStop={resetState.bind(this)} position={position}>
-        <span className='inline-block toggle-container'>
-          <span className='inline-block'>
-            <span className={className}
-              onMouseOver={toggle.bind(this, true)}
-              onMouseOut={toggle.bind(this, false)}>{label}</span>
-          </span>
-        </span>
-      </Draggable>
-    )
+    browserHistory.push('/')
   }
 
   render () {
-    const { data: { disciplines, color, work, awards } } = this.props
+    const { data: { color, work, awards }, routeParams: { splat }, location: { pathname } } = this.props
 
-    const sizeLarge = 9
-    const sizeSmall = 3
-    const { clientWidth, clientHeight } = window.document.documentElement
-    const w = clientWidth * 0.8 * 0.8
-    const h = clientHeight * 0.7 * 0.8
+    const { dragging } = this.state
 
-    const { venn, photos, travelMap, routeMap, ai, weird, cloud, technology, hover, dragging } = this.state
+    const hover = pathname.replace(/^\//, '')
+    const routeMap = (splat === 'routeMap')
+    const travelMap = (splat === 'travelMap')
     const mapType = routeMap ? 'route' : 'cities'
     const mapVisible = Boolean(travelMap || routeMap)
 
@@ -143,10 +132,14 @@ class HomePage extends Component {
 
     return (
       <div className={className}>
-        <SvgFilters />
+        {!isSafari && <SvgFilters />}
         <div className='bio relative z2 height-100 px2 py1' style={{maxWidth: '1400px'}}>
           <Bio
-            renderToggle={this.renderToggle.bind(this)} className={bioClassName} />
+            activeToggle={hover}
+            updateOffset={this.updateOffset.bind(this)}
+            onRelease={this.resetState.bind(this)}
+            onToggle={this.toggle.bind(this)}
+            className={bioClassName} />
           <div className='clearfix mx-auto relative flex flex-wrap'>
             <p className='pl3'>
               <span className='medium-text text-work distort left-align mb2 inline-block absolute top-0 pt1'>
@@ -189,40 +182,17 @@ class HomePage extends Component {
             &copy; Peteris Bikis 2016. Built using React, Redux, Basscss and D3. <br />Illustrations used with permission by <a href='http://vincemckelvie.tumblr.com/'>Vince McKelvie</a>.
           </p>
         </div>
+        <WorldMap
+          visible={mapVisible}
+          color={color}
+          type={mapType}
+          offset={offset}
+          className={mapClassName} />
         <ReactCSSTransitionGroup
           transitionName='visualisation'
           transitionEnterTimeout={600}
           transitionLeaveTimeout={600}>
-        {venn && (
-          <VennDiagram
-            key='venn'
-            intersectLabel={['']}
-            items={disciplines}
-            large={sizeLarge}
-            small={sizeSmall}
-            duration={1000}
-            width={w}
-            height={h}
-            animate
-            className='component venn fixed abs-center z1 fuzzy' />
-        )}
-        {photos && (
-          <PhotosContainer
-            className='component photos absolute top-0 left-0 m2 z1'
-            offset={offset}
-            style={{width: '50%'}}
-          />
-        )}
-          <WorldMap
-            visible={mapVisible}
-            color={color}
-            type={mapType}
-            offset={offset}
-            className={mapClassName} />
-          {technology && <Gif name='technology' src='https://media.giphy.com/media/jy7Ipmx7Zeb0k/giphy.gif' />}
-          {cloud && <Gif name='cloud' src='https://media.giphy.com/media/OT2lwSsUgpsT6/giphy.gif' />}
-          {ai && (<Gif name='ai' src='https://media.giphy.com/media/IWoZqzqk7LZn2/giphy.gif' />)}
-          {weird && (<Gif name='weird' src='https://media.giphy.com/media/QTKpNChuRixKo/giphy.gif' />)}
+          {this.props.children}
         </ReactCSSTransitionGroup>
         <ReactTransitionGroup>
           {routeMap && <WindowWithCursor><CyclingNotes /></WindowWithCursor>}
