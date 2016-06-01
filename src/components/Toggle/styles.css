@@ -1,0 +1,11 @@
+.toggle {
+  cursor: grab;
+}
+
+.toggle-hover {
+  transform: skewY(-10deg);
+}
+
+.toggle-hover:active {
+  transform: skewY(-15deg) scale(1.5);
+}

@@ -1,8 +1,3 @@
-.home {
-    perspective: 1200px;
-    perspective-origin: 35% 50%;
-}
-
 .h3 {
   text-transform: uppercase;
   font-size: 0.8em;
@@ -14,37 +9,13 @@
   hyphens: auto;
 }
 
-.toggle {
-  cursor: grab;
-  transition-property: transform;
-}
-
-.toggle.toggle-hover:active {
-  transform: skewY(-15deg) scale(1.5);
-}
-
-.bio p > span, .toggle-container, .bio a {
+.bio p > span,
+.bio p > a {
   transition: opacity 300ms ease;
 }
 
-.toggle.toggle-hover {
-  transform: skewY(-10deg);
-  transition: transform 300ms ease;
-}
-
-.faded a, .faded p > span {
+.faded p > a,
+.faded p > span {
   opacity: 0.15;
   color: $text-color;
-}
-
-.bio .toggle-container.react-draggable-dragged {
-  transition: opacity,transform 300ms ease;
-}
-
-.bio .toggle-container.react-draggable-dragging {
-  transition-duration: 0ms;
-}
-
-.faded .toggle-container:hover {
-  opacity: 1;
 }

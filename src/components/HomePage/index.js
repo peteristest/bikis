@@ -14,16 +14,23 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactTransitionGroup from 'react-addons-transition-group'
 import classNames from 'classnames'
 
-const Bio = ({className = '', onRelease, onToggle, updateOffset, activeToggle}) => {
-  const toggle = (label, prop) => (
-    <Toggle
-      label={label}
-      prop={prop || label}
-      active={(prop || label) === activeToggle}
-      onToggle={onToggle}
-      onRelease={onRelease}
-      updateOffset={updateOffset} />
-  )
+const Bio = ({className = '', handleRelease, handleToggle, handleOffset, activeToggle, dragging}) => {
+  const toggle = (label, id) => {
+    id = id || label
+    const disabled = Boolean(dragging && activeToggle && id !== activeToggle)
+    const active = id === activeToggle
+
+    return (
+      <Toggle
+        label={label}
+        id={id}
+        active={active}
+        disabled={disabled}
+        handleToggle={handleToggle}
+        handleRelease={handleRelease}
+        handleOffset={handleOffset} />
+    )
+  }
 
   return (
     <div className={className} style={{lineHeight: '1.5em', fontSize: '2em', marginTop: 0, textAlign: 'left'}}>
@@ -34,7 +41,7 @@ const Bio = ({className = '', onRelease, onToggle, updateOffset, activeToggle}) 
         &nbsp;{toggle('travel', 'travelMap')}<span>, </span> {toggle('cycling', 'routeMap')}<span>, and</span> {toggle('photography')}<span>.</span>
         <span> Currently obsessed with React and functional
         programming. Interested in</span> {toggle('AI')}<span>, neural networks
-        and a</span> {toggle('weirder')} <span>future</span>.
+        and a</span> {toggle('weirder')} <span>future.</span>
       </p>
     </div>
   )
@@ -78,19 +85,12 @@ class HomePage extends Component {
     }
   }
 
-  toggle (hover, prop) {
-    console.log('--- Toggle', hover, prop, this.state.dragging)
-    if (this.state.dragging) { return }
-
+  handleToggle (hover, prop) {
     // Update history
-    if (this.props.location.pathname !== `/${prop}`) {
-      browserHistory.push(`/${prop}`)
-    } else if (!hover) {
-      browserHistory.push('/')
-    }
+    browserHistory.push(hover ? `/${prop}` : '')
   }
 
-  updateOffset (offset) {
+  handleOffset (offset) {
     this.setState({
       dragging: true,
       offset
@@ -136,9 +136,10 @@ class HomePage extends Component {
         <div className='bio relative z2 height-100 px2 py1' style={{maxWidth: '1400px'}}>
           <Bio
             activeToggle={hover}
-            updateOffset={this.updateOffset.bind(this)}
-            onRelease={this.resetState.bind(this)}
-            onToggle={this.toggle.bind(this)}
+            dragging={dragging}
+            handleOffset={this.handleOffset.bind(this)}
+            handleToggle={this.handleToggle.bind(this)}
+            handleRelease={this.resetState.bind(this)}
             className={bioClassName} />
           <div className='clearfix mx-auto relative flex flex-wrap'>
             <p className='pl3'>

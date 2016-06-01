@@ -13,3 +13,11 @@
 .no-pointer-events {
   pointer-events: none;
 }
+
+.transition-opacity {
+  transition: opacity 300ms ease;
+}
+
+.transition-transform {
+  transition: transform 300ms ease;
+}
