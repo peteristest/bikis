@@ -9,3 +9,21 @@
 .toggle-hover:active {
   transform: skewY(-15deg) scale(1.5);
 }
+
+.toggle-hover span {
+  animation: bounce 900ms 0ms infinite both;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+
+  18% {
+    transform: translateY(-8px);
+  }
+
+  50% {
+    transform: translateY(0);
+  }
+}

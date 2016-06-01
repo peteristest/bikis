@@ -127,7 +127,7 @@ class HomePage extends Component {
     )).join('')
 
     // Safari is dishonest about supporting SVG filters
-    const isSafari = /Safari/.test(navigator.userAgent)
+    const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)
     const className = classNames('home height-11', {'no-svgfilters': isSafari})
 
     return (

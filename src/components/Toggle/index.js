@@ -61,19 +61,25 @@ export default class Toggle extends Component {
       'transition-transform': !disabled
     })
 
+    const labelContent = label.split('').map((letter, i) => (
+      <span
+        className='inline-block'
+        style={{animationDelay: `${i * 50}ms`}}
+        dangerouslySetInnerHTML={{ __html: letter.replace(' ', '&nbsp;') }} />
+    ))
+
     return (
       <span
         style={{opacity: active ? 1 : ''}}
-        onMouseOver={this.onToggle.bind(this, true)}
-        onMouseOut={this.onToggle.bind(this, false)}
+        onMouseEnter={this.onToggle.bind(this, true)}
+        onMouseLeave={this.onToggle.bind(this, false)}
         >
         <Draggable
           onDrag={this.setOffset.bind(this)}
           onStop={this.resetOffset.bind(this)}
           position={position}>
           <span className='inline-block'>
-            <span className={className}
-              >{label}</span>
+            <span className={className}>{labelContent}</span>
           </span>
         </Draggable>
       </span>
