@@ -1,6 +1,8 @@
+@import './../../constants.css';
+
 .cursor,
 .notes-container {
-  transition: transform 600ms $ease-out-cubic;
+  transition: transform 600ms var(--ease-out-cubic);
 }
 
 .cursor {
@@ -9,15 +11,16 @@
 
 .notes {
   max-width: 500px;
-  background: $background-color;
-  box-shadow: $text-color 2px 2px 0px;
+  background: var(--background-color);
+  box-shadow: var(--text-color) 2px 2px 0px;
+
   pointer-events: none;
   transform: translate3d(0,0,0);
 }
 
 .notes.visualisation-enter.visualisation-enter-active,
 .notes.visualisation-leave.visualisation-leave-active {
-  transition: opacity 500ms $ease-out-cubic;
+  transition: opacity 500ms var(--ease-out-cubic);
 }
 
 .notes.visualisation-enter {

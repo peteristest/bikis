@@ -5,8 +5,10 @@
 import React, { Component } from 'react'
 import classNames from 'classnames'
 
+import imgCursor from './cursor.png'
+
 const Cursor = (props) => (
-  <img src='img/cursor.png' {...props} />
+  <img className='cursor' src={imgCursor} {...props} />
 )
 
 class WindowWithCursor extends Component {

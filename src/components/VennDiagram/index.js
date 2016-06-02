@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom'
 import venn from 'venn.js/build/venn.min.js'
 import d3 from 'd3'
 
+import './styles.css'
+
 const c = (o) => `rgba(132, 73, 249,${o}`
 const COLOURS = [c(0.2), c(0.4), c(0.2), c(0.2), c(0.4), c(0.2)]
 

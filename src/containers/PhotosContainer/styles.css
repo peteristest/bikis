@@ -1,3 +1,5 @@
+@import './../../constants.css';
+
 .photos {
   opacity: 0.6;
 }
@@ -7,7 +9,7 @@
 }
 
 .photo-bg {
-  background-color: $blue;
+  background-color: var(--blue);
   mix-blend-mode: screen;
 }
 
@@ -21,7 +23,7 @@
 
 .visualisation-enter.visualisation-enter-active .image-container,
 .visualisation-leave.visualisation-leave-active .image-container {
-  transition: opacity 300ms $ease-out-cubic;
+  transition: opacity 300ms var(--ease-out-cubic);
   transition-property: opacity,transform;  
 }
 

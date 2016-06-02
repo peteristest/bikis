@@ -4,9 +4,11 @@ import d3 from 'd3'
 import 'd3-geo-projection/d3.geo.projection'
 import topojson from 'topojson'
 
+import './styles.css'
+
 import map from 'json!./../../world-110m.topojson'
 import route from 'json!./../../route.topojson'
-import cities from 'json!./../../cities.json'
+import cities from './../../cities.json'
 
 const TYPE_ROUTE = 'route'
 const TYPE_CITIES = 'cities'

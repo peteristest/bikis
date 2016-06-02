@@ -1,9 +1,8 @@
-/* Easing */
-$ease-out-cubic: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+@import './../../constants.css';
 
 .gif.visualisation-enter.visualisation-enter-active,
 .gif.visualisation-leave.visualisation-leave-active {
-  transition: opacity 300ms $ease-out-cubic;
+  transition: opacity 300ms var(--ease-out-cubic);
   transition-property: opacity,transform;  
 }
 

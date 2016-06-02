@@ -1,3 +1,5 @@
+@import './../../constants.css';
+
 .venn {
   text-transform: uppercase;
   font-size: 0.4rem;
@@ -14,7 +16,7 @@
 
 .venn.visualisation-enter.visualisation-enter-active,
 .venn.visualisation-leave.visualisation-leave-active {
-  transition: opacity 300ms $ease-out-cubic;
+  transition: opacity 300ms var(--ease-out-cubic);
   transition-property: opacity,transform;
 }
 
@@ -44,22 +46,22 @@
 
 .visualisation-enter.visualisation-enter-active .venn-intersection:last-child {
   transform: none;
-  transition: transform 300ms 150ms $ease-out-cubic;
+  transition: transform 300ms 150ms var(--ease-out-cubic);
 }
 
 @keyframes wave {
-  $degrees: 15deg;
+  --degrees: 15deg;
   0% {
     tranform: rotate(0deg);
   }
   10% {
-    transform: rotate($degrees);
+    transform: rotate(var(--degrees));
   }
   20% {
-    transform: rotate(-$degrees);
+    transform: rotate(-var(--degrees));
   }
   30% {
-    transform: rotate($degrees);
+    transform: rotate(var(--degrees));
   }
   40% {
     transform: rotate(0deg);

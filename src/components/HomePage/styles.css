@@ -1,0 +1,85 @@
+@import './../../constants.css';
+
+.h3 {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.bio p {
+  hyphens: auto;
+}
+
+.bio p > span,
+.bio p > a {
+  transition: opacity 300ms ease;
+}
+
+.faded p > a,
+.faded p > span {
+  opacity: 0.15;
+  color: var(--text-color);
+}
+
+/* Animations */
+
+@keyframes fuzzy {
+  0% {
+    filter: url('#fuzzy-00');
+  }
+  25% {
+    filter: url('#fuzzy-01');
+  }
+  50% {
+    filter: url('#fuzzy-02');
+  }
+  75% {
+    filter: url('#fuzzy-03');
+  }
+  100% {
+    filter: url('#fuzzy-04');
+  }
+}
+
+.fuzzy {
+  animation: fuzzy 300ms infinite;
+}
+
+/* Distortion */
+
+.distort {
+  filter: url("/#filter");
+  -webkit-filter: url("#filter");
+}
+
+/* Fallbacks */
+
+.no-svgfilters .text-pb {
+  background-image: url(./img/text-peterisbikis.png);
+  padding-top: 0.15em;
+  padding-right: 0.1em;
+  padding-left: 0.1em;
+  margin-top: -0.15em;
+}
+
+.no-svgfilters .text-work {
+  background-image: url(./img/text-featuredwork.png);
+}
+
+.no-svgfilters .text-awards {
+  background-image: url(./img/text-awards.png);
+}
+
+.no-svgfilters .text-sayhello {
+  background-image: url(./img/text-sayhello.png);
+}
+
+.no-svgfilters .distort {
+  filter: none;
+  -webkit-filter: none;
+  color: transparent;
+  background-size: contain;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}

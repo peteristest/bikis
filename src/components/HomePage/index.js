@@ -6,6 +6,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { browserHistory } from 'react-router'
 
+import './styles.css'
+
 import WorldMap from './../WorldMap'
 import CyclingNotes from './../../containers/CyclingNotes/'
 import WindowWithCursor from './../WindowWithCursor'

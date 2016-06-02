@@ -6,6 +6,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { asyncFetchInstagramPhotos } from '../../actions'
 
+import './styles.css'
+
 const NUM_PHOTOS = 6
 const TRANSFORM_SMALL = 'TRANSFORM_SMALL'
 const TRANSFORM_LARGE = 'TRANSFORM_LARGE'
