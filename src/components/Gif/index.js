@@ -8,4 +8,20 @@ const Gif = ({src, name}) => (
   </span>
 )
 
+export const TechnologyGif = () => (
+  <Gif name='technology' src='https://media.giphy.com/media/jy7Ipmx7Zeb0k/giphy.gif' />
+)
+
+export const WeirdGif = () => (
+  <Gif name='weird' src='https://media.giphy.com/media/QTKpNChuRixKo/giphy.gif' />
+)
+
+export const AiGif = () => (
+  <Gif name='ai' src='https://media.giphy.com/media/IWoZqzqk7LZn2/giphy.gif' />
+)
+
+export const CloudGif = () => (
+  <Gif name='cloud' src='https://media.giphy.com/media/OT2lwSsUgpsT6/giphy.gif' />
+)
+
 export default Gif
