@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import d3 from 'd3'
-import 'd3-geo-projection/d3.geo.projection'
 import topojson from 'topojson'
 
 import './styles.css'
 
-import map from 'json!./../../world-110m.topojson'
-import route from 'json!./../../route.topojson'
-import cities from './../../cities.json'
+const map = require('./../../world-110m.json')
+const route = require('./../../route.json')
+const cities = require('./../../cities.json')
 
 const TYPE_ROUTE = 'route'
 const TYPE_CITIES = 'cities'
@@ -48,6 +47,7 @@ const STYLES = {
 class WorldMap extends Component {
 
   componentDidMount () {
+    require('d3-geo-projection/d3.geo.projection')
     const { color, type, visible } = this.props
     const styles = this.getStyles({ type, visible })
     const opacity = styles.opacity

@@ -56,7 +56,7 @@ const SvgFilters = () => {
   const filterResult = 'noise'
 
   return (
-    <svg xmlns='http://www.w3.org/2000/svg' version='1.1' class='svg-filters' style={{position: 'absolute'}}>
+    <svg xmlns='http://www.w3.org/2000/svg' version='1.1' className='svg-filters' style={{position: 'absolute'}}>
       <defs>
         <linearGradient id='gradient'>
           <stop offset='5%' stopColor='rgb(132, 73, 249)' />
