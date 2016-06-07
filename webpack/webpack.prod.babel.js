@@ -1,7 +1,8 @@
 // Important modules this config uses
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin-webpack-2');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CleanPlugin = require('clean-webpack-plugin');
 
 // PostCSS plugins
 const cssnext = require('postcss-cssnext');
@@ -12,8 +13,10 @@ const postcssReporter = require('postcss-reporter');
 const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools'));
 
+const assetsPath = path.resolve(__dirname, '../dist') + '/'
+const projectRootPath = path.resolve(__dirname, '..')
+
 module.exports = require('./webpack.base.babel')({
-  devtool: 'source-map',
   entry: [
     path.join(process.cwd(), 'src/app.js')
   ],
@@ -37,8 +40,10 @@ module.exports = require('./webpack.base.babel')({
   ],
   plugins: [
 
+    new CleanPlugin([assetsPath], { root: projectRootPath }),
+
     // Extract CSS
-    new ExtractTextPlugin('[name].[contenthash].css'),
+    new ExtractTextPlugin('[name].[chunkhash].css', { allChunks: true }),
 
     // optimise
     new webpack.optimize.OccurrenceOrderPlugin(true),

@@ -27,6 +27,7 @@ const server = new http.Server(app)
 app.use(compression())
 app.use(favicon(path.join(__dirname, '..', '..', 'static', 'favicon.ico')))
 app.use('/static', Express.static(path.join(__dirname, '..', '..', 'static')))
+app.use('/dist', Express.static(path.join(__dirname, '..', '..', 'dist')))
 
 // A simple reverse proxy for the API
 const proxy = httpProxy.createProxyServer({ target: env.apiHost, changeOrigin: true })

@@ -9,6 +9,10 @@ const initialState = {
     'Cycling', // 🚴
     'Travel', // ️️✈️
     'Photo' // 📷
+  ],
+  work: [
+  ],
+  awards: [
   ]
 }
 

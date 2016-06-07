@@ -8,8 +8,8 @@ const webpack = require('webpack');
 module.exports = (options) => ({
   entry: options.entry,
   output: Object.assign({
-    path: path.resolve(process.cwd(), 'static/dist'),
-    publicPath: '/static/dist/'
+    path: path.resolve(process.cwd(), 'dist'),
+    publicPath: '/dist/'
   }, options.output), // Merge with env dependent settings
   module: {
     loaders: [{
@@ -61,18 +61,14 @@ module.exports = (options) => ({
       }
     })
   ]),
-  postcss: (webpack) => options.postcssPlugins,
+  postcss: options.postcssPlugins,
   resolve: {
-    modules: ['app', 'node_modules'],
+    modules: ['src', 'node_modules'],
     extensions: [
       '',
       '.js',
       '.jsx',
       '.react.js'
-    ],
-    packageMains: [
-      'jsnext:main',
-      'main'
     ]
   },
   devtool: options.devtool,

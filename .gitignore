@@ -1,7 +1,7 @@
 node_modules
 .DS_Store
-src/bundle.js
-src/bundle.min.js
-src/config.js
-build
 npm-debug.log
+webpack-assets.json
+assets/
+dist/
+src/config.js
