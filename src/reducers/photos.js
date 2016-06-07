@@ -10,13 +10,10 @@ function photosReducer (state = initialState, action) {
   switch (action.type) {
     case FETCH_INSTAGRAM_PHOTOS:
 
-      const images = action.data.map((item) => (
-        item.images.standard_resolution.url
-      ))
-
       return assignToEmpty(state, {
-        images
+        images: action.data
       })
+
     default:
       return state
   }

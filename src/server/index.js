@@ -3,22 +3,21 @@
 import Express from 'express'
 import React from 'react'
 import ReactDOM from 'react-dom/server'
-import env from './../env'
 import favicon from 'serve-favicon'
 import compression from 'compression'
-import httpProxy from 'http-proxy'
 import path from 'path'
-import configureStore from './../store'
 import PrettyError from 'pretty-error'
 import http from 'http'
-
+import { trigger } from 'redial'
 import { match, RouterContext } from 'react-router'
 import createHistory from 'react-router/lib/createMemoryHistory'
 import { Provider } from 'react-redux'
+
+import env from './../env'
+import configureStore from './../store'
 import getRoutes from './../routes'
 import Html from './../helpers/Html'
-
-import { trigger } from 'redial'
+import { fetchInstagramPhotos, fetchStravaData } from './api.js'
 
 const pretty = new PrettyError()
 const app = new Express()
@@ -29,9 +28,9 @@ app.use(favicon(path.join(__dirname, '..', '..', 'static', 'favicon.ico')))
 app.use('/static', Express.static(path.join(__dirname, '..', '..', 'static')))
 app.use('/dist', Express.static(path.join(__dirname, '..', '..', 'dist')))
 
-// A simple reverse proxy for the API
-const proxy = httpProxy.createProxyServer({ target: env.apiHost, changeOrigin: true })
-app.all('/api/*', (req, res) => { proxy.web(req, res) })
+// Dead simple API functionality
+app.get('/api/photos', fetchInstagramPhotos)
+app.get('/api/cycling', fetchStravaData)
 
 const handleRequest = (req, res) => {
   if (__DEVELOPMENT__) {
