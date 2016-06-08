@@ -1,4 +1,3 @@
-require('dotenv').config()
 const host = process.env.HOST || 'localhost'
 const port = process.env.PORT || 8080
 

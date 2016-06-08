@@ -11,8 +11,9 @@ import 'babel-polyfill'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { Router, browserHistory } from 'react-router'
+import { Router, browserHistory, match } from 'react-router'
 import FontFaceObserver from 'fontfaceobserver'
+import { trigger } from 'redial'
 
 import configureStore from './store'
 import getRoutes from './routes'
@@ -25,11 +26,28 @@ fontObserver.check().then(() => {
   document.body.classList.remove('js-fonts-loaded')
 })
 
-const store = configureStore()
+const store = configureStore(window.__data)
+const { dispatch } = store
+const routes = getRoutes()
+
+browserHistory.listen((location) => {
+  match({ routes, location }, (e, redirectLocation, renderProps) => {
+    const { components } = renderProps
+
+    const locals = {
+      path: renderProps.location.pathname,
+      query: renderProps.location.query,
+      params: renderProps.params,
+      dispatch
+    }
+
+    trigger('defer', components, locals)
+  })
+})
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory} routes={getRoutes()} />
+    <Router history={browserHistory} routes={routes} />
   </Provider>,
   document.getElementById('app')
 )

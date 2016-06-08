@@ -1,4 +1,5 @@
 import fetch from 'isomorphic-fetch'
+require('dotenv').config()
 
 export function fetchInstagramPhotos (req, res, next) {
   const { IG_ACCESS_TOKEN } = process.env

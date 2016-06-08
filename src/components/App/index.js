@@ -1,13 +1,13 @@
 /**
  *
- * App.react.js
+ * App
  *
- * This component is the skeleton around the actual pages, and should only
- * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import { provideHooks } from 'redial'
+
+import { asyncFetchInstagramPhotos, asyncFetchCyclingData, asyncFetchSiteContent } from '../../actions'
 
 import 'normalize.css/normalize.css'
 import 'basscss/css/basscss.min.css'
@@ -23,14 +23,12 @@ class App extends Component {
   }
 }
 
-// REDUX STUFF
-
-// Which props do we want to inject, given the global state?
-function select (state) {
-  return {
-    data: state
-  }
+const hooks = {
+  fetch: ({ dispatch }) => dispatch(asyncFetchSiteContent()),
+  defer: ({ dispatch }) => [
+    dispatch(asyncFetchInstagramPhotos()),
+    dispatch(asyncFetchCyclingData())
+  ]
 }
 
-// Wrap the component to inject dispatch and state into it
-export default connect(select)(App)
+export default provideHooks(hooks)(App)

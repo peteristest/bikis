@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
 import { FETCH_INSTAGRAM_PHOTOS, FETCH_CYCLING_DATA, FETCH_SITE_CONTENT } from './../constants/AppConstants'
+import config from './../config'
 
 function fetchInstagramPhotos (data) {
   return {
@@ -8,8 +9,10 @@ function fetchInstagramPhotos (data) {
   }
 }
 
+const apiURL = (url) => config.apiHost + url
+
 export const asyncFetchInstagramPhotos = () => (dispatch, getState) => {
-  const url = '/api/photos'
+  const url = apiURL('/api/photos')
 
   if (shouldFetchInstagramPhotos(getState())) {
     return fetch(url)
@@ -18,7 +21,7 @@ export const asyncFetchInstagramPhotos = () => (dispatch, getState) => {
   }
 }
 
-export const shouldFetchInstagramPhotos = ({ photos }) => Boolean(!photos.images.length)
+const shouldFetchInstagramPhotos = ({ photos }) => Boolean(!photos.images.length)
 
 function fetchCyclingData (data) {
   return {
@@ -28,7 +31,7 @@ function fetchCyclingData (data) {
 }
 
 export const asyncFetchCyclingData = () => (dispatch, getState) => {
-  const url = '/api/cycling'
+  const url = apiURL('/api/cycling')
 
   if (shouldFetchCyclingData(getState())) {
     return fetch(url)
@@ -37,7 +40,7 @@ export const asyncFetchCyclingData = () => (dispatch, getState) => {
   }
 }
 
-export const shouldFetchCyclingData = ({ photos }) => Boolean(!photos.images.length)
+const shouldFetchCyclingData = ({ cycling }) => Boolean(!cycling.distance)
 
 function fetchSiteContent (data) {
   return {
@@ -47,7 +50,7 @@ function fetchSiteContent (data) {
 }
 
 export const asyncFetchSiteContent = () => (dispatch, getState) => {
-  const url = '/api/content'
+  const url = apiURL('/api/content')
 
   if (shouldFetchSiteContent(getState())) {
     return fetch(url)
@@ -56,4 +59,4 @@ export const asyncFetchSiteContent = () => (dispatch, getState) => {
   }
 }
 
-export const shouldFetchSiteContent = ({ home }) => Boolean(!home.bio.length)
+const shouldFetchSiteContent = ({ home }) => Boolean(!home.bio.length)
