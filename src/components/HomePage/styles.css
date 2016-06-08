@@ -7,17 +7,12 @@
   letter-spacing: 0.05em;
 }
 
-.bio p {
+.bio {
   hyphens: auto;
 }
 
-.bio p > span,
-.bio p > a {
-  transition: opacity 300ms ease;
-}
-
-.faded p > a,
-.faded p > span {
+.faded > a,
+.faded > span {
   opacity: 0.15;
   color: var(--text-color);
 }

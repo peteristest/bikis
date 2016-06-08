@@ -39,7 +39,7 @@ export default class Toggle extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    const { id, handleOffset, handleToggle } = this.props
+    const { url, handleOffset, handleToggle } = this.props
     const { hover, offset } = this.state
 
     if (prevState.offset !== offset) {
@@ -47,12 +47,12 @@ export default class Toggle extends Component {
     }
 
     if (prevState.hover !== hover) {
-      handleToggle(hover, id)
+      handleToggle(hover, url)
     }
   }
 
   render () {
-    const { label, active, disabled } = this.props
+    const { label, active, disabled, url } = this.props
     const position = this.state.offset ? null : {x: 0, y: 0}
 
     const className = classNames('toggle inline-block', {
@@ -68,11 +68,14 @@ export default class Toggle extends Component {
         dangerouslySetInnerHTML={{ __html: letter.replace(' ', '&nbsp;') }} />
     ))
 
-    return (
+    return url.match(/^http/) ? (
+      <a className='transition-opacity' href={url} target='_blank'>{label}</a>
+    ) : (
       <span
         style={{opacity: active ? 1 : ''}}
         onMouseEnter={this.onToggle.bind(this, true)}
         onMouseLeave={this.onToggle.bind(this, false)}
+        className='transition-opacity'
         >
         <Draggable
           onDrag={this.setOffset.bind(this)}
@@ -89,7 +92,7 @@ export default class Toggle extends Component {
 
 Toggle.propTypes = {
   label: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
   active: PropTypes.bool,
   disabled: PropTypes.bool,
   handleToggle: PropTypes.func,

@@ -95,6 +95,8 @@ a.symbol:after {
   font-size: 5.5rem;
   font-variant: small-caps;
   transform: scale(0.9) translateY(5%);
+  text-indent: 0.5em;
+  margin-left: -0.5em;
 }
 
 .medium-text {

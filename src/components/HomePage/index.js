@@ -2,52 +2,21 @@
  * HomePage
  */
 
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import React, { Component, PropTypes } from 'react'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import ReactTransitionGroup from 'react-addons-transition-group'
 import { browserHistory } from 'react-router'
+import classNames from 'classnames'
+import SimpleMarkdown from 'simple-markdown'
+import R from 'ramda'
+import { slantedText, verticalText } from './../../utils/format'
 
 import './styles.css'
 
 import WorldMap from './../WorldMap'
 import CyclingNotes from './../../containers/CyclingNotes/'
 import WindowWithCursor from './../WindowWithCursor'
-import Toggle from './../Toggle'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import ReactTransitionGroup from 'react-addons-transition-group'
-import classNames from 'classnames'
-
-const Bio = ({className = '', handleRelease, handleToggle, handleOffset, activeToggle, dragging}) => {
-  const toggle = (label, id) => {
-    id = id || label
-    const disabled = Boolean(dragging && activeToggle && id !== activeToggle)
-    const active = id === activeToggle
-
-    return (
-      <Toggle
-        label={label}
-        id={id}
-        active={active}
-        disabled={disabled}
-        handleToggle={handleToggle}
-        handleRelease={handleRelease}
-        handleOffset={handleOffset} />
-    )
-  }
-
-  return (
-    <div className={className} style={{lineHeight: '1.5em', fontSize: '2em', marginTop: 0, textAlign: 'left'}}>
-      <p className='mt0' >
-        <span>Creative Technologist, Designer and Engineer.</span> <a href='//asketicsf.com' target='_blank'>Asketic</a> <span>Co-founder.</span>
-        <span className='large-text text-pb distort block center right'>Peteris<br /><span style={{marginLeft: '-0.5em'}}>Bikis</span> </span>
-        <span>&nbsp; I am a</span> {toggle('venn diagram', 'venn')} <span>of design,</span> {toggle('technology')}<span>, </span>{toggle('the Internet', 'internet')}<span>,</span>
-        &nbsp;{toggle('travel', 'travelMap')}<span>, </span> {toggle('cycling', 'routeMap')}<span>, and</span> {toggle('photography')}<span>.</span>
-        <span> Currently obsessed with React and functional
-        programming. Interested in</span> {toggle('AI')}<span>, neural networks
-        and a</span> {toggle('weirder')} <span>future.</span>
-      </p>
-    </div>
-  )
-}
+import Bio from './../Bio'
 
 const Tab = () => <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
@@ -77,6 +46,11 @@ const SvgFilters = () => {
   )
 }
 
+const parseMd = R.compose(
+  SimpleMarkdown.defaultOutput,
+  SimpleMarkdown.defaultBlockParse
+)
+
 class HomePage extends Component {
 
   constructor (props) {
@@ -87,9 +61,9 @@ class HomePage extends Component {
     }
   }
 
-  handleToggle (hover, prop) {
+  handleToggle (hover, url) {
     // Update history
-    browserHistory.push(hover ? `/${prop}` : '')
+    browserHistory.push(hover ? url : '')
   }
 
   handleOffset (offset) {
@@ -109,24 +83,20 @@ class HomePage extends Component {
   }
 
   render () {
-    const { data: { color, work, awards }, routeParams: { splat }, location: { pathname } } = this.props
-
+    const { color, work, awards, bio, contact, footer, activeComponent, routeMap, travelMap } = this.props
     const { dragging } = this.state
 
-    const hover = pathname.replace(/^\//, '')
-    const routeMap = (splat === 'routeMap')
-    const travelMap = (splat === 'travelMap')
     const mapType = routeMap ? 'route' : 'cities'
     const mapVisible = Boolean(travelMap || routeMap)
 
-    const bioClassName = classNames('max-width', {'faded': hover || dragging}, {'disabled': dragging})
-    const mapClassName = classNames('component map fixed abs-center z1', {'fuzzy': mapVisible})
+    const bioClassName = classNames('max-width', {
+      'faded': Boolean(activeComponent) || dragging,
+      'disabled': dragging
+    })
+    const mapClassName = classNames('component map fixed abs-center z1', {
+      'fuzzy': mapVisible
+    })
     const offset = this.state.offset * 0.2
-
-    const titleAwards = 'Awards'
-    const textAwards = titleAwards.split('').map((character, i) => (
-      character + Array(titleAwards.length - i + (i ? 0 : 1)).fill('&nbsp;').join('') + '<br />'
-    )).join('')
 
     // Safari is dishonest about supporting SVG filters
     const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)
@@ -135,9 +105,10 @@ class HomePage extends Component {
     return (
       <div className={className}>
         {!isSafari && <SvgFilters />}
-        <div className='bio relative z2 height-100 px2 py1' style={{maxWidth: '1400px'}}>
+        <div className='relative z2 height-100 px2 py1' style={{maxWidth: '1400px'}}>
           <Bio
-            activeToggle={hover}
+            content={bio}
+            activeToggle={`/${activeComponent}`}
             dragging={dragging}
             handleOffset={this.handleOffset.bind(this)}
             handleToggle={this.handleToggle.bind(this)}
@@ -159,7 +130,7 @@ class HomePage extends Component {
                 <span
                   className='medium-text text-awards distort right-align block absolute left-0'
                   style={{lineHeight: '0.55em'}}
-                  dangerouslySetInnerHTML={{ __html: textAwards }} />
+                  dangerouslySetInnerHTML={{ __html: slantedText('Awards') }} />
                 <br />
                 <span className='h4 font-alternative inline-block' style={{lineHeight: '1.5em'}}>
                   {awards.map((award, i) => (
@@ -169,21 +140,21 @@ class HomePage extends Component {
               </p>
             </div>
           </div>
-          <p className='clearfix center mt3'>
+          <div className='clearfix center mt3'>
             <span
               className='caps medium-text text-sayhello distort center inline-block'
               style={{lineHeight: '0.75em'}}
-              dangerouslySetInnerHTML={{ __html: 'Say Hello'.split('').join('<br />') }}
+              dangerouslySetInnerHTML={{ __html: verticalText('Say Hello') }}
             /><br />
-            <span className='mt3 font-alternative inline-block' style={{lineHeight: '1.5em'}}>
-              <a href='mailto:hi@peter.is'>hi@peter.is</a><br />
-              <a href='//twitter.com/peteris'>@peteris</a><br />
-              +44 (0)7 534 72 9985<br />
-            </span>
-          </p>
-          <p className='small font-monospace pb3 mt4 max-width-2 mx-auto center'>
-            &copy; Peteris Bikis 2016. Built using React, Redux, Basscss and D3. <br />Illustrations used with permission by <a href='http://vincemckelvie.tumblr.com/'>Vince McKelvie</a>.
-          </p>
+            <div
+              className='mt3 font-alternative inline-block'
+              style={{lineHeight: '1.5em'}}>
+              {parseMd(contact)}
+            </div>
+          </div>
+          <div
+            className='small font-monospace pb3 mt4 max-width-2 mx-auto center'
+            dangerouslySetInnerHTML={{ __html: footer }} />
         </div>
         <WorldMap
           visible={mapVisible}
@@ -205,12 +176,16 @@ class HomePage extends Component {
   }
 }
 
-function mapStateToProps (state) {
-  return {
-    data: state.home
-  }
+HomePage.propTypes = {
+  color: PropTypes.string.isRequired,
+  work: PropTypes.arrayOf(PropTypes.string).isRequired,
+  awards: PropTypes.arrayOf(PropTypes.string).isRequired,
+  bio: PropTypes.string.isRequired,
+  contact: PropTypes.string.isRequired,
+  footer: PropTypes.string.isRequired,
+  activeComponent: PropTypes.string,
+  routeMap: PropTypes.bool,
+  travelMap: PropTypes.bool
 }
 
-export default connect(
-  mapStateToProps
-)(HomePage)
+export default HomePage
