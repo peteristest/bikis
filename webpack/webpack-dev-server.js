@@ -1,7 +1,7 @@
 const Express = require('express');
 const webpack = require('webpack');
 
-const config = require('./../src/env.js');
+const config = require('./../src/config.js');
 const webpackConfig = require('./webpack.dev.babel.js');
 const compiler = webpack(webpackConfig);
 

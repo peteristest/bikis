@@ -1,7 +1,5 @@
 import fetch from 'isomorphic-fetch'
-
 import { FETCH_INSTAGRAM_PHOTOS, FETCH_CYCLING_DATA } from './../constants/AppConstants'
-import { IG_ACCESS_TOKEN, STRAVA_ACCESS_TOKEN } from './../config'
 
 function fetchInstagramPhotos (data) {
   return {

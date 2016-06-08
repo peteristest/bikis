@@ -13,7 +13,7 @@ import { match, RouterContext } from 'react-router'
 import createHistory from 'react-router/lib/createMemoryHistory'
 import { Provider } from 'react-redux'
 
-import env from './../env'
+import config from './../config'
 import configureStore from './../store'
 import getRoutes from './../routes'
 import Html from './../helpers/Html'
@@ -105,10 +105,10 @@ app.use((req, res) => {
   handleRequest(req, res)
 })
 
-server.listen(env.port, '0.0.0.0', (err) => {
+server.listen(config.port, '0.0.0.0', (err) => {
   if (err) {
     console.error(err)
   }
-  console.info('----\n==> ✅  %s is running', env.app)
-  console.info('==> 💻  Open http://%s:%s in a browser to view the app.', env.host, env.port)
+  console.info('----\n==> ✅  %s is running', config.app)
+  console.info('==> 💻  Open http://%s:%s in a browser to view the app.', config.host, config.port)
 })

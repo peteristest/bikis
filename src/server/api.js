@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
-import { IG_ACCESS_TOKEN, STRAVA_ACCESS_TOKEN } from './../config'
 
-export const fetchInstagramPhotos = (req, res, next) => {
+export function fetchInstagramPhotos (req, res, next) {
+  const { IG_ACCESS_TOKEN } = process.env
   const api = 'https://api.instagram.com/v1/users/self/media/recent'
   const url = `${api}?access_token=${IG_ACCESS_TOKEN}`
 
@@ -16,8 +16,9 @@ export const fetchInstagramPhotos = (req, res, next) => {
     })
 }
 
-export const fetchStravaData = (req, res, next) => {
+export function fetchStravaData (req, res, next) {
   const api = 'https://www.strava.com/api/v3/athlete/activities'
+  const { STRAVA_ACCESS_TOKEN } = process.env
   const url = `${api}?access_token=${STRAVA_ACCESS_TOKEN}`
 
   fetch(url)

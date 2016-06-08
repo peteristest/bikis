@@ -2,7 +2,7 @@
  * DEVELOPMENT WEBPACK CONFIGURATION
  */
 
-const config = require('./../src/env.js');
+const config = require('./../src/config.js');
 const path = require('path');
 const webpack = require('webpack');
 

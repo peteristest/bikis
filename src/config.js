@@ -1,10 +1,11 @@
+require('dotenv').config()
 const host = process.env.HOST || 'localhost'
 const port = process.env.PORT || 8080
 
 const environment = {
   development: {
     isProduction: false,
-    apiHost: 'http://localhost:8888'
+    apiHost: `http://${host}:${port}`
   },
   production: {
     isProduction: true,

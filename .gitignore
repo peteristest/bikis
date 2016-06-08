@@ -4,4 +4,4 @@ npm-debug.log
 webpack-assets.json
 assets/
 dist/
-src/config.js
+.env
