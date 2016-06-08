@@ -9,7 +9,8 @@ function fetchInstagramPhotos (data) {
   }
 }
 
-const apiURL = (url) => config.apiHost + url
+const isServerSide = typeof window === 'undefined'
+const apiURL = (url) => isServerSide ? (config.apiHost + url) : url
 
 export const asyncFetchInstagramPhotos = () => (dispatch, getState) => {
   const url = apiURL('/api/photos')
