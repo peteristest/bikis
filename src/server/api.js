@@ -29,3 +29,12 @@ export function fetchStravaData (req, res, next) {
       date: data[0].start_date
     }))
 }
+
+export function fetchContentfulData (req, res, next) {
+  const { CONTENTFUL_ACCESS_TOKEN, CONTENTFUL_SPACE_ID, CONTENTFUL_ENTRY_ID } = process.env
+  const url = `https://cdn.contentful.com/spaces/${CONTENTFUL_SPACE_ID}/entries/${CONTENTFUL_ENTRY_ID}?access_token=${CONTENTFUL_ACCESS_TOKEN}`
+
+  fetch(url)
+    .then((response) => response.json())
+    .then((data) => res.json(data.fields))
+}

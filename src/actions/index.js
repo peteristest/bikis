@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch'
-import { FETCH_INSTAGRAM_PHOTOS, FETCH_CYCLING_DATA } from './../constants/AppConstants'
+import { FETCH_INSTAGRAM_PHOTOS, FETCH_CYCLING_DATA, FETCH_SITE_CONTENT } from './../constants/AppConstants'
 
 function fetchInstagramPhotos (data) {
   return {
@@ -38,3 +38,22 @@ export const asyncFetchCyclingData = () => (dispatch, getState) => {
 }
 
 export const shouldFetchCyclingData = ({ photos }) => Boolean(!photos.images.length)
+
+function fetchSiteContent (data) {
+  return {
+    type: FETCH_SITE_CONTENT,
+    data
+  }
+}
+
+export const asyncFetchSiteContent = () => (dispatch, getState) => {
+  const url = '/api/content'
+
+  if (shouldFetchSiteContent(getState())) {
+    return fetch(url)
+      .then((response) => response.json())
+      .then((data) => dispatch(fetchSiteContent(data)))
+  }
+}
+
+export const shouldFetchSiteContent = ({ home }) => Boolean(!home.bio.length)

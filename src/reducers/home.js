@@ -1,6 +1,10 @@
+import assignToEmpty from '../utils/assign'
+import { FETCH_SITE_CONTENT } from '../constants/AppConstants'
+
 const initialState = {
-  projectName: 'peter.is',
-  ownerName: 'peteris',
+  bio: '',
+  footer: '',
+  contact: '',
   color: 'rgb(153, 102, 255)',
   disciplines: [
     'Design', // ✏️
@@ -16,8 +20,16 @@ const initialState = {
   ]
 }
 
-function home (state = initialState, action) {
-  return state
+function homeReducer (state = initialState, action) {
+  Object.freeze(state)
+  switch (action.type) {
+    case FETCH_SITE_CONTENT:
+
+      return assignToEmpty(state, action.data)
+
+    default:
+      return state
+  }
 }
 
-export default home
+export default homeReducer

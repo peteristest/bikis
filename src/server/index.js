@@ -17,7 +17,7 @@ import config from './../config'
 import configureStore from './../store'
 import getRoutes from './../routes'
 import Html from './../helpers/Html'
-import { fetchInstagramPhotos, fetchStravaData } from './api.js'
+import { fetchInstagramPhotos, fetchStravaData, fetchContentfulData } from './api.js'
 
 const pretty = new PrettyError()
 const app = new Express()
@@ -31,6 +31,7 @@ app.use('/dist', Express.static(path.join(__dirname, '..', '..', 'dist')))
 // Dead simple API functionality
 app.get('/api/photos', fetchInstagramPhotos)
 app.get('/api/cycling', fetchStravaData)
+app.get('/api/content', fetchContentfulData)
 
 const handleRequest = (req, res) => {
   if (__DEVELOPMENT__) {
