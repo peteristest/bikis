@@ -1,5 +1,6 @@
 const host = process.env.HOST || 'localhost'
 const port = process.env.PORT || 8080
+const apiHost = process.env.API_HOST || 'http://peter.is'
 
 const environment = {
   development: {
@@ -8,7 +9,7 @@ const environment = {
   },
   production: {
     isProduction: true,
-    apiHost: 'http://peter.is'
+    apiHost: apiHost
   }
 }[process.env.NODE_ENV || 'development']
 
