@@ -49,6 +49,30 @@ body.js-fonts-loaded {
   font-family: 'Vollkorn', Georgia, serif;
 }
 
+.cover {
+  background-color: var(--text-color);
+}
+
+.app {
+  display: none;
+}
+
+html {
+  cursor: url(./cursor.png), auto;
+}
+
+body.js-fonts-loaded .app {
+  display: block;
+}
+
+.animate-in .app {
+  animation: fade-in 500ms 0ms var(--ease-out-cubic) both;
+}
+
+body.js-fonts-loaded .cover {
+  animation: fade-out 500ms 200ms var(--ease-out-cubic) both;
+}
+
 a,
 .toggle {
   color: var(--text-color);
@@ -121,4 +145,25 @@ a.symbol:after {
 
 .lh3 {
   line-height: 1.5em;
+}
+
+/* Animations */
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

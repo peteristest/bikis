@@ -22,7 +22,9 @@ const fontObserver = new FontFaceObserver('Vollkorn', {})
 
 fontObserver.check().then(() => {
   document.body.classList.add('js-fonts-loaded')
+  document.body.classList.add('animate-in')
   document.body.classList.remove('no-webfonts')
+  setTimeout(() => { document.body.classList.remove('animate-in') }, 500)
 }, () => {
   document.body.classList.remove('js-fonts-loaded')
 })

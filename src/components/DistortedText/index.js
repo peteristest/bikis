@@ -20,7 +20,7 @@ class DistortedText extends Component {
 
     this.state = {
       animate: false,
-      p: 0,
+      p: 0.5,
       disableFilter: false
     }
 
@@ -33,10 +33,10 @@ class DistortedText extends Component {
     const {p, animate} = this.state
     if (animate) {
       this.setState({
-        p: p + 0.075
+        p: p + 0.2
       })
 
-      window.requestAnimationFrame(this.animate)
+      setTimeout(() => window.requestAnimationFrame(this.animate), 30)
     }
   }
 
@@ -64,10 +64,9 @@ class DistortedText extends Component {
   }
 
   render () {
-    const {content, turbulence = 0.005} = this.props
-
-    const offset = Math.sin(this.state.p) * turbulence
-    const baseFrequency = getBaseFrequency(offset)
+    const {content, animated = true} = this.props
+    const baseFrequency = getBaseFrequency(0)
+    const seed = Math.floor(Math.sin(this.state.p) * 44 + 15)
 
     const distortStyle = this.state.disableFilter ? null : this.distortFilter
     const className = classNames(
@@ -79,8 +78,8 @@ class DistortedText extends Component {
     return (
       <span>
         <span
-          onMouseEnter={this.handleEnter}
-          onMouseLeave={this.handleLeave}
+          onMouseEnter={animated && this.handleEnter}
+          onMouseLeave={animated && this.handleLeave}
           className={className}
           style={distortStyle}
           dangerouslySetInnerHTML={{ __html: content }}/>
@@ -89,7 +88,7 @@ class DistortedText extends Component {
             <defs>
               <filter id={`${this.id}`}>
                 <feTurbulence type='turbulence' baseFrequency={baseFrequency} numOctaves='1' result='warp'></feTurbulence>
-                <feDisplacementMap scale='30' in='SourceGraphic' in2='warp' />
+                <feDisplacementMap scale={seed} in='SourceGraphic' in2='warp' />
               </filter>
             </defs>
           </svg>
@@ -102,7 +101,8 @@ class DistortedText extends Component {
 DistortedText.propTypes = {
   content: PropTypes.string.isRequired,
   turbulence: PropTypes.number,
-  className: PropTypes.string
+  className: PropTypes.string,
+  animated: PropTypes.boolean
 }
 
 export default DistortedText

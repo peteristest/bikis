@@ -9,6 +9,8 @@ import { browserHistory } from 'react-router'
 import classNames from 'classnames'
 import SimpleMarkdown from 'simple-markdown'
 import R from 'ramda'
+import Helmet from 'react-helmet'
+
 import { slantedText, verticalText } from './../../utils/format'
 
 import './styles.css'
@@ -64,7 +66,7 @@ class HomePage extends Component {
 
   handleToggle (hover, url) {
     // Update history
-    browserHistory.push(hover ? url : '')
+    browserHistory.replace(hover ? url : '')
   }
 
   handleOffset (offset) {
@@ -90,7 +92,7 @@ class HomePage extends Component {
     const mapType = routeMap ? 'route' : 'cities'
     const mapVisible = Boolean(travelMap || routeMap)
 
-    const bioClassName = classNames('max-width', {
+    const bioClassName = classNames('max-width mb3', {
       'faded': Boolean(activeComponent) || dragging,
       'disabled': dragging
     })
@@ -100,9 +102,10 @@ class HomePage extends Component {
     const offset = this.state.offset * 0.2
 
     return (
-      <div className='home height-11'>
+      <div>
+        <Helmet title='Peteris Bikis – Designer and Engineer' />
         <SvgFilters />
-        <div className='relative z2 height-100 px2 py1' style={{maxWidth: '1400px'}}>
+        <div className='relative z2 height-100 px2 py1' style={{maxWidth: '1400px', overflowX: 'hidden'}}>
           <Bio
             content={bio}
             activeToggle={`/${activeComponent}`}
@@ -111,26 +114,24 @@ class HomePage extends Component {
             handleToggle={this.handleToggle}
             handleRelease={this.resetState}
             className={bioClassName} />
-          <div className='clearfix mx-auto relative flex flex-wrap'>
-            <p className='pl3'>
+          <div className='clearfix mx-auto relative flex flex-wrap mb3'>
+            <div className='pl3 mt2 mb3' style={{minWidth: '45%'}}>
               <DistortedText
                 className='medium-text text-work left-align mb2 inline-block absolute top-0 pt1'
                 content='Featured work' />
-              <br />
-              <span className='inline-block h4 font-alternative pl2 lh3'>
+              <span className='inline-block h4 font-alternative pl2 lh3 mt3'>
                 {work.map((project, i) => (
                   <span key={i}>{Array(i + 1).fill(<Tab />)}<a href='#'>{project}</a><br /></span>
                 ))}
               </span>
-            </p>
-            <div className='ml-auto'>
+            </div>
+            <div className='ml-auto mb3'>
               <p className='mr3 ml3 pr3 relative pl4'>
                 <DistortedText
                   className='medium-text text-awards right-align block absolute left-0 lh1'
                   turbulence={0.0015}
                   content={slantedText('Awards')} />
-                <br />
-                <span className='h4 font-alternative inline-block lh3'>
+                <span className='h4 font-alternative inline-block lh3 mt3'>
                   {awards.map((award, i) => (
                     <span key={i}>{Array(i + 1).fill(<Tab />)}{award}<br /></span>
                   ))}
@@ -138,7 +139,7 @@ class HomePage extends Component {
               </p>
             </div>
           </div>
-          <div className='clearfix center mt3'>
+          <div className='clearfix center'>
             <DistortedText
               className='caps medium-text text-sayhello center inline-block lh2'
               turbulence={0.001}
@@ -149,7 +150,8 @@ class HomePage extends Component {
             </div>
           </div>
           <div
-            className='small font-monospace pb3 mt4 max-width-2 mx-auto center'
+            className='small font-monospace pb3 mt4 max-width-2 mx-auto center px1 border-box'
+            style={{maxWidth: '42em'}}
             dangerouslySetInnerHTML={{ __html: footer }} />
         </div>
         <WorldMap

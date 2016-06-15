@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react'
 import SimpleMarkdown from 'simple-markdown'
+import classNames from 'classnames'
 
 import assignToEmpty from './../../utils/assign'
 import Toggle from './../Toggle'
@@ -33,6 +34,7 @@ const getRules = (isToggleDisabled, isToggleActive, toggleProps) => (
         <DistortedText
           className='large-text text-pb block center right transition-opacity'
           turbulence={0.005}
+          animated={false}
           content={output(node.content, state)[0].replace(' ', '<br />')} />
       )
     })
@@ -58,7 +60,7 @@ const Bio = (props) => {
   const reactContent = parseMarkdown(content, rules)
 
   return (
-    <div className={className} style={{lineHeight: '1.5em', fontSize: '2em', marginTop: 0, textAlign: 'left'}}>
+    <div className={classNames('lh3 mt0 h1', className)}>
       {reactContent}
     </div>
   )
