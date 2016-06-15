@@ -121,7 +121,7 @@ class HomePage extends Component {
                 content='Featured work' />
               <span className='inline-block h4 font-alternative pl2 lh3 mt3'>
                 {work.map((project, i) => (
-                  <span key={i}>{Array(i + 1).fill(<Tab />)}<a href='#'>{project}</a><br /></span>
+                  <span key={i}>{Array(i + 1).fill(<Tab />)}<a target='_blank' href={project.split(':')[1]}>{project.split(':')[0]}</a><br /></span>
                 ))}
               </span>
             </div>
