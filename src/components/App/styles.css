@@ -110,3 +110,15 @@ a.symbol:after {
 .normal-text {
   font-size: 1.5rem;
 }
+
+.lh1 {
+  line-height: 0.55em;
+}
+
+.lh2 {
+  line-height: 0.75em;
+}
+
+.lh3 {
+  line-height: 1.5em;
+}

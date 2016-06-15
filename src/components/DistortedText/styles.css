@@ -1,0 +1,39 @@
+.distort-text {
+  cursor: default;
+}
+
+/* Fallbacks */
+
+.text-pb.no-svgfilters,
+.no-webfonts .text-pb {
+  background-image: url(./img/text-peterisbikis.png);
+  padding-top: 0.15em;
+  padding-right: 0.1em;
+  padding-left: 0.1em;
+  margin-top: -0.15em;
+}
+
+.text-work.no-svgfilters,
+.no-webfonts .text-work {
+  background-image: url(./img/text-featuredwork.png);
+}
+
+.text-awards.no-svgfilters,
+.no-webfonts .text-awards {
+  background-image: url(./img/text-awards.png);
+}
+
+.text-sayhello.no-svgfilters,
+.no-webfonts .text-sayhello {
+  background-image: url(./img/text-sayhello.png);
+}
+
+.no-svgfilters,
+.no-webfonts .distort-text {
+  filter: none;
+  -webkit-filter: none;
+  color: transparent;
+  background-size: contain;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+}

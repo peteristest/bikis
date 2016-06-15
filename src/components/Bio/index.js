@@ -3,6 +3,7 @@ import SimpleMarkdown from 'simple-markdown'
 
 import assignToEmpty from './../../utils/assign'
 import Toggle from './../Toggle'
+import DistortedText from './../DistortedText'
 
 const { defaultRules } = SimpleMarkdown
 
@@ -29,9 +30,10 @@ const getRules = (isToggleDisabled, isToggleActive, toggleProps) => (
     }),
     u: assignToEmpty(defaultRules.u, {
       react: (node, output, state) => (
-        <span
-          className='large-text text-pb distort block center right transition-opacity'
-          dangerouslySetInnerHTML={{ __html: output(node.content, state)[0].replace(' ', '<br />') }} />
+        <DistortedText
+          className='large-text text-pb block center right transition-opacity'
+          turbulence={0.005}
+          content={output(node.content, state)[0].replace(' ', '<br />')} />
       )
     })
   })
@@ -51,6 +53,7 @@ const Bio = (props) => {
 
   const isToggleDisabled = (url) => (dragging && activeToggle && url !== activeToggle)
   const isToggleActive = (url) => (url === activeToggle)
+
   const rules = getRules(isToggleDisabled, isToggleActive, toggleProps)
   const reactContent = parseMarkdown(content, rules)
 

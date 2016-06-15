@@ -17,6 +17,7 @@ import WorldMap from './../WorldMap'
 import CyclingNotes from './../../containers/CyclingNotes/'
 import WindowWithCursor from './../WindowWithCursor'
 import Bio from './../Bio'
+import DistortedText from './../DistortedText'
 
 const Tab = () => <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
@@ -31,10 +32,6 @@ const SvgFilters = () => {
           <stop offset='5%' stopColor='rgb(132, 73, 249)' />
           <stop offset='95%' stopColor='#FF6' />
         </linearGradient>
-        <filter id='filter'>
-          <feTurbulence type='turbulence' baseFrequency='0.00001 0.018001' numOctaves='1' result='warp'></feTurbulence>
-          <feDisplacementMap scale='30' in='SourceGraphic' in2='warp' />
-        </filter>
         {[2, 3, 2, 3, 1].map((scale, i) => (
           <filter id={`fuzzy-0${i + 1}`} key={i}>
             <feTurbulence id='turbulence' baseFrequency={baseFrequency} numOctaves='3' result={filterResult} seed={i}/>
@@ -59,6 +56,10 @@ class HomePage extends Component {
       offset: 0,
       dragging: false
     }
+
+    this.handleOffset = this.handleOffset.bind(this)
+    this.handleToggle = this.handleToggle.bind(this)
+    this.resetState = this.resetState.bind(this)
   }
 
   handleToggle (hover, url) {
@@ -98,28 +99,25 @@ class HomePage extends Component {
     })
     const offset = this.state.offset * 0.2
 
-    // Safari is dishonest about supporting SVG filters
-    const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)
-    const className = classNames('home height-11', {'no-svgfilters': isSafari})
-
     return (
-      <div className={className}>
-        {!isSafari && <SvgFilters />}
+      <div className='home height-11'>
+        <SvgFilters />
         <div className='relative z2 height-100 px2 py1' style={{maxWidth: '1400px'}}>
           <Bio
             content={bio}
             activeToggle={`/${activeComponent}`}
             dragging={dragging}
-            handleOffset={this.handleOffset.bind(this)}
-            handleToggle={this.handleToggle.bind(this)}
-            handleRelease={this.resetState.bind(this)}
+            handleOffset={this.handleOffset}
+            handleToggle={this.handleToggle}
+            handleRelease={this.resetState}
             className={bioClassName} />
           <div className='clearfix mx-auto relative flex flex-wrap'>
             <p className='pl3'>
-              <span className='medium-text text-work distort left-align mb2 inline-block absolute top-0 pt1'>
-                Featured work
-              </span><br />
-              <span className='inline-block h4 font-alternative pl2' style={{lineHeight: '1.5em'}}>
+              <DistortedText
+                className='medium-text text-work left-align mb2 inline-block absolute top-0 pt1'
+                content='Featured work' />
+              <br />
+              <span className='inline-block h4 font-alternative pl2 lh3'>
                 {work.map((project, i) => (
                   <span key={i}>{Array(i + 1).fill(<Tab />)}<a href='#'>{project}</a><br /></span>
                 ))}
@@ -127,12 +125,12 @@ class HomePage extends Component {
             </p>
             <div className='ml-auto'>
               <p className='mr3 ml3 pr3 relative pl4'>
-                <span
-                  className='medium-text text-awards distort right-align block absolute left-0'
-                  style={{lineHeight: '0.55em'}}
-                  dangerouslySetInnerHTML={{ __html: slantedText('Awards') }} />
+                <DistortedText
+                  className='medium-text text-awards right-align block absolute left-0 lh1'
+                  turbulence={0.0015}
+                  content={slantedText('Awards')} />
                 <br />
-                <span className='h4 font-alternative inline-block' style={{lineHeight: '1.5em'}}>
+                <span className='h4 font-alternative inline-block lh3'>
                   {awards.map((award, i) => (
                     <span key={i}>{Array(i + 1).fill(<Tab />)}{award}<br /></span>
                   ))}
@@ -141,14 +139,12 @@ class HomePage extends Component {
             </div>
           </div>
           <div className='clearfix center mt3'>
-            <span
-              className='caps medium-text text-sayhello distort center inline-block'
-              style={{lineHeight: '0.75em'}}
-              dangerouslySetInnerHTML={{ __html: verticalText('Say Hello') }}
-            /><br />
-            <div
-              className='mt3 font-alternative inline-block'
-              style={{lineHeight: '1.5em'}}>
+            <DistortedText
+              className='caps medium-text text-sayhello center inline-block lh2'
+              turbulence={0.001}
+              content={verticalText('Say Hello')} />
+            <br />
+            <div className='mt3 font-alternative inline-block lh3'>
               {parseMd(contact)}
             </div>
           </div>
