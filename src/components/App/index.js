@@ -9,8 +9,6 @@ import { provideHooks } from 'redial'
 
 import { asyncFetchInstagramPhotos, asyncFetchCyclingData, asyncFetchSiteContent } from '../../actions'
 
-import 'normalize.css/normalize.css'
-import 'basscss/css/basscss.min.css'
 import './styles.css'
 
 class App extends Component {

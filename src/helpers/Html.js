@@ -37,9 +37,9 @@ class Html extends Component {
 
           {Object.keys(assets.styles).length === 0 ? <style dangerouslySetInnerHTML={{ __html: require('./../components/App/styles.css') }} /> : null}
 
-          <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500|Karla:400,700|Roboto+Mono|Vollkorn:400,700' rel='stylesheet' type='text/css' />
+          <link href='https://fonts.googleapis.com/css?family=Karla:400|Roboto+Mono|Vollkorn:400,700' rel='stylesheet' type='text/css' />
         </head>
-        <body>
+        <body className='no-webfonts'>
           <div id='app' dangerouslySetInnerHTML={{__html: content}}/>
           <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet='UTF-8'/>
           <script src={assets.javascript.main} charSet='UTF-8'/>

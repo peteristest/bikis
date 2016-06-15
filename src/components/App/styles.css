@@ -1,6 +1,10 @@
 /* Do not write any CSS in here, add it to the appropriate module or make a new one */
 @charset 'UTF-8';
 
+/* Modules */
+@import 'normalize.css/normalize.css';
+@import 'basscss/css/basscss.min.css';
+
 /* Global Typography */
 @import './typography.css';
 
@@ -35,14 +39,14 @@ body {
 }
 
 body {
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: Georgia, 'Times New Roman', serif;
   color: var(--text-color);
   line-height: 1.9em;
   background-color: var(--background-color);
 }
 
 body.js-fonts-loaded {
-  font-family: 'Vollkorn', Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: 'Vollkorn', Georgia, serif;
 }
 
 a,

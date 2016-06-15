@@ -50,7 +50,6 @@
 }
 
 @keyframes wave {
-  --degrees: 15deg;
   0% {
     tranform: rotate(0deg);
   }

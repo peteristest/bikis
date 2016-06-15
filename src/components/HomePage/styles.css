@@ -50,7 +50,8 @@
 
 /* Fallbacks */
 
-.no-svgfilters .text-pb {
+.no-svgfilters .text-pb,
+.no-webfonts .text-pb {
   background-image: url(./img/text-peterisbikis.png);
   padding-top: 0.15em;
   padding-right: 0.1em;
@@ -58,19 +59,23 @@
   margin-top: -0.15em;
 }
 
-.no-svgfilters .text-work {
+.no-svgfilters .text-work,
+.no-webfonts .text-work {
   background-image: url(./img/text-featuredwork.png);
 }
 
-.no-svgfilters .text-awards {
+.no-svgfilters .text-awards,
+.no-webfonts .text-awards {
   background-image: url(./img/text-awards.png);
 }
 
-.no-svgfilters .text-sayhello {
+.no-svgfilters .text-sayhello,
+.no-webfonts .text-sayhello {
   background-image: url(./img/text-sayhello.png);
 }
 
-.no-svgfilters .distort {
+.no-svgfilters .distort,
+.no-webfonts .distort {
   filter: none;
   -webkit-filter: none;
   color: transparent;
