@@ -27,6 +27,9 @@ class App extends Component {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual'
     }
+
+    const greeting = require('raw!./peterisbikis.txt')
+    console.log(`%c ${greeting}`, 'color: lime')
   }
 }
 
