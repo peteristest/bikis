@@ -23,7 +23,7 @@ const STYLES = {
     },
     'hidden': {
       rotation: [-80, -20],
-      opacity: 0,
+      opacity: 0.01,
       scale: 10,
       duration: 500
     }
@@ -37,7 +37,7 @@ const STYLES = {
     },
     'hidden': {
       rotation: [-60, -20],
-      opacity: 0,
+      opacity: 0.01,
       scale: 10,
       duration: 500
     }
@@ -125,7 +125,7 @@ class WorldMap extends Component {
       .append('circle')
       .attr('cx', (d) => projection(d)[0])
       .attr('cy', (d) => projection(d)[1])
-      .attr('opacity', opacity)
+      .attr('opacity', opacity === 0.01 ? 0 : opacity)
       .attr('r', radius)
       .attr('fill', color)
   }
