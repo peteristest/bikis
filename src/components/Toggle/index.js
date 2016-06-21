@@ -72,7 +72,7 @@ export default class Toggle extends Component {
       <a className='transition-opacity' href={url} target='_blank'>{label}</a>
     ) : (
       <span
-        style={{opacity: active ? 1 : ''}}
+        style={active ? {opacity: 1} : {}}
         onMouseEnter={this.onToggle.bind(this, true)}
         onMouseLeave={this.onToggle.bind(this, false)}
         className='transition-opacity'

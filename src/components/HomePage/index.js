@@ -65,8 +65,17 @@ class HomePage extends Component {
   }
 
   handleToggle (hover, url) {
+    // todo: clean up
     // Update history
-    browserHistory.replace(hover ? url : '')
+    if (!hover && this.props.activeComponent && this.currentToggle !== url) {
+      // Ignore late mouse leave update
+    } else {
+      browserHistory.replace(hover ? url : '')
+    }
+
+    if (hover) {
+      this.currentToggle = url
+    }
   }
 
   handleOffset (offset) {

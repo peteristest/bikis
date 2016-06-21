@@ -185,7 +185,9 @@ class WorldMap extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    (this.props.visible !== prevProps.visible || (this.props.visible && this.props.offset !== prevProps.offset)) && this.update()
+    (this.props.visible !== prevProps.visible ||
+     (this.props.visible && this.props.offset !== prevProps.offset) ||
+     (this.props.type !== prevProps.type)) && this.update()
   }
 
   render () {

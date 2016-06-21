@@ -14,7 +14,6 @@
   background: var(--background-color);
   box-shadow: var(--text-color) 2px 2px 0px;
 
-  pointer-events: none;
   transform: translate3d(0,0,0);
 }
 
