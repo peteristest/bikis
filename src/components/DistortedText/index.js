@@ -13,10 +13,7 @@ class DistortedText extends Component {
   constructor (props) {
     super(props)
 
-    const id = `filter${Math.random()}`
-
-    this.id = id
-    this.distortFilter = getDistortFilter(id)
+    this.distortFilter = getDistortFilter(this.props.id)
 
     this.state = {
       animate: false,
@@ -86,7 +83,7 @@ class DistortedText extends Component {
         {!this.state.disableFilter && (
           <svg xmlns='http://www.w3.org/2000/svg' version='1.1' className='absolute'>
             <defs>
-              <filter id={`${this.id}`}>
+              <filter id={this.props.id}>
                 <feTurbulence type='turbulence' baseFrequency={baseFrequency} numOctaves='1' result='warp'></feTurbulence>
                 <feDisplacementMap scale={seed} in='SourceGraphic' in2='warp' />
               </filter>
@@ -99,6 +96,7 @@ class DistortedText extends Component {
 }
 
 DistortedText.propTypes = {
+  id: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   turbulence: PropTypes.number,
   className: PropTypes.string,

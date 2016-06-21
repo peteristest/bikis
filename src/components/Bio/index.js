@@ -32,6 +32,7 @@ const getRules = (isToggleDisabled, isToggleActive, toggleProps) => (
     u: assignToEmpty(defaultRules.u, {
       react: (node, output, state) => (
         <DistortedText
+          id='name'
           className='large-text text-pb block center right transition-opacity'
           turbulence={0.005}
           animated={false}

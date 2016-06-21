@@ -20,6 +20,8 @@ class WindowWithCursor extends Component {
       xCursor: 50,
       yCursor: 0
     }
+
+    this.timeouts = []
   }
 
   componentDidMount () {
@@ -32,34 +34,43 @@ class WindowWithCursor extends Component {
       xCursor: 10 - 20 * m
     })
 
-    setTimeout(() => {
+    const t01 = setTimeout(() => {
       this.setState({
         x: (50 + Math.random() * 50) * m,
         y: 0
       })
     }, delay + transitionTime)
 
-    setTimeout(() => {
+    const t02 = setTimeout(() => {
       this.setState({
         xCursor: 100,
         yCursor: 400
       })
     }, delay + transitionTime * 2)
+
+    this.timeouts = [t01, t02, ...this.timeouts]
   }
 
   componentWillLeave (cb) {
-    this.setState({
+    const t03 = this.setState({
       xCursor: 10,
       yCursor: 60
     })
 
-    setTimeout(() => {
+    const t04 = setTimeout(() => {
       this.setState({
         y: 450
       })
     }, 400)
 
-    setTimeout(cb, 1200)
+    const t05 = setTimeout(cb, 1200)
+
+    this.timeouts = [t03, t04, t05, ...this.timeouts]
+  }
+
+  componentWillUnmount () {
+    // Clear timeouts
+    this.timeouts.map((t) => clearTimeout(t))
   }
 
   render () {
