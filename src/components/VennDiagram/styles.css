@@ -49,6 +49,14 @@
   transition: transform 300ms 150ms var(--ease-out-cubic);
 }
 
+.venn-circle path {
+  fill: rgba(106, 0, 199, 0.2);
+}
+
+.venn-circle:nth-child(2n) path {
+  fill: rgba(106, 0, 199, 0.4);
+}
+
 @keyframes wave {
   0% {
     tranform: rotate(0deg);

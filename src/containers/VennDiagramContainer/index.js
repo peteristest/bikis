@@ -9,14 +9,30 @@ import VennDiagram from './../../components/VennDiagram'
 
 class VennDiagarmContainer extends Component {
 
+  constructor (props) {
+    super(props)
+    this.state = {
+      width: 0,
+      height: 0
+    }
+  }
+
+  componentDidMount () {
+    this.setState({
+      width: window.document.documentElement.clientWidth,
+      height: window.document.documentElement.clientHeight
+    })
+  }
+
   render () {
     const { disciplines } = this.props
     const sizeLarge = 9
     const sizeSmall = 3
 
-    const { clientWidth, clientHeight } = window.document.documentElement
-    const w = clientWidth * 0.8 * 0.8
-    const h = clientHeight * 0.7 * 0.8
+    const { width, height } = this.state
+
+    const w = width * 0.8 * 0.8
+    const h = height * 0.7 * 0.8
 
     return (
       <VennDiagram
