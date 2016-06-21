@@ -5,7 +5,7 @@ const initialState = {
   bio: '',
   footer: '',
   contact: '',
-  color: 'rgb(153, 102, 255)',
+  color: 'rgb(106, 0, 199)',
   disciplines: [
     'Design', // ✏️
     'Tech', // 💾

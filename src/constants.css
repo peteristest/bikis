@@ -3,7 +3,7 @@
 :root {
   /* Color definitions */
   --red: #EC3338;
-  --blue: #5934F6;
+  --blue: rgb(106, 0, 199);
   --purple: rgb(153, 102, 255);
   --purple2: rgb(132, 73, 249);
   --beige: #f9e3d0;
