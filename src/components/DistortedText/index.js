@@ -89,7 +89,7 @@ class DistortedText extends Component {
     const className = classNames(
       this.props.className,
       'distort-text',
-      {'no-svgfilters': this.state.disableFilter}
+      {'distort-text-fallback': this.state.disableFilter}
     )
 
     return (

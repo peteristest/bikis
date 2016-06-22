@@ -118,35 +118,6 @@ a.symbol:after {
   transform: translate3d(-50%,-50%,0);
 }
 
-/* Bio styles */
-.large-text {
-  font-size: 5.5rem;
-  font-variant: small-caps;
-  transform: scale(0.9) translateY(5%);
-  text-indent: 0.5em;
-  margin-left: -0.5em;
-}
-
-.medium-text {
-  font-size: 2.5rem;
-}
-
-.normal-text {
-  font-size: 1.5rem;
-}
-
-.lh1 {
-  line-height: 0.55em;
-}
-
-.lh2 {
-  line-height: 0.75em;
-}
-
-.lh3 {
-  line-height: 1.5em;
-}
-
 /* Animations */
 @keyframes fade-in {
   0% {

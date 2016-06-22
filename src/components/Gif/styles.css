@@ -1,5 +1,9 @@
 @import './../../constants.css';
 
+.gif-image {
+  max-width: 80vw;
+}
+
 .gif.visualisation-enter.visualisation-enter-active,
 .gif.visualisation-leave.visualisation-leave-active {
   transition: opacity 300ms var(--ease-out-cubic);

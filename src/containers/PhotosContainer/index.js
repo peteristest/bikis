@@ -20,7 +20,7 @@ const Photo = ({delay, transform, url, bgOffset}) => {
   const supportsMixBlendMode = 'CSS' in window && 'supports' in window.CSS && window.CSS.supports('mix-blend-mode', 'screen')
   return (
     <span
-      className='image-container inline-block left-0 top-0 absolute'
+      className='image-container inline-block left-0 top-0 fixed'
       style={{transitionDelay: `${delay}ms`}}>
       <span className='image relative inline-block' style={{ transform }}>
         <img

@@ -67,7 +67,7 @@ class HomePage extends Component {
   handleToggle (hover, url) {
     // todo: clean up
     // Update history
-    if (!hover && this.props.activeComponent && this.currentToggle !== url) {
+    if (!hover && this.props.activeComponent && this.currentToggle !== url && !this.isTouchDevice) {
       // Ignore late mouse leave update
     } else {
       browserHistory.replace(hover ? url : '')
@@ -92,6 +92,10 @@ class HomePage extends Component {
     })
 
     browserHistory.push('/')
+  }
+
+  componentDidMount () {
+    this.isTouchDevice = 'ontouchstart' in document.documentElement
   }
 
   render () {
@@ -139,21 +143,21 @@ class HomePage extends Component {
               {routeMap && <WindowWithCursor><CyclingNotes /></WindowWithCursor>}
             </ReactTransitionGroup>
           </Bio>
-          <div className='clearfix mx-auto relative flex flex-wrap mb3 mt4'>
-            <div className='pl3 mt2 mb3' style={{minWidth: '45%'}}>
+          <div className='clearfix mx-auto relative flex flex-wrap mb3 mt3'>
+            <div className='mx-auto sm-mx0 sm-pl3 mt2 mb3' style={{minWidth: '45%'}}>
               <DistortedText
                 id='work'
                 url={activeComponent}
                 className='medium-text text-work left-align mb2 inline-block absolute top-0 pt1'
                 content='Featured work' />
-              <span className='inline-block h4 font-alternative pl2 lh3 mt3'>
+              <span className='inline-block h4 font-alternative sm-pl2 lh3 mt3'>
                 {work.map((project, i) => (
                   <span key={i}>{Array(i + 1).fill(<Tab />)}<a target='_blank' href={project.split('|')[1]}>{project.split('|')[0]}</a><br /></span>
                 ))}
               </span>
             </div>
-            <div className='ml-auto mb3'>
-              <p className='ml3 pr3 relative pl4'>
+            <div className='mx-auto sm-ml-auto mb3'>
+              <p className='sm-ml3 sm-pr3 relative pl4'>
                 <DistortedText
                   id='awards'
                   url={activeComponent}
@@ -176,7 +180,7 @@ class HomePage extends Component {
               turbulence={0.001}
               content={verticalText('Say Hello')} />
             <br />
-            <div className='mt3 font-alternative inline-block lh3'>
+            <div className='mt3 font-alternative inline-block lh3 h4'>
               {parseMd(contact)}
             </div>
           </div>

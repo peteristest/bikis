@@ -21,6 +21,13 @@ import getRoutes from './routes'
 const fontObserver = new FontFaceObserver('Vollkorn', {})
 
 fontObserver.check().then(() => {
+  // Disable SVG filters in Safari
+  const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)
+  const isIE = /Edge|Trident|MSIE/.test(navigator.userAgent)
+  if (isSafari || isIE) {
+    document.body.classList.add('no-svgfilters')
+  }
+
   document.body.classList.add('js-fonts-loaded')
   document.body.classList.add('animate-in')
   document.body.classList.remove('no-webfonts')

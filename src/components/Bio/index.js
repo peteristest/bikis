@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import SimpleMarkdown from 'simple-markdown'
 import classNames from 'classnames'
+import Tappable from 'react-tappable'
 
 import assignToEmpty from './../../utils/assign'
 import Toggle from './../Toggle'
@@ -33,7 +34,7 @@ const getRules = (isToggleDisabled, isToggleActive, toggleProps, activeToggle) =
       react: (node, output, state) => (
         <DistortedText
           id='name'
-          className='large-text text-pb block center right'
+          className='large-text text-pb block center right no-pointer-events'
           url={activeToggle}
           turbulence={0.005}
           animated={false}
@@ -61,13 +62,17 @@ const Bio = (props) => {
   const rules = getRules(isToggleDisabled, isToggleActive, toggleProps, activeToggle)
   const reactContent = parseMarkdown(content, rules)
 
+  const coverClassName = classNames('bio-cover transition-opacity fixed top-0 left-0 right-0', {
+    'no-pointer-events': activeToggle === '/'
+  })
+
   return (
     <div className={classNames('lh3 mt0 h1', className)}>
       {reactContent}
       <div className='absolute top-0 left-0 right-0 bottom-0 no-pointer-events' style={{zIndex: 11}}>
         {props.children}
       </div>
-      <div className='bio-cover transition-opacity fixed top-0 left-0 right-0 no-pointer-events' />
+      <Tappable className={coverClassName} onTap={() => handleToggle(false)} />
     </div>
   )
 }

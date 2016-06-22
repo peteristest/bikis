@@ -50,3 +50,7 @@
 .fuzzy {
   animation: fuzzy 300ms infinite;
 }
+
+.no-svgfilters .fuzzy {
+  animation: none;
+}

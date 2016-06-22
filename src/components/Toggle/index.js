@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import Draggable from 'react-draggable'
+import Tappable from 'react-tappable'
 import classNames from 'classnames'
 import './styles.css'
 
@@ -56,7 +57,7 @@ export default class Toggle extends Component {
     const position = this.state.offset ? null : {x: 0, y: 0}
 
     const className = classNames('toggle inline-block', {
-      'toggle-hover': active,
+      'toggle-hover': active || this.state.hover,
       'transition-transform': !disabled
     })
 
@@ -67,24 +68,37 @@ export default class Toggle extends Component {
         dangerouslySetInnerHTML={{ __html: letter.replace(' ', '&nbsp;') }} />
     ))
 
+    const content = (
+      <span className='inline-block'>
+        <span className={className}>{labelContent}</span>
+      </span>
+    )
+
+    const isTouchDevice = 'ontouchstart' in document.documentElement
+
     return url.match(/^http/) ? (
-      <a className='transition-opacity' href={url} target='_blank'>{label}</a>
+      <a
+        href={url} target='_blank'
+        onMouseEnter={() => this.setState({ hover: true })}
+        onMouseLeave={() => this.setState({ hover: false })}
+        className={className}>{label}</a>
     ) : (
-      <span
+      <Tappable
         style={active ? {zIndex: 12} : {}}
         onMouseEnter={this.onToggle.bind(this, true)}
         onMouseLeave={this.onToggle.bind(this, false)}
+        onTap={() => this.onToggle(!this.state.hover)}
         className='relative inline-block'
         >
-        <Draggable
-          onDrag={this.setOffset.bind(this)}
-          onStop={this.resetOffset.bind(this)}
-          position={position}>
-          <span className='inline-block'>
-            <span className={className}>{labelContent}</span>
-          </span>
-        </Draggable>
-      </span>
+        {isTouchDevice ? content : (
+          <Draggable
+            onDrag={this.setOffset.bind(this)}
+            onStop={this.resetOffset.bind(this)}
+            position={position}>
+            {content}
+          </Draggable>
+        )}
+      </Tappable>
     )
   }
 }
