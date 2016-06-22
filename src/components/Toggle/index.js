@@ -57,7 +57,7 @@ export default class Toggle extends Component {
     const position = this.state.offset ? null : {x: 0, y: 0}
 
     const className = classNames('toggle inline-block', {
-      'toggle-hover': active || this.state.hover,
+      'toggle-hover': active,
       'transition-transform': !disabled
     })
 
@@ -79,9 +79,7 @@ export default class Toggle extends Component {
     return url.match(/^http/) ? (
       <a
         href={url} target='_blank'
-        onMouseEnter={() => this.setState({ hover: true })}
-        onMouseLeave={() => this.setState({ hover: false })}
-        className={className}>{label}</a>
+        className='link transition-transform'>{label}</a>
     ) : (
       <Tappable
         style={active ? {zIndex: 12} : {}}

@@ -31,12 +31,12 @@ class VennDiagarmContainer extends Component {
 
     const { width, height } = this.state
 
-    const w = width * 0.8 * 0.8
-    const h = height * 0.7 * 0.8
+    const w = Math.min(width, Math.max(460, width * 0.64))
+    const h = Math.max(460, height * 0.56)
 
     return (
       <VennDiagram
-        intersectLabel={['']}
+        intersectLabel={['◕‿◕']}
         items={disciplines}
         large={sizeLarge}
         small={sizeSmall}

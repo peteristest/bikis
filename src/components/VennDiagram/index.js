@@ -5,9 +5,6 @@ import d3 from 'd3'
 
 import './styles.css'
 
-const c = (o) => `rgba(132, 73, 249,${o}`
-const COLOURS = [c(0.2), c(0.4), c(0.2), c(0.2), c(0.4), c(0.2)]
-
 const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 class VennDiagram extends Component {
@@ -99,13 +96,11 @@ class VennDiagram extends Component {
     const chartItems = [...items.slice(order, items.length), ...items.slice(0, order)]
 
     const chartData = this.getData(chartItems, large, small, intersectLabel)
-    const colours = d3.scale.ordinal().range(COLOURS)
     const vennChart = venn.VennDiagram()
       .wrap(false)
       .width(width)
       .height(height)
       .duration(duration)
-      .colours(colours)
 
     const elem = ReactDOM.findDOMNode(this)
 
@@ -118,6 +113,7 @@ class VennDiagram extends Component {
       .select(elem)
       .selectAll('.venn-circle path')
       .style('fill-opacity', 0.5)
+      .style('fill', 'url(#gradient)')
 
     d3
       .select(elem)

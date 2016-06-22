@@ -10,11 +10,12 @@
 
 .photo-bg {
   background-color: var(--blue);
+  background: linear-gradient(to left, #06f200, #cdc9ff);
   mix-blend-mode: screen;
 }
 
 .image-container img {
-  filter: saturate(0) contrast(1.2);
+  filter: saturate(0) contrast(2);
   width: 12.5vw;
 }
 

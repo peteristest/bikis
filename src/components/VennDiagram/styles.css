@@ -9,9 +9,16 @@
 
 .venn-intersection:last-child {
   transform-origin: 50% 50%;
-  animation: wave 2000ms 0ms infinite linear;
-  font-size: 1.25rem;
-  -webkit-font-smoothing: antialiased;
+  font-size: 0.5rem;
+}
+
+.venn-intersection text {
+  opacity: 0;
+}
+
+.venn-intersection:last-child text {
+  opacity: 1;
+  fill-opacity: 1;
 }
 
 .venn.visualisation-enter.visualisation-enter-active,
@@ -51,6 +58,7 @@
 
 .venn-circle path {
   fill: rgba(106, 0, 199, 0.2);
+  fill: url(#gradient);
 }
 
 .venn-circle:nth-child(2n) path {

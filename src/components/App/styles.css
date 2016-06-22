@@ -83,7 +83,8 @@ a,
 }
 
 a:after,
-.toggle:after {
+.toggle:after,
+a:before {
   content: '';
   display: block;
   border-bottom: 6px solid var(--text-color);
@@ -92,6 +93,21 @@ a:after,
   left: 0;
   right: 0;
   opacity: 0.2;
+  transition: opacity 300ms var(--ease-out-cubic);
+}
+
+a:before {
+  transform: scaleX(0);
+  opacity: 1;
+  transition: transform 300ms var(--ease-out-cubic);
+}
+
+.link:hover {
+  transform: skewY(-10deg);
+}
+
+a:hover:before {
+  transform: scaleX(1);
 }
 
 a.symbol {
