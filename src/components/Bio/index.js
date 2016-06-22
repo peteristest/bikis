@@ -8,7 +8,7 @@ import DistortedText from './../DistortedText'
 
 const { defaultRules } = SimpleMarkdown
 
-const getRules = (isToggleDisabled, isToggleActive, toggleProps) => (
+const getRules = (isToggleDisabled, isToggleActive, toggleProps, activeToggle) => (
   assignToEmpty(defaultRules, {
     em: assignToEmpty(defaultRules.em, {
       match: (source) => /^\*([\s\S]+?)\*/.exec(source),
@@ -32,8 +32,9 @@ const getRules = (isToggleDisabled, isToggleActive, toggleProps) => (
     u: assignToEmpty(defaultRules.u, {
       react: (node, output, state) => (
         <DistortedText
-          id={`name${Math.random() * 100 << 0}`}
+          id='name'
           className='large-text text-pb block center right'
+          url={activeToggle}
           turbulence={0.005}
           animated={false}
           content={output(node.content, state)[0].replace(' ', '<br />')} />
@@ -57,7 +58,7 @@ const Bio = (props) => {
   const isToggleDisabled = (url) => (dragging && activeToggle && url !== activeToggle)
   const isToggleActive = (url) => (url === activeToggle)
 
-  const rules = getRules(isToggleDisabled, isToggleActive, toggleProps)
+  const rules = getRules(isToggleDisabled, isToggleActive, toggleProps, activeToggle)
   const reactContent = parseMarkdown(content, rules)
 
   return (

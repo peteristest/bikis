@@ -142,7 +142,8 @@ class HomePage extends Component {
           <div className='clearfix mx-auto relative flex flex-wrap mb3 mt4'>
             <div className='pl3 mt2 mb3' style={{minWidth: '45%'}}>
               <DistortedText
-                id={`work${Math.random() * 100 << 0}`}
+                id='work'
+                url={activeComponent}
                 className='medium-text text-work left-align mb2 inline-block absolute top-0 pt1'
                 content='Featured work' />
               <span className='inline-block h4 font-alternative pl2 lh3 mt3'>
@@ -154,7 +155,8 @@ class HomePage extends Component {
             <div className='ml-auto mb3'>
               <p className='ml3 pr3 relative pl4'>
                 <DistortedText
-                  id={`awards${Math.random() * 100 << 0}`}
+                  id='awards'
+                  url={activeComponent}
                   className='medium-text text-awards right-align block absolute left-0 lh1'
                   turbulence={0.0015}
                   content={slantedText('Awards')} />
@@ -169,6 +171,7 @@ class HomePage extends Component {
           <div className='clearfix center'>
             <DistortedText
               id='contact'
+              url={activeComponent}
               className='caps medium-text text-sayhello center inline-block lh2'
               turbulence={0.001}
               content={verticalText('Say Hello')} />

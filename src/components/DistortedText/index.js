@@ -4,11 +4,9 @@ import raf from 'raf'
 
 import './styles.css'
 
-const getBaseFrequency = (offset) => `0.00001 ${offset + 0.018001}`
-const getDistortFilter = (id) => {
-  const filter = `url("#${id}")`
-  return {filter: filter, WebkitFilter: filter}
-}
+const FILTER_BASE_FREQUENCY = '0.00001 0.018001'
+const FILTER_SEED_BASE = 15
+const FILTER_SEED_RANGE = 44
 
 class DistortedText extends Component {
   constructor (props) {
@@ -17,7 +15,8 @@ class DistortedText extends Component {
     this.state = {
       animate: false,
       p: 0.5,
-      disableFilter: false
+      disableFilter: false,
+      alternateFilter: true
     }
 
     this.handleEnter = this.handleEnter.bind(this)
@@ -59,14 +58,31 @@ class DistortedText extends Component {
     })
   }
 
+  componentDidUpdate (prevProps) {
+    if (prevProps.url !== this.props.url) {
+      this.setState({ alternateFilter: !this.state.alternateFilter })
+    }
+  }
+
+  getDistortFilter () {
+    const id1 = this.props.id + '1'
+    const id2 = this.props.id + '2'
+    const id = this.state.alternateFilter ? id1 : id2
+
+    const filter = `url("#${id}")`
+    return this.state.disableFilter ? null : {filter: filter, WebkitFilter: filter, willChange: 'filter'}
+  }
+
+  getSeed (percentage) {
+    return (FILTER_SEED_BASE + Math.sin(percentage) * FILTER_SEED_RANGE) << 0
+  }
+
   render () {
     const {content, animated = true} = this.props
-    const baseFrequency = getBaseFrequency(0)
-    const seed = Math.floor(Math.sin(this.state.p) * 44 + 15)
 
-    const id = this.props.id
+    const seed = this.getSeed(this.state.p)
+    const distortStyle = this.getDistortFilter()
 
-    const distortStyle = this.state.disableFilter ? null : getDistortFilter(id)
     const className = classNames(
       this.props.className,
       'distort-text',
@@ -84,8 +100,12 @@ class DistortedText extends Component {
         {!this.state.disableFilter && (
           <svg xmlns='http://www.w3.org/2000/svg' version='1.1' className='absolute'>
             <defs>
-              <filter id={id}>
-                <feTurbulence type='turbulence' baseFrequency={baseFrequency} numOctaves='1' result='warp'></feTurbulence>
+              <filter id={`${this.props.id}1`}>
+                <feTurbulence type='turbulence' baseFrequency={FILTER_BASE_FREQUENCY} numOctaves='1' result='warp'></feTurbulence>
+                <feDisplacementMap scale={seed} in='SourceGraphic' in2='warp' />
+              </filter>
+              <filter id={`${this.props.id}2`}>
+                <feTurbulence type='turbulence' baseFrequency={FILTER_BASE_FREQUENCY} numOctaves='1' result='warp'></feTurbulence>
                 <feDisplacementMap scale={seed} in='SourceGraphic' in2='warp' />
               </filter>
             </defs>
@@ -101,7 +121,9 @@ DistortedText.propTypes = {
   content: PropTypes.string.isRequired,
   turbulence: PropTypes.number,
   className: PropTypes.string,
-  animated: PropTypes.boolean
+  animated: PropTypes.boolean,
+  // todo: readdress
+  url: PropTypes.string
 }
 
 export default DistortedText
