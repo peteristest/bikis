@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import d3 from 'd3'
 import topojson from 'topojson'
+import raf from 'raf'
 
 import './styles.css'
 
@@ -46,11 +47,52 @@ const STYLES = {
 
 class WorldMap extends Component {
 
+  constructor (props) {
+    super(props)
+
+    this.state = {
+      width: 0,
+      height: 0
+    }
+
+    this.update = this.update.bind(this)
+    this.handleResize = this.handleResize.bind(this)
+  }
+
   componentDidMount () {
     require('d3-geo-projection/d3.geo.projection')
+
+    // Listen for browser dimension changes
+    window.addEventListener('resize', this.handleResize)
+    this.handleResize()
+
+    // Draw elements
     const { color, type, visible } = this.props
     const styles = this.getStyles({ type, visible })
     const opacity = styles.opacity
+
+    const elem = ReactDOM.findDOMNode(this.refs.svg)
+    const svg = d3.select(elem)
+
+    this.drawMap(map, {svg, opacity, path: this.path, color})
+    this.plotRoute(route, {svg, opacity, path: this.path, color})
+    this.plotCities(cities, {radius: DOT_RADIUS, svg, opacity, projection: this.projection, color})
+
+    // Register vars
+    this.opacity = opacity
+    this.routeOpacity = 0
+    this.citiesOpacity = 0
+    this.svg = svg
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+  handleResize () {
+    const { type, visible } = this.props
+    const styles = this.getStyles({ type, visible })
+
     const width = Math.min(890, document.documentElement.clientWidth)
     const height = Math.min(500, document.documentElement.clientHeight)
 
@@ -59,22 +101,10 @@ class WorldMap extends Component {
     const projection = this.setProjection(d3, options)
     const path = d3.geo.path().projection(projection)
 
-    // Create d3 SVG
-    const elem = ReactDOM.findDOMNode(this)
-    const svg = d3.select(elem).append('svg')
-                  .attr('width', width)
-                  .attr('height', height)
+    // Update width and height
+    this.setState({ width, height })
 
-    // Draw elements
-    this.drawMap(map, {svg, opacity, path, color})
-    this.plotRoute(route, {svg, opacity, path, color})
-    this.plotCities(cities, {radius: DOT_RADIUS, svg, opacity, projection, color})
-
-    // Register vars
-    this.opacity = opacity
-    this.routeOpacity = 0
-    this.citiesOpacity = 0
-    this.svg = svg
+    // Register projection and path
     this.projection = projection
     this.path = path
   }
@@ -187,11 +217,15 @@ class WorldMap extends Component {
   componentDidUpdate (prevProps) {
     (this.props.visible !== prevProps.visible ||
      (this.props.visible && this.props.offset !== prevProps.offset) ||
-     (this.props.type !== prevProps.type)) && this.update()
+     (this.props.type !== prevProps.type)) && raf(this.update)
   }
 
   render () {
-    return <div {...this.props} />
+    return (
+      <div {...this.props}>
+        <svg ref='svg' width={this.state.width} height={this.state.height} />
+      </div>
+    )
   }
 }
 
