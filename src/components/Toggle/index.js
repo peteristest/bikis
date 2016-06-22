@@ -48,7 +48,7 @@ export default class Toggle extends Component {
     }
 
     if (prevState.hover !== hover) {
-      handleToggle(hover, url)
+      handleToggle(!this.props.active, url)
     }
   }
 

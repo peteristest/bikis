@@ -35,8 +35,9 @@ class WindowWithCursor extends Component {
     })
 
     const t01 = setTimeout(() => {
+      const x = (document.documentElement.clientWidth < 700) ? 0 : (50 + Math.random() * 50) * m
       this.setState({
-        x: (50 + Math.random() * 50) * m,
+        x: x,
         y: 0
       })
     }, delay + transitionTime)
@@ -80,7 +81,7 @@ class WindowWithCursor extends Component {
     const containerPosition = `translate3d(${x}px, ${y}px, 0)`
     const cursorPosition = `translate3d(${xCursor}px, ${yCursor}px, 0)`
 
-    const className = classNames('notes-container fixed z3 my1', (position + ' ').split(' ').join('-0 '))
+    const className = classNames('notes-container fixed z3 my1 px3 sm-px0', (position + ' ').split(' ').join('-0 '))
     const isRight = position.indexOf('right')
 
     const cursorClassName = classNames('absolute cursor top-0 z4 mt1', {

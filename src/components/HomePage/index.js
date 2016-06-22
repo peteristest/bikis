@@ -118,7 +118,7 @@ class HomePage extends Component {
       <div>
         <Helmet title='Peteris Bikis – Designer and Engineer' />
         <SvgFilters />
-        <div className='relative z2 height-100 px2 py1' style={{maxWidth: '1400px', overflowX: 'hidden'}}>
+        <div className='relative z2 height-100 px2 py1' style={{maxWidth: '1400px'}}>
           <Bio
             content={bio}
             activeToggle={`/${activeComponent}`}
