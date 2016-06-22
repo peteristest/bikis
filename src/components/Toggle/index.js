@@ -57,7 +57,6 @@ export default class Toggle extends Component {
 
     const className = classNames('toggle inline-block', {
       'toggle-hover': active,
-      'transition-opacity': disabled,
       'transition-transform': !disabled
     })
 
@@ -72,10 +71,10 @@ export default class Toggle extends Component {
       <a className='transition-opacity' href={url} target='_blank'>{label}</a>
     ) : (
       <span
-        style={active ? {opacity: 1} : {}}
+        style={active ? {zIndex: 12} : {}}
         onMouseEnter={this.onToggle.bind(this, true)}
         onMouseLeave={this.onToggle.bind(this, false)}
-        className='transition-opacity'
+        className='relative inline-block'
         >
         <Draggable
           onDrag={this.setOffset.bind(this)}

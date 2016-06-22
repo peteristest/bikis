@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import classNames from 'classnames'
+import raf from 'raf'
 
 import './styles.css'
 
@@ -12,8 +13,6 @@ const getDistortFilter = (id) => {
 class DistortedText extends Component {
   constructor (props) {
     super(props)
-
-    this.distortFilter = getDistortFilter(this.props.id)
 
     this.state = {
       animate: false,
@@ -33,7 +32,7 @@ class DistortedText extends Component {
         p: p + 0.2
       })
 
-      setTimeout(() => window.requestAnimationFrame(this.animate), 30)
+      setTimeout(() => raf(this.animate), 30)
     }
   }
 
@@ -42,7 +41,7 @@ class DistortedText extends Component {
       animate: true
     })
 
-    window.requestAnimationFrame(this.animate)
+    raf(this.animate)
   }
 
   handleLeave (e) {
@@ -65,7 +64,9 @@ class DistortedText extends Component {
     const baseFrequency = getBaseFrequency(0)
     const seed = Math.floor(Math.sin(this.state.p) * 44 + 15)
 
-    const distortStyle = this.state.disableFilter ? null : this.distortFilter
+    const id = this.props.id
+
+    const distortStyle = this.state.disableFilter ? null : getDistortFilter(id)
     const className = classNames(
       this.props.className,
       'distort-text',
@@ -83,7 +84,7 @@ class DistortedText extends Component {
         {!this.state.disableFilter && (
           <svg xmlns='http://www.w3.org/2000/svg' version='1.1' className='absolute'>
             <defs>
-              <filter id={this.props.id}>
+              <filter id={id}>
                 <feTurbulence type='turbulence' baseFrequency={baseFrequency} numOctaves='1' result='warp'></feTurbulence>
                 <feDisplacementMap scale={seed} in='SourceGraphic' in2='warp' />
               </filter>

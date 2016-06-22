@@ -12,7 +12,7 @@ const getRules = (isToggleDisabled, isToggleActive, toggleProps) => (
   assignToEmpty(defaultRules, {
     em: assignToEmpty(defaultRules.em, {
       match: (source) => /^\*([\s\S]+?)\*/.exec(source),
-      react: (node, recurseOutput) => <span className='transition-opacity'>{recurseOutput(node.content)}</span>
+      react: (node, recurseOutput) => <span>{recurseOutput(node.content)}</span>
     }),
     link: assignToEmpty(defaultRules.link, {
       react: (node, output, state) => {
@@ -32,8 +32,8 @@ const getRules = (isToggleDisabled, isToggleActive, toggleProps) => (
     u: assignToEmpty(defaultRules.u, {
       react: (node, output, state) => (
         <DistortedText
-          id='name'
-          className='large-text text-pb block center right transition-opacity'
+          id={`name${Math.random() * 100 << 0}`}
+          className='large-text text-pb block center right'
           turbulence={0.005}
           animated={false}
           content={output(node.content, state)[0].replace(' ', '<br />')} />
@@ -63,6 +63,10 @@ const Bio = (props) => {
   return (
     <div className={classNames('lh3 mt0 h1', className)}>
       {reactContent}
+      <div className='absolute top-0 left-0 right-0 bottom-0 no-pointer-events' style={{zIndex: 11}}>
+        {props.children}
+      </div>
+      <div className='bio-cover transition-opacity fixed top-0 left-0 right-0 no-pointer-events' />
     </div>
   )
 }

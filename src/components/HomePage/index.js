@@ -101,7 +101,7 @@ class HomePage extends Component {
     const mapType = routeMap ? 'route' : 'cities'
     const mapVisible = Boolean(travelMap || routeMap)
 
-    const bioClassName = classNames('max-width mb3', {
+    const bioClassName = classNames('max-width mb3 bio', {
       'faded': Boolean(activeComponent) || dragging,
       'disabled': dragging
     })
@@ -122,11 +122,27 @@ class HomePage extends Component {
             handleOffset={this.handleOffset}
             handleToggle={this.handleToggle}
             handleRelease={this.resetState}
-            className={bioClassName} />
-          <div className='clearfix mx-auto relative flex flex-wrap mb3'>
+            className={bioClassName}>
+            <WorldMap
+              visible={mapVisible}
+              color={color}
+              type={mapType}
+              offset={offset}
+              className={mapClassName} />
+            <ReactCSSTransitionGroup
+              transitionName='visualisation'
+              transitionEnterTimeout={600}
+              transitionLeaveTimeout={600}>
+              {this.props.children}
+            </ReactCSSTransitionGroup>
+            <ReactTransitionGroup>
+              {routeMap && <WindowWithCursor><CyclingNotes /></WindowWithCursor>}
+            </ReactTransitionGroup>
+          </Bio>
+          <div className='clearfix mx-auto relative flex flex-wrap mb3 mt4'>
             <div className='pl3 mt2 mb3' style={{minWidth: '45%'}}>
               <DistortedText
-                id='work'
+                id={`work${Math.random() * 100 << 0}`}
                 className='medium-text text-work left-align mb2 inline-block absolute top-0 pt1'
                 content='Featured work' />
               <span className='inline-block h4 font-alternative pl2 lh3 mt3'>
@@ -136,9 +152,9 @@ class HomePage extends Component {
               </span>
             </div>
             <div className='ml-auto mb3'>
-              <p className='mr3 ml3 pr3 relative pl4'>
+              <p className='ml3 pr3 relative pl4'>
                 <DistortedText
-                  id='awards'
+                  id={`awards${Math.random() * 100 << 0}`}
                   className='medium-text text-awards right-align block absolute left-0 lh1'
                   turbulence={0.0015}
                   content={slantedText('Awards')} />
@@ -166,21 +182,6 @@ class HomePage extends Component {
             style={{maxWidth: '42em'}}
             dangerouslySetInnerHTML={{ __html: footer }} />
         </div>
-        <WorldMap
-          visible={mapVisible}
-          color={color}
-          type={mapType}
-          offset={offset}
-          className={mapClassName} />
-        <ReactCSSTransitionGroup
-          transitionName='visualisation'
-          transitionEnterTimeout={600}
-          transitionLeaveTimeout={600}>
-          {this.props.children}
-        </ReactCSSTransitionGroup>
-        <ReactTransitionGroup>
-          {routeMap && <WindowWithCursor><CyclingNotes /></WindowWithCursor>}
-        </ReactTransitionGroup>
       </div>
     )
   }
