@@ -74,7 +74,7 @@ export default class Toggle extends Component {
       </span>
     )
 
-    const isTouchDevice = 'ontouchstart' in document.documentElement
+    const isTouchDevice = typeof window !== 'undefined' && 'ontouchstart' in document.documentElement
 
     return url.match(/^http/) ? (
       <a
