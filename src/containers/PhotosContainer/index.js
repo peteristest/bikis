@@ -17,6 +17,7 @@ const shuffle = () => 0.5 - Math.random()
 
 const Photo = ({delay, transform, url, bgOffset}) => {
   const bgTransform = `translate3d(${bgOffset}%, ${bgOffset}%, 0)`
+  const supportsMixBlendMode = 'CSS' in window && 'supports' in window.CSS && window.CSS.supports('mix-blend-mode', 'screen')
   return (
     <span
       className='image-container inline-block left-0 top-0 absolute'
@@ -25,7 +26,7 @@ const Photo = ({delay, transform, url, bgOffset}) => {
         <img
           src={url}
           className='fit relative block' />
-        <span className='photo-bg absolute top-0 left-0 right-0 bottom-0' style={{ transform: bgTransform }} />
+        {supportsMixBlendMode && <span className='photo-bg absolute top-0 left-0 right-0 bottom-0' style={{ transform: bgTransform }} />}
       </span>
     </span>
   )

@@ -14,11 +14,12 @@
 }
 
 .image-container {
-  width: 25%;
+  width: 12.5vw;
 }
 
 .image-container img {
   filter: saturate(0) contrast(1.2);
+  width: 12.5vw;
 }
 
 .visualisation-enter.visualisation-enter-active .image-container,
