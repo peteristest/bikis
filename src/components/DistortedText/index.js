@@ -52,9 +52,12 @@ class DistortedText extends Component {
   componentDidMount () {
     // Safari is dishonest about supporting SVG filters
     const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)
+    // IE and Edge only support them within an SVG element
+    // todo: explore rendering text within SVG
+    const isIE = /Edge|Trident|MSIE/.test(navigator.userAgent)
 
     this.setState({
-      disableFilter: isSafari
+      disableFilter: isSafari || isIE
     })
   }
 
