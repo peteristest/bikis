@@ -51,6 +51,9 @@ browserHistory.listen((location) => {
       dispatch
     }
 
+    // Track event
+    typeof window !== 'undefined' && 'ga' in window && window.ga('send', 'pageview', renderProps.location.pathname)
+
     trigger('defer', components, locals)
   })
 })
