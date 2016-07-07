@@ -54,3 +54,7 @@
 .no-svgfilters .fuzzy {
   animation: none;
 }
+
+.min-width-half {
+  min-width: 45%;
+}

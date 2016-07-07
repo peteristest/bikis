@@ -117,7 +117,7 @@ VennDiagram.defaultProps = {
 const getRandomElement = (arr) => arr[Math.floor(Math.random() * arr.length)]
 
 const groupArray = (array, elems = 2) => {
-  const a = [...Array.from(array), array[0]]
+  const a = [...Array.from(array), R.head(array)]
   const temp = a.slice()
   const arr = []
 

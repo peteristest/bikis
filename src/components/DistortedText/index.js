@@ -63,7 +63,7 @@ class DistortedText extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    if (prevProps.url !== this.props.url) {
+    if (prevProps.location !== this.props.location) {
       this.setState({ alternateFilter: !this.state.alternateFilter })
     }
   }
@@ -82,7 +82,7 @@ class DistortedText extends Component {
   }
 
   render () {
-    const {content, animated = true} = this.props
+    const { content, animated } = this.props
 
     const seed = this.getSeed(this.state.p)
     const distortStyle = this.getDistortFilter()
@@ -125,9 +125,12 @@ DistortedText.propTypes = {
   content: PropTypes.string.isRequired,
   turbulence: PropTypes.number,
   className: PropTypes.string,
-  animated: PropTypes.boolean,
-  // todo: readdress
-  url: PropTypes.string
+  animated: PropTypes.bool,
+  location: PropTypes.string.isRequired
+}
+
+DistortedText.defaultProps = {
+  animated: true
 }
 
 export default DistortedText
