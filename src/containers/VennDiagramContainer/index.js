@@ -5,42 +5,34 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { asyncFetchSiteContent } from '../../actions'
 import VennDiagram from './../../components/VennDiagram'
 
+const MIN_WIDTH = 460
+const MIN_HEIGHT = 460
+const SCALE_WIDTH = 0.64
+const SCALE_HEIGHT = 0.56
+
 class VennDiagarmContainer extends Component {
-
-  constructor (props) {
-    super(props)
-    this.state = {
-      width: 0,
-      height: 0
-    }
-  }
-
-  componentDidMount () {
-    this.setState({
-      width: window.document.documentElement.clientWidth,
-      height: window.document.documentElement.clientHeight
-    })
+  componentWillMount () {
+    const { asyncFetchSiteContent } = this.props
+    asyncFetchSiteContent()
   }
 
   render () {
-    const { disciplines } = this.props
-    const sizeLarge = 9
-    const sizeSmall = 3
+    const { disciplines, vennIntersectLabel } = this.props
+    const { clientWidth = 0, clientHeight = 0 } = typeof window === 'undefined' ? {} : window.document.documentElement
 
-    const { width, height } = this.state
+    const width = clientWidth * SCALE_WIDTH
+    const height = clientHeight * SCALE_HEIGHT
 
-    const w = Math.min(width, Math.max(460, width * 0.64))
-    const h = Math.max(460, height * 0.56)
+    const w = Math.min(width, Math.max(MIN_WIDTH, width))
+    const h = Math.max(MIN_HEIGHT, height)
 
     return (
       <VennDiagram
-        intersectLabel={['◕‿◕']}
+        intersectLabel={vennIntersectLabel}
         items={disciplines}
-        large={sizeLarge}
-        small={sizeSmall}
-        duration={1000}
         width={w}
         height={h}
         animate
@@ -51,10 +43,12 @@ class VennDiagarmContainer extends Component {
 
 function mapStateToProps ({ home }) {
   return {
-    disciplines: home.disciplines
+    disciplines: home.disciplines,
+    vennIntersectLabel: home.vennIntersectLabel
   }
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  { asyncFetchSiteContent }
 )(VennDiagarmContainer)

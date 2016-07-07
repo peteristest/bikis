@@ -7,9 +7,12 @@ import classNames from 'classnames'
 
 import imgCursor from './cursor.png'
 
-const Cursor = (props) => (
-  <img className='cursor' src={imgCursor} {...props} />
-)
+import { isSmallScreen } from './../../utils/env'
+
+export const TOP_LEFT = 'top left'
+export const TOP_RIGHT = 'top right'
+export const BOTTOM_LEFT = 'bottom left'
+export const BOTTOM_RIGHT = 'bottom right'
 
 class WindowWithCursor extends Component {
   constructor (props) {
@@ -35,7 +38,7 @@ class WindowWithCursor extends Component {
     })
 
     const t01 = setTimeout(() => {
-      const x = (document.documentElement.clientWidth < 700) ? 0 : (50 + Math.random() * 50) * m
+      const x = isSmallScreen() ? 0 : (50 + Math.random() * 50) * m
       this.setState({
         x: x,
         y: 0
@@ -76,12 +79,13 @@ class WindowWithCursor extends Component {
 
   render () {
     const { x, y, xCursor, yCursor } = this.state
-    const { position = 'bottom right' } = this.props
+    const { position } = this.props
 
     const containerPosition = `translate3d(${x}px, ${y}px, 0)`
     const cursorPosition = `translate3d(${xCursor}px, ${yCursor}px, 0)`
 
-    const className = classNames('notes-container fixed z3 my1 px3 sm-px0', (position + ' ').split(' ').join('-0 '))
+    const absPosition = `${position} `.split(' ').join('-0 ')
+    const className = classNames('notes-container fixed z3 my1 px3 sm-px0', absPosition)
     const isRight = position.indexOf('right')
 
     const cursorClassName = classNames('absolute cursor top-0 z4 mt1', {
@@ -99,8 +103,17 @@ class WindowWithCursor extends Component {
 }
 
 WindowWithCursor.propTypes = {
-  position: React.PropTypes.oneOf(['top left', 'top right', 'bottom left', 'bottom right']),
+  position: React.PropTypes.oneOf([TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT]),
   delay: React.PropTypes.number
 }
+
+WindowWithCursor.defaultProps = {
+  position: BOTTOM_RIGHT
+}
+
+/* Helpers */
+const Cursor = (props) => (
+  <img className='cursor' src={imgCursor} {...props} />
+)
 
 export default WindowWithCursor

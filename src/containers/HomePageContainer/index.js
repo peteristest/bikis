@@ -7,6 +7,9 @@ import { connect } from 'react-redux'
 import { asyncFetchSiteContent } from '../../actions'
 import HomePage from './../../components/HomePage'
 
+const COMPONENT_CYCLING = 'cycling'
+const COMPONENT_TRAVEL = 'travel'
+
 class HomePageContainer extends Component {
 
   componentWillMount () {
@@ -18,8 +21,8 @@ class HomePageContainer extends Component {
     const { bio, footer, color, work, awards, contact } = this.props.data
     const activeComponent = this.props.location.pathname.replace(/^\//, '')
 
-    const routeMap = (activeComponent === 'cycling')
-    const travelMap = (activeComponent === 'travel')
+    const routeMap = (activeComponent === COMPONENT_CYCLING)
+    const travelMap = (activeComponent === COMPONENT_TRAVEL)
 
     return (
       <HomePage

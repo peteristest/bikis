@@ -10,10 +10,14 @@ const map = require('./../../world-110m.json')
 const route = require('./../../route.json')
 const cities = require('./../../cities.json')
 
-const TYPE_ROUTE = 'route'
-const TYPE_CITIES = 'cities'
+export const TYPE_ROUTE = 'route'
+export const TYPE_CITIES = 'cities'
+
 const PROJECTION_TYPE = 'collignon'
 const DOT_RADIUS = '3px'
+const MAX_WIDTH = 890
+const MAX_HEIGHT = 500
+const OFFSET_Y = 90
 const STYLES = {
   'route': {
     'visible': {
@@ -68,7 +72,7 @@ class WorldMap extends Component {
 
     // Draw elements
     const { color, type, visible } = this.props
-    const styles = this.getStyles({ type, visible })
+    const styles = getStyles({ type, visible })
     const opacity = styles.opacity
 
     const elem = ReactDOM.findDOMNode(this.refs.svg)
@@ -91,10 +95,10 @@ class WorldMap extends Component {
 
   handleResize () {
     const { type, visible } = this.props
-    const styles = this.getStyles({ type, visible })
+    const styles = getStyles({ type, visible })
 
-    const width = Math.min(890, document.documentElement.clientWidth)
-    const height = Math.min(500, document.documentElement.clientHeight)
+    const width = Math.min(MAX_WIDTH, document.documentElement.clientWidth)
+    const height = Math.min(MAX_HEIGHT, document.documentElement.clientHeight)
 
     // Set projection
     const options = { projectionType: PROJECTION_TYPE, width, height, ...styles }
@@ -109,15 +113,11 @@ class WorldMap extends Component {
     this.path = path
   }
 
-  getStyles ({ type = 'route', visible }) {
-    return STYLES[ type ][ visible ? 'visible' : 'hidden' ]
-  }
-
   setProjection (d3, options) {
     const { width, height, projectionType, scale, rotation } = options
 
     const projection = d3.geo[projectionType]()
-      .translate([width * 0.5, height * 0.5 + 90])
+      .translate([width * 0.5, height * 0.5 + OFFSET_Y])
       .clipAngle(90)
       .scale(scale)
       .rotate(rotation)
@@ -163,7 +163,7 @@ class WorldMap extends Component {
   update () {
     const { visible, type, offset } = this.props
 
-    const styles = this.getStyles({ type, visible })
+    const styles = getStyles({ type, visible })
     const showRoute = visible && type === TYPE_ROUTE
     const showCities = visible && type === TYPE_CITIES
 
@@ -215,9 +215,13 @@ class WorldMap extends Component {
   }
 
   componentDidUpdate (prevProps) {
-    (this.props.visible !== prevProps.visible ||
-     (this.props.visible && this.props.offset !== prevProps.offset) ||
-     (this.props.type !== prevProps.type)) && raf(this.update)
+    const { visible, offset, type } = this.props
+
+    if (visible !== prevProps.visible ||
+     (visible && offset !== prevProps.offset) ||
+     (type !== prevProps.type)) {
+      raf(this.update)
+    }
   }
 
   render () {
@@ -234,6 +238,11 @@ WorldMap.propTypes = {
   color: React.PropTypes.string.isRequired,
   offset: React.PropTypes.number,
   type: React.PropTypes.oneOf([TYPE_CITIES, TYPE_ROUTE])
+}
+
+/* Helpers */
+function getStyles ({ type = TYPE_ROUTE, visible }) {
+  return STYLES[ type ][ visible ? 'visible' : 'hidden' ]
 }
 
 export default WorldMap

@@ -7,48 +7,19 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactTransitionGroup from 'react-addons-transition-group'
 import { browserHistory } from 'react-router'
 import classNames from 'classnames'
-import SimpleMarkdown from 'simple-markdown'
-import R from 'ramda'
 import Helmet from 'react-helmet'
 
 import { slantedText, verticalText } from './../../utils/format'
+import { parseMd } from './../../utils/markdown'
 
 import './styles.css'
 
-import WorldMap from './../WorldMap'
+import WorldMap, { TYPE_ROUTE, TYPE_CITIES } from './../WorldMap'
 import CyclingNotes from './../../containers/CyclingNotes/'
 import WindowWithCursor from './../WindowWithCursor'
 import Bio from './../Bio'
 import DistortedText from './../DistortedText'
-
-const Tab = () => <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-
-const SvgFilters = () => {
-  const baseFrequency = '0.05 0.05'
-  const filterResult = 'noise'
-
-  return (
-    <svg xmlns='http://www.w3.org/2000/svg' version='1.1' className='svg-filters' style={{position: 'absolute'}}>
-      <defs>
-        <linearGradient id='gradient'>
-          <stop offset='5%' stopColor='#06f200' />
-          <stop offset='80%' stopColor='#cdc9ff' />
-        </linearGradient>
-        {[2, 3, 2, 3, 1].map((scale, i) => (
-          <filter id={`fuzzy-0${i + 1}`} key={i}>
-            <feTurbulence id='turbulence' baseFrequency={baseFrequency} numOctaves='3' result={filterResult} seed={i}/>
-            <feDisplacementMap in='SourceGraphic' in2='noise' scale={scale} />
-          </filter>
-        ))}
-      </defs>
-    </svg>
-  )
-}
-
-const parseMd = R.compose(
-  SimpleMarkdown.defaultOutput,
-  SimpleMarkdown.defaultBlockParse
-)
+import SvgFilters from './../SvgFilters'
 
 class HomePage extends Component {
 
@@ -100,9 +71,9 @@ class HomePage extends Component {
 
   render () {
     const { color, work, awards, bio, contact, footer, activeComponent, routeMap, travelMap } = this.props
-    const { dragging } = this.state
+    const { dragging, offset } = this.state
 
-    const mapType = routeMap ? 'route' : 'cities'
+    const mapType = routeMap ? TYPE_ROUTE : TYPE_CITIES
     const mapVisible = Boolean(travelMap || routeMap)
 
     const bioClassName = classNames('max-width mb3 bio', {
@@ -112,7 +83,9 @@ class HomePage extends Component {
     const mapClassName = classNames('component map fixed abs-center z1', {
       'fuzzy': mapVisible
     })
-    const offset = this.state.offset * 0.2
+    const mapOffset = offset * 0.2
+
+    const tab = <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
     return (
       <div>
@@ -131,7 +104,7 @@ class HomePage extends Component {
               visible={mapVisible}
               color={color}
               type={mapType}
-              offset={offset}
+              offset={mapOffset}
               className={mapClassName} />
             <ReactCSSTransitionGroup
               transitionName='visualisation'
@@ -152,7 +125,7 @@ class HomePage extends Component {
                 content='Featured work' />
               <span className='inline-block h4 font-alternative sm-pl2 lh3 mt3'>
                 {work.map((project, i) => (
-                  <span key={i}>{Array(i + 1).fill(<Tab />)}<a target='_blank' href={project.split('|')[1]}>{project.split('|')[0]}</a><br /></span>
+                  <span key={i}>{Array(i + 1).fill(tab)}<a target='_blank' href={project.split('|')[1]}>{project.split('|')[0]}</a><br /></span>
                 ))}
               </span>
             </div>
@@ -166,7 +139,7 @@ class HomePage extends Component {
                   content={slantedText('Awards')} />
                 <span className='h4 font-alternative inline-block lh3 mt3'>
                   {awards.map((award, i) => (
-                    <span key={i}>{Array(i + 1).fill(<Tab />)}{award}<br /></span>
+                    <span key={i}>{Array(i + 1).fill(tab)}{award}<br /></span>
                   ))}
                 </span>
               </p>

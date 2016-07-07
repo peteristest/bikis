@@ -14,6 +14,7 @@ const initialState = {
     'Travel', // ️️✈️
     'Photo' // 📷
   ],
+  vennIntersectLabel: '◕‿◕',
   work: [
   ],
   awards: [

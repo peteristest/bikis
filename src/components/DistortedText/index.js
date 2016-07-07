@@ -4,6 +4,8 @@ import raf from 'raf'
 
 import './styles.css'
 
+import { isSafari, isIE } from './../../utils/env'
+
 const FILTER_BASE_FREQUENCY = '0.00001 0.018001'
 const FILTER_SEED_BASE = 15
 const FILTER_SEED_RANGE = 44
@@ -51,13 +53,12 @@ class DistortedText extends Component {
 
   componentDidMount () {
     // Safari is dishonest about supporting SVG filters
-    const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)
+    const safari = isSafari()
     // IE and Edge only support them within an SVG element
-    // todo: explore rendering text within SVG
-    const isIE = /Edge|Trident|MSIE/.test(navigator.userAgent)
+    const ie = isIE()
 
     this.setState({
-      disableFilter: isSafari || isIE
+      disableFilter: safari || ie
     })
   }
 

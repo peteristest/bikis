@@ -4,6 +4,8 @@ import Tappable from 'react-tappable'
 import classNames from 'classnames'
 import './styles.css'
 
+import { isTouchDevice } from './../../utils/env'
+
 export default class Toggle extends Component {
   constructor (props) {
     super(props)
@@ -12,6 +14,9 @@ export default class Toggle extends Component {
       hover: false,
       offset: 0
     }
+
+    this.setOffset = this.setOffset.bind(this)
+    this.resetOffset = this.resetOffset.bind(this)
   }
 
   resetOffset () {
@@ -40,7 +45,7 @@ export default class Toggle extends Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    const { url, handleOffset, handleToggle } = this.props
+    const { url, handleOffset, handleToggle, active } = this.props
     const { hover, offset } = this.state
 
     if (prevState.offset !== offset) {
@@ -48,7 +53,7 @@ export default class Toggle extends Component {
     }
 
     if (prevState.hover !== hover) {
-      handleToggle(!this.props.active, url)
+      handleToggle(!active, url)
     }
   }
 
@@ -74,7 +79,7 @@ export default class Toggle extends Component {
       </span>
     )
 
-    const isTouchDevice = typeof window !== 'undefined' && 'ontouchstart' in document.documentElement
+    const isTouch = isTouchDevice()
 
     return url.match(/^http/) ? (
       <a
@@ -88,10 +93,10 @@ export default class Toggle extends Component {
         onTap={() => this.onToggle(!this.state.hover)}
         className='relative inline-block'
         >
-        {isTouchDevice ? content : (
+        {isTouch ? content : (
           <Draggable
-            onDrag={this.setOffset.bind(this)}
-            onStop={this.resetOffset.bind(this)}
+            onDrag={this.setOffset}
+            onStop={this.resetOffset}
             position={position}>
             {content}
           </Draggable>

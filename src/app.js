@@ -17,14 +17,13 @@ import { trigger } from 'redial'
 
 import configureStore from './store'
 import getRoutes from './routes'
+import { isSafari, isIE } from './utils/env'
 
 const fontObserver = new FontFaceObserver('Vollkorn', {})
 
 fontObserver.check().then(() => {
-  // Disable SVG filters in Safari
-  const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent)
-  const isIE = /Edge|Trident|MSIE/.test(navigator.userAgent)
-  if (isSafari || isIE) {
+  // Disable SVG filters in Safari and IE
+  if (isSafari() || isIE()) {
     document.body.classList.add('no-svgfilters')
   }
 
