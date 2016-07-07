@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { asyncFetchSiteContent } from '../../actions'
+import { asyncFetchSiteContent, setUrl } from '../../actions'
 import HomePage from './../../components/HomePage'
 
 const COMPONENT_CYCLING = 'cycling'
@@ -19,7 +19,8 @@ class HomePageContainer extends Component {
 
   render () {
     const { bio, footer, color, work, awards, contact } = this.props.data
-    const activeComponent = this.props.location.pathname.replace(/^\//, '')
+    const { location, setUrl } = this.props
+    const activeComponent = location.pathname.replace(/^\//, '')
 
     const routeMap = (activeComponent === COMPONENT_CYCLING)
     const travelMap = (activeComponent === COMPONENT_TRAVEL)
@@ -34,6 +35,7 @@ class HomePageContainer extends Component {
         awards={awards}
         activeComponent={activeComponent}
         routeMap={routeMap}
+        setUrl={setUrl}
         travelMap={travelMap}>
         {this.props.children}
       </HomePage>
@@ -49,5 +51,5 @@ function mapStateToProps ({ home }) {
 
 export default connect(
   mapStateToProps,
-  { asyncFetchSiteContent }
+  { asyncFetchSiteContent, setUrl }
 )(HomePageContainer)

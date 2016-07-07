@@ -1,5 +1,6 @@
 import fetch from 'isomorphic-fetch'
-import { FETCH_INSTAGRAM_PHOTOS, FETCH_CYCLING_DATA, FETCH_SITE_CONTENT } from './../constants/AppConstants'
+import { browserHistory } from 'react-router'
+import { FETCH_INSTAGRAM_PHOTOS, FETCH_CYCLING_DATA, FETCH_SITE_CONTENT, GOTO_URL } from './../constants/AppConstants'
 import config from './../config'
 
 function fetchInstagramPhotos (data) {
@@ -61,3 +62,16 @@ export const asyncFetchSiteContent = () => (dispatch, getState) => {
 }
 
 const shouldFetchSiteContent = ({ home }) => Boolean(!home.bio.length)
+
+export function setUrl (url, replace) {
+  if (replace) {
+    browserHistory.replace(url)
+  } else {
+    browserHistory.push(url)
+  }
+
+  return {
+    type: GOTO_URL,
+    url
+  }
+}

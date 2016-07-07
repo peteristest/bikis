@@ -5,7 +5,6 @@
 import React, { Component, PropTypes } from 'react'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 import ReactTransitionGroup from 'react-addons-transition-group'
-import { browserHistory } from 'react-router'
 import classNames from 'classnames'
 import Helmet from 'react-helmet'
 
@@ -20,6 +19,8 @@ import WindowWithCursor from './../WindowWithCursor'
 import Bio from './../Bio'
 import DistortedText from './../DistortedText'
 import SvgFilters from './../SvgFilters'
+
+import { isTouchDevice } from './../../utils/env'
 
 class HomePage extends Component {
 
@@ -36,12 +37,12 @@ class HomePage extends Component {
   }
 
   handleToggle (hover, url) {
-    // todo: clean up
-    // Update history
-    if (!hover && this.props.activeComponent && this.currentToggle !== url && !this.isTouchDevice) {
+    const ignoreEvent = !hover && this.props.activeComponent && this.currentToggle !== url && !isTouchDevice()
+    if (ignoreEvent) {
       // Ignore late mouse leave update
     } else {
-      browserHistory.replace(hover ? url : '')
+      const replace = true
+      this.props.setUrl(hover ? url : '', replace)
     }
 
     if (hover) {
@@ -62,11 +63,7 @@ class HomePage extends Component {
       offset: 0
     })
 
-    browserHistory.push('/')
-  }
-
-  componentDidMount () {
-    this.isTouchDevice = 'ontouchstart' in document.documentElement
+    this.props.setUrl('/')
   }
 
   render () {
@@ -176,7 +173,8 @@ HomePage.propTypes = {
   footer: PropTypes.string.isRequired,
   activeComponent: PropTypes.string,
   routeMap: PropTypes.bool,
-  travelMap: PropTypes.bool
+  travelMap: PropTypes.bool,
+  setUrl: PropTypes.func.isRequired
 }
 
 export default HomePage
