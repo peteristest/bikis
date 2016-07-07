@@ -36,7 +36,7 @@ class Bio extends Component {
 }
 
 Bio.propTypes = {
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
   content: PropTypes.string.isRequired,
   handleRelease: PropTypes.func.isRequired,
   handleToggle: PropTypes.func.isRequired,
@@ -86,9 +86,9 @@ const getRules = (isToggleDisabled, isToggleActive, toggleProps) => (
 const parseMarkdown = (src, rules) => {
   const parser = SimpleMarkdown.parserFor(rules)
   const reactOutput = SimpleMarkdown.reactFor(SimpleMarkdown.ruleOutput(rules, 'react'))
-  const parseTree = parser(src + '\n\n', {inline: true})
+  const parseTree = parser && parser(src + '\n\n', {inline: true})
 
-  return reactOutput(parseTree)
+  return reactOutput && reactOutput(parseTree)
 }
 
 export default Bio

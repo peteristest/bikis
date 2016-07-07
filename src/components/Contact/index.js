@@ -18,7 +18,7 @@ const Contact = ({className, children}) => (
 )
 
 Contact.propTypes = {
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
   children: PropTypes.node
 }
 
