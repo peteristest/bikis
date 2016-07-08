@@ -4,11 +4,10 @@ import { FETCH_CYCLING_DATA } from '../constants/AppConstants'
 const initialState = {
   distance: 0,
   name: '',
-  date: new Date().time
+  date: '2016-01-01T00:00:00Z'
 }
 
 function cyclingReducer (state = initialState, action) {
-  Object.freeze(state)
   switch (action.type) {
     case FETCH_CYCLING_DATA:
 

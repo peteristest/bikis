@@ -12,7 +12,7 @@ const SvgFilters = ({baseFrequency, filterResult, colorFrom, colorTo}) => (
       </linearGradient>
       {[2, 3, 2, 3, 1].map((scale, i) => (
         <filter id={`fuzzy-0${i + 1}`} key={i}>
-          <feTurbulence id='turbulence' baseFrequency={baseFrequency} numOctaves='3' result={filterResult} seed={i}/>
+          <feTurbulence id='turbulence' baseFrequency={baseFrequency} numOctaves='3' result={filterResult} seed={i} />
           <feDisplacementMap in='SourceGraphic' in2='noise' scale={scale} />
         </filter>
       ))}

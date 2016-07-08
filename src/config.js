@@ -10,6 +10,9 @@ const environment = {
   production: {
     isProduction: true,
     apiHost: apiHost
+  },
+  test: {
+    apiHost: apiHost
   }
 }[process.env.NODE_ENV || 'development']
 

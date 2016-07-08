@@ -19,10 +19,15 @@ const Photo = ({delay, transform, url, bgOffset}) => (
 )
 
 Photo.propTypes = {
-  delay: React.PropTypes.number.isRequired,
-  transform: React.PropTypes.number.isRequired,
   url: React.PropTypes.string.isRequired,
-  bgOffset: React.PropTypes.number.isRequired
+  delay: React.PropTypes.number,
+  transform: React.PropTypes.string,
+  bgOffset: React.PropTypes.number
+}
+
+Photo.defaultProps = {
+  delay: 0,
+  bgOffset: 0
 }
 
 export default Photo

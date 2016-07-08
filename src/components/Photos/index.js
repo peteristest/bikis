@@ -25,10 +25,10 @@ class Photos extends Component {
   }
 
   componentWillMount () {
-    const { images } = this.props
+    const { images, imagesToShow } = this.props
 
     this.setState({
-      images: prepareImages(images)
+      images: prepareImages(images, imagesToShow)
     })
   }
 
@@ -60,7 +60,12 @@ class Photos extends Component {
 }
 
 Photos.propTypes = {
-  images: PropTypes.arrayOf(PropTypes.string).isRequired
+  images: PropTypes.arrayOf(PropTypes.string).isRequired,
+  imagesToShow: PropTypes.number
+}
+
+Photos.defaultProps = {
+  imagesToShow: NUM_PHOTOS
 }
 
 /* Helpers */
@@ -77,10 +82,10 @@ const getTransformFromMap = R.curry((map, size, index) => {
 
 const getTransform = getTransformFromMap(TRANSFORMS_MAP)
 
-const prepareImages = (images) => (
+const prepareImages = (images, imagesToShow) => (
   images
     .sort(shuffle)
-    .slice(0, NUM_PHOTOS)
+    .slice(0, imagesToShow)
     .map((url, i) => {
       const isSmall = Boolean(i)
       const size = isSmall ? TRANSFORM_SMALL : TRANSFORM_LARGE

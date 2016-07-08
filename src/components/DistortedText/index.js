@@ -100,7 +100,7 @@ class DistortedText extends Component {
           onMouseLeave={animated && this.handleLeave}
           className={className}
           style={distortStyle}
-          dangerouslySetInnerHTML={{ __html: content }}/>
+          dangerouslySetInnerHTML={{ __html: content }} />
         {!this.state.disableFilter && (
           <svg xmlns='http://www.w3.org/2000/svg' version='1.1' className='absolute'>
             <defs>

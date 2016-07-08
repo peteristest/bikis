@@ -6,7 +6,6 @@ const initialState = {
 }
 
 function photosReducer (state = initialState, action) {
-  Object.freeze(state)
   switch (action.type) {
     case FETCH_INSTAGRAM_PHOTOS:
 

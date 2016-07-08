@@ -2,6 +2,7 @@ import fetch from 'isomorphic-fetch'
 import { browserHistory } from 'react-router'
 import { FETCH_INSTAGRAM_PHOTOS, FETCH_CYCLING_DATA, FETCH_SITE_CONTENT, GOTO_URL } from './../constants/AppConstants'
 import config from './../config'
+import { isServerSide } from './../utils/env'
 
 function fetchInstagramPhotos (data) {
   return {
@@ -10,8 +11,7 @@ function fetchInstagramPhotos (data) {
   }
 }
 
-const isServerSide = typeof window === 'undefined'
-const apiURL = (url) => isServerSide ? (config.apiHost + url) : url
+export const apiURL = (url) => isServerSide() ? (config.apiHost + url) : url
 
 export const asyncFetchInstagramPhotos = () => (dispatch, getState) => {
   const url = apiURL('/api/photos')

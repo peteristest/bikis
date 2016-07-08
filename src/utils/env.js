@@ -17,3 +17,5 @@ export const isSafari = () => (
 export const isIE = () => (
   /Edge|Trident|MSIE/.test(navigator.userAgent)
 )
+
+export const isServerSide = () => typeof window === 'undefined'

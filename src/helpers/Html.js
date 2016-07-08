@@ -32,7 +32,7 @@ class Html extends Component {
           {Object.keys(assets.styles).map((style, key) =>
             <link
               href={assets.styles[style]} key={key} media='screen, projection'
-              rel='stylesheet' type='text/css' charSet='UTF-8'/>
+              rel='stylesheet' type='text/css' charSet='UTF-8' />
           )}
 
           {Object.keys(assets.styles).length === 0 ? <style dangerouslySetInnerHTML={{ __html: require('./../components/App/styles.css') }} /> : null}
@@ -40,9 +40,9 @@ class Html extends Component {
           <link href='https://fonts.googleapis.com/css?family=Karla:400|Roboto+Mono|Vollkorn:400,700' rel='stylesheet' type='text/css' />
         </head>
         <body className='no-webfonts'>
-          <div id='app' dangerouslySetInnerHTML={{__html: content}}/>
-          <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet='UTF-8'/>
-          <script src={assets.javascript.main} charSet='UTF-8'/>
+          <div id='app' dangerouslySetInnerHTML={{__html: content}} />
+          <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet='UTF-8' />
+          <script src={assets.javascript.main} charSet='UTF-8' />
           <script dangerouslySetInnerHTML={{__html: `(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
             m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)

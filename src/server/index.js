@@ -37,7 +37,7 @@ const handleRequest = (req, res) => {
   if (__DEVELOPMENT__) {
     // Do not cache webpack stats: the script file would change since
     // hot module replacement is enabled in the development env
-    webpackIsomorphicTools.refresh();
+    webpackIsomorphicTools.refresh()
   }
 
   const history = createHistory(req.originalUrl)
@@ -46,7 +46,7 @@ const handleRequest = (req, res) => {
 
   function hydrateOnClient (assets) {
     res.send('<!doctype html>\n' +
-      ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store}/>))
+      ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} store={store} />))
   }
 
   if (__DISABLE_SSR__) {
@@ -88,7 +88,7 @@ const handleRequest = (req, res) => {
           global.navigator = {userAgent: req.headers['user-agent']}
 
           res.send('<!doctype html>\n' +
-            ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store}/>))
+            ReactDOM.renderToString(<Html assets={webpackIsomorphicTools.assets()} component={component} store={store} />))
         })
         .catch((err) => {
           console.log(pretty.render(err))

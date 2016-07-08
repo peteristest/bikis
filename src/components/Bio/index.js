@@ -16,7 +16,7 @@ class Bio extends Component {
     const isToggleDisabled = (url) => (dragging && activeToggle && url !== activeToggle)
     const isToggleActive = (url) => (url === activeToggle)
 
-    const rules = getRules(isToggleDisabled, isToggleActive, toggleProps)
+    const rules = getRules(SimpleMarkdown.defaultRules, isToggleDisabled, isToggleActive, toggleProps)
     const reactContent = parseMarkdown(content, rules)
 
     const coverClassName = classNames('bio-cover transition-opacity fixed top-0 left-0 right-0', {
@@ -47,9 +47,7 @@ Bio.propTypes = {
 
 /* Helpers */
 
-const { defaultRules } = SimpleMarkdown
-
-const getRules = (isToggleDisabled, isToggleActive, toggleProps) => (
+const getRules = (defaultRules, isToggleDisabled, isToggleActive, toggleProps) => (
   assignToEmpty(defaultRules, {
     em: assignToEmpty(defaultRules.em, {
       match: (source) => /^\*([\s\S]+?)\*/.exec(source),

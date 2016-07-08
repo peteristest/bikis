@@ -6,7 +6,6 @@ const initialState = {
 }
 
 function uiReducer (state = initialState, action) {
-  Object.freeze(state)
   switch (action.type) {
     case GOTO_URL:
 

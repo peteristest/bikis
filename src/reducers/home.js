@@ -1,7 +1,7 @@
 import assignToEmpty from '../utils/assign'
 import { FETCH_SITE_CONTENT } from '../constants/AppConstants'
 
-const initialState = {
+export const initialState = {
   bio: '',
   footer: '',
   contact: '',
@@ -22,7 +22,6 @@ const initialState = {
 }
 
 function homeReducer (state = initialState, action) {
-  Object.freeze(state)
   switch (action.type) {
     case FETCH_SITE_CONTENT:
 

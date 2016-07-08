@@ -68,6 +68,7 @@ export default class Toggle extends Component {
 
     const labelContent = label.split('').map((letter, i) => (
       <span
+        key={i}
         className='inline-block'
         style={{animationDelay: `${i * 50}ms`}}
         dangerouslySetInnerHTML={{ __html: letter.replace(' ', '&nbsp;') }} />
@@ -80,8 +81,9 @@ export default class Toggle extends Component {
     )
 
     const isTouch = isTouchDevice()
+    const isExternal = url.match(/^http/)
 
-    return url.match(/^http/) ? (
+    return isExternal ? (
       <a
         href={url} target='_blank'
         className='link transition-transform'>{label}</a>

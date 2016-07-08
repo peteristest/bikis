@@ -10,6 +10,16 @@ import timeAgo from 'time-ago'
 
 const ta = timeAgo()
 
+const template = (distance, when) => [
+  'Rode 2700 miles from Stockholm to Barcelona a few years ago, fixed gear. Still living in past glories.',
+  '',
+  '   __o  '.replace(/ /gi, '&nbsp;'),
+  ' _`\\<,_ '.replace(/ /gi, '&nbsp;'),
+  '(_)/ (_)',
+  '',
+  `Other than that, looks like I last went on a ${distance}km ride ${when}.`,
+  ''].join('<br />')
+
 class CyclingNotesContainer extends Component {
 
   componentWillMount () {
@@ -21,19 +31,10 @@ class CyclingNotesContainer extends Component {
     const { cycling } = this.props
 
     const when = ta.ago(cycling.date)
-    const text = [
-      'Rode 2700 miles from Stockholm to Barcelona a few years ago, fixed gear. Still living in past glories.',
-      '',
-      '   __o  '.replace(/\ /gi, '&nbsp;'),
-      ' _`\\<,_ '.replace(/\ /gi, '&nbsp;'),
-      '(_)/ (_)',
-      '',
-      `Other than that, looks like I last went on a ${cycling.distance}km ride ${when}.`,
-      '']
-    const notes = text.join('<br />')
+    const text = template(cycling.distance, when)
 
     return (
-      <Notes text={notes} />
+      <Notes text={text} />
     )
   }
 }
