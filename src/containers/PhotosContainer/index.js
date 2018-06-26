@@ -6,7 +6,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { asyncFetchInstagramPhotos } from '../../actions'
 
-import Photos from './../../components/Photos'
+import Photos from './../../components/Photos';
 
 class PhotosContainer extends Component {
   componentWillMount () {
